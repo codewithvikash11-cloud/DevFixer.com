@@ -15,6 +15,7 @@ import {
     Globe
 } from 'lucide-react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 const allErrors = [
     { id: 1, title: "Uncaught ReferenceError: x is not defined", language: "JavaScript", difficulty: "Beginner", solved: "12k+", description: "One of the most common JavaScript errors. Occurs when you try to access a variable that hasn't been declared." },
@@ -35,112 +36,112 @@ export default function ErrorsListingPage() {
 
     return (
         <LayoutWrapper>
-            <div className="mb-12 md:mb-20 text-center max-w-3xl mx-auto">
-                <div className="inline-flex items-center space-x-2 px-3 py-1 bg-accent-blue/10 border border-accent-blue/20 rounded-full text-accent-blue text-xs font-bold mb-6">
-                    <Globe size={14} />
+            <div className="mb-10 md:mb-24 text-center max-w-4xl mx-auto px-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
+                <div className="inline-flex items-center space-x-2 px-3 py-1.5 md:px-4 md:py-2 bg-accent-blue/5 border-2 border-accent-blue/20 rounded-2xl text-accent-blue text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase mb-6 md:mb-8 shadow-xl">
+                    <Globe size={14} className="md:w-4 md:h-4" />
                     <span>Universal Solution Database</span>
                 </div>
-                <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">The Error Archive</h1>
-                <p className="text-xl text-text-secondary leading-relaxed">
+                <h1 className="text-4xl md:text-8xl font-black mb-6 md:mb-8 tracking-tighter leading-none">The Error Archive</h1>
+                <p className="text-base md:text-2xl text-text-secondary leading-relaxed font-medium">
                     Access thousands of verified solutions, technical breakdowns, and preventative guidelines
                     curated by senior software architects.
                 </p>
             </div>
 
             {/* Global Search Interface */}
-            <div className="max-w-4xl mx-auto mb-16 px-4">
+            <div className="max-w-5xl mx-auto mb-12 md:mb-20 px-2 md:px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
                 <div className="relative group">
-                    <div className="absolute inset-0 bg-accent-blue/20 blur-3xl opacity-0 group-focus-within:opacity-30 transition-opacity duration-700" />
-                    <div className="relative flex items-center bg-panel border-2 border-border group-focus-within:border-accent-blue/50 rounded-[2rem] p-2 pr-6 shadow-2xl transition-all h-20">
-                        <div className="w-16 h-16 flex items-center justify-center text-text-secondary group-focus-within:text-accent-blue transition-colors">
-                            <Search size={28} />
+                    <div className="absolute inset-0 bg-accent-blue/10 blur-[100px] opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000" />
+                    <div className="relative flex items-center bg-panel border-2 border-border group-focus-within:border-accent-blue/50 rounded-[1.5rem] md:rounded-[2.5rem] p-2 md:p-3 pr-4 md:pr-8 shadow-3xl transition-all h-20 md:h-24 hover:border-accent-blue/30 overflow-hidden">
+                        <div className="w-14 md:w-20 h-full flex items-center justify-center text-text-secondary group-focus-within:text-accent-blue transition-colors shrink-0">
+                            <Search size={24} className="md:w-8 md:h-8" />
                         </div>
                         <input
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search by error message, code, or technology..."
-                            className="flex-1 bg-transparent border-none focus:outline-none text-xl font-medium placeholder:text-text-secondary/50"
+                            placeholder="Search by error message..."
+                            className="flex-1 bg-transparent border-none focus:outline-none text-base md:text-2xl font-bold placeholder:text-text-secondary/30 min-w-0"
                         />
-                        <div className="hidden md:flex items-center space-x-2">
-                            <button className="p-3 bg-background border border-border rounded-xl text-text-secondary hover:text-text-primary transition-all">
-                                <Filter size={20} />
+                        <div className="hidden md:flex items-center space-x-3 shrink-0">
+                            <div className="text-[10px] font-black text-text-secondary/40 border border-border px-2 py-1 rounded-lg uppercase tracking-widest">
+                                CMD + K
+                            </div>
+                            <button className="p-4 bg-background border-2 border-border rounded-2xl text-text-secondary hover:text-accent-blue hover:border-accent-blue/20 transition-all active:scale-90">
+                                <Filter size={24} />
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
-                    <span className="text-xs font-mono font-bold text-text-secondary uppercase tracking-[0.2em] mr-2">Hot Topics:</span>
+                <div className="flex flex-wrap items-center justify-center gap-2 mt-6 md:mt-10 px-2 transition-all">
+                    <span className="text-[9px] md:text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] w-full md:w-auto text-center md:text-left mb-2 md:mb-0">Hot Topics:</span>
                     {['React Hooks', 'Python Async', 'Docker Compose', 'Tailwind Config', 'Next.js Routing'].map(tag => (
-                        <button key={tag} className="px-4 py-2 bg-panel border border-border rounded-xl text-xs font-bold text-text-secondary hover:text-accent-blue hover:border-accent-blue/20 transition-all flex items-center space-x-2 group">
-                            <Flame size={12} className="text-orange-500 group-hover:animate-pulse" />
-                            <span>{tag}</span>
+                        <button key={tag} className="px-4 md:px-6 py-2 md:py-2.5 bg-panel border-2 border-border hover:border-accent-blue/30 rounded-xl md:rounded-2xl text-[9px] md:text-xs font-black text-text-secondary hover:text-accent-blue transition-all active:scale-95 group uppercase tracking-widest">
+                            <span>#{tag}</span>
                         </button>
                     ))}
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-                {filteredErrors.map((error) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 px-2 md:px-4">
+                {filteredErrors.map((error, index) => (
                     <Link
                         key={error.id}
                         href={`/errors/detail`}
-                        className="group flex flex-col p-8 bg-panel/40 border border-border rounded-[2.5rem] hover:border-accent-blue/50 hover:bg-panel/60 transition-all transform hover:scale-[1.02] hover:shadow-2xl active:scale-95 duration-300"
+                        className="group flex flex-col p-6 md:p-10 bg-panel border-2 border-border/80 rounded-[2rem] md:rounded-[3rem] hover:border-accent-blue/50 hover:bg-panel shadow-xl transition-all duration-500 hover:-translate-y-1 active:scale-95 animate-in fade-in slide-in-from-bottom-12"
+                        style={{ animationDelay: `${index * 50}ms` }}
                     >
-                        <div className="flex items-start justify-between mb-6">
-                            <div className="px-3 py-1 bg-accent-blue/10 text-accent-blue text-[10px] font-black rounded-full border border-accent-blue/20 uppercase tracking-widest">
+                        <div className="flex items-start justify-between mb-6 md:mb-8">
+                            <div className="px-3 py-1 md:px-4 md:py-1.5 bg-accent-blue text-white text-[9px] md:text-[10px] font-black rounded-full shadow-lg shadow-accent-blue/20 uppercase tracking-widest">
                                 {error.language}
                             </div>
-                            <div className="flex items-center space-x-1 text-accent-yellow">
-                                <Star size={14} className="fill-current" />
-                                <span className="text-xs font-bold text-text-primary">4.9</span>
+                            <div className="flex items-center space-x-1.5 text-accent-yellow">
+                                <Star size={14} className="md:w-4 md:h-4 fill-current" />
+                                <span className="text-xs md:text-sm font-black text-text-primary">4.9</span>
                             </div>
                         </div>
 
-                        <h3 className="text-xl font-bold mb-4 leading-tight min-h-[3.5rem] group-hover:text-accent-blue transition-colors">
+                        <h3 className="text-xl md:text-2xl font-black mb-3 md:mb-4 leading-tight group-hover:text-accent-blue transition-colors tracking-tight line-clamp-2 md:min-h-[4rem]">
                             {error.title}
                         </h3>
 
-                        <p className="text-sm text-text-secondary mb-8 line-clamp-3 leading-relaxed">
+                        <p className="text-xs md:text-sm text-text-secondary mb-8 md:mb-10 line-clamp-2 md:line-clamp-3 leading-relaxed font-medium opacity-80">
                             {error.description}
                         </p>
 
-                        <div className="mt-auto pt-6 border-t border-border/50 flex items-center justify-between">
-                            <div className="flex items-center space-x-4">
+                        <div className="mt-auto pt-6 md:pt-8 border-t border-border/50 flex items-center justify-between">
+                            <div className="flex items-center space-x-4 md:space-x-6">
                                 <div className="flex flex-col">
-                                    <span className="text-[10px] font-mono text-text-secondary uppercase tracking-tighter">Difficulty</span>
-                                    <span className="text-xs font-bold">{error.difficulty}</span>
+                                    <span className="text-[8px] md:text-[10px] font-black text-text-secondary uppercase tracking-widest opacity-50">Lvl</span>
+                                    <span className="text-[10px] md:text-xs font-black uppercase text-text-primary">{error.difficulty}</span>
                                 </div>
                                 <div className="flex flex-col">
-                                    <span className="text-[10px] font-mono text-text-secondary uppercase tracking-tighter">Resolved</span>
-                                    <span className="text-xs font-bold text-accent-green">{error.solved}</span>
+                                    <span className="text-[8px] md:text-[10px] font-black text-text-secondary uppercase tracking-widest opacity-50">Fixes</span>
+                                    <span className="text-[10px] md:text-xs font-black text-accent-green uppercase tracking-tight">{error.solved}</span>
                                 </div>
                             </div>
 
-                            <div className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-text-secondary group-hover:bg-accent-blue group-hover:text-white group-hover:border-accent-blue transition-all">
-                                <ChevronRight size={20} className="group-hover:translate-x-0.5 transition-transform" />
+                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl border-2 border-border flex items-center justify-center text-text-secondary group-hover:bg-accent-blue group-hover:text-white group-hover:border-accent-blue transition-all duration-500 group-hover:shadow-lg group-hover:shadow-accent-blue/30 group-hover:rotate-6">
+                                <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-0.5 transition-transform" />
                             </div>
                         </div>
                     </Link>
                 ))}
-
-                {/* Placeholder for "Add Empty State" */}
-                {filteredErrors.length === 0 && (
-                    <div className="col-span-full py-20 flex flex-col items-center justify-center text-center opacity-30">
-                        <div className="w-20 h-20 bg-white/5 rounded-[2rem] flex items-center justify-center mb-8">
-                            <Terminal size={48} />
-                        </div>
-                        <h3 className="text-2xl font-bold">No results found for "{searchQuery}"</h3>
-                        <p className="mt-4">Try checking your spelling or search for a different error code.</p>
-                    </div>
-                )}
             </div>
 
-            <div className="mt-20 py-12 border-t border-border/50 text-center">
-                <h3 className="text-lg font-bold mb-6">Can't find your specific issue?</h3>
-                <Link href="/editor" className="inline-flex items-center space-x-3 px-8 py-4 bg-accent-blue text-white rounded-2xl font-black text-lg shadow-xl shadow-accent-blue/20 hover:scale-105 transition-all active:scale-95">
-                    <Zap size={24} fill="currentColor" />
+            {filteredErrors.length === 0 && (
+                <div className="py-20 flex flex-col items-center justify-center text-center opacity-30">
+                    <Terminal size={48} className="md:w-16 md:h-16 mb-6" />
+                    <h3 className="text-lg md:text-2xl font-black uppercase tracking-widest">No results found</h3>
+                    <p className="mt-2 text-sm">Try adjusting your search filters.</p>
+                </div>
+            )}
+
+            <div className="mt-16 md:mt-20 py-10 md:py-12 border-t border-border/50 text-center">
+                <h3 className="text-xl font-bold mb-6 md:mb-8 font-black uppercase tracking-tight">Can't find your issue?</h3>
+                <Link href="/editor" className="inline-flex items-center space-x-3 px-8 md:px-10 py-4 md:py-5 bg-accent-blue text-white rounded-2xl font-black text-base md:text-lg shadow-2xl shadow-accent-blue/20 active-scale uppercase tracking-widest">
+                    <Zap size={20} className="md:w-6 md:h-6" fill="currentColor" />
                     <span>Open Diagnostic Tool</span>
                 </Link>
             </div>

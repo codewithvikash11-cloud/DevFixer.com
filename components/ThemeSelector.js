@@ -1,114 +1,110 @@
 "use client";
 
-import React from 'react';
-import { X, Check, Palette, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
 import { useTheme } from '@/context/ThemeContext';
+import { X, Palette, Check, Sparkles } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const themes = [
-    {
-        id: 'dark',
-        name: 'VS Code Dark',
-        desc: 'Productivity focused environment',
-        colors: { bg: '#1E1E1E', panel: '#111827', accent: '#2563EB' }
-    },
-    {
-        id: 'tokyo-night',
-        name: 'Tokyo Night',
-        desc: 'Vibrant neon developer setup',
-        colors: { bg: '#1A1B26', panel: '#16161E', accent: '#7AA2F7' }
-    },
-    {
-        id: 'light',
-        name: 'VS Code Light',
-        desc: 'High clarity diurnal workspace',
-        colors: { bg: '#FFFFFF', panel: '#F3F4F6', accent: '#2563EB' }
-    },
-    {
-        id: 'solarized-light',
-        name: 'Solarized Light',
-        desc: 'Eye-strain reduction palette',
-        colors: { bg: '#FDF6E3', panel: '#EEE8D5', accent: '#859900' }
-    }
+    { id: 'dark', name: 'VS Code Dark', desc: 'The classic pro developer look' },
+    { id: 'tokyo-night', name: 'Tokyo Night', desc: 'Clean, modern, and high-contrast' },
+    { id: 'light', name: 'VS Code Light', desc: 'Pristine and readable for daytime' },
+    { id: 'solarized-light', name: 'Solarized Light', desc: 'Warm palettes for eye comfort' },
 ];
 
 const ThemeSelector = ({ onClose }) => {
-    const { theme: currentTheme, changeTheme } = useTheme();
+    const { theme: currentTheme, setTheme } = useTheme();
+    const [selectedTheme, setSelectedTheme] = useState(currentTheme);
+
+    const getThemeColors = (themeId) => {
+        switch (themeId) {
+            case 'dark': return { accent: '#2563eb', bg: '#0F0F12' };
+            case 'tokyo-night': return { accent: '#bb9af7', bg: '#1a1b26' };
+            case 'light': return { accent: '#005fb8', bg: '#ffffff' };
+            case 'solarized-light': return { accent: '#b58900', bg: '#fdf6e3' };
+            default: return { accent: '#2563eb', bg: '#0F0F12' };
+        }
+    };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
             <div
-                className="absolute inset-0 bg-black/60 backdrop-blur-md animate-in fade-in duration-300"
+                className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity animate-in fade-in duration-300"
                 onClick={onClose}
             />
 
-            <div className="relative bg-panel border-2 border-border/80 rounded-[2.5rem] w-full max-w-xl shadow-[0_32px_128px_rgba(0,0,0,0.8)] overflow-hidden animate-in fade-in zoom-in-95 duration-500 scale-100 ring-1 ring-white/10">
-                <div className="flex items-center justify-between px-10 py-8 border-b border-border/50">
-                    <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-accent-blue/10 rounded-xl text-accent-blue">
-                            <Palette size={24} />
+            <div className="relative w-full max-w-2xl bg-panel border-2 border-border rounded-[3rem] shadow-[0_0_100px_rgba(37,99,235,0.2)] overflow-hidden animate-in zoom-in-95 duration-500">
+                <div className="p-8 border-b border-border flex items-center justify-between">
+                    <div>
+                        <div className="flex items-center space-x-2 text-accent-blue mb-1 font-mono text-[10px] font-black tracking-[0.3em] uppercase">
+                            <Sparkles size={12} />
+                            <span>Appearance</span>
                         </div>
-                        <div>
-                            <h2 className="text-xl font-bold tracking-tight">System Interface</h2>
-                            <p className="text-xs text-text-secondary font-medium">Select your preferred visual engine</p>
-                        </div>
+                        <h2 className="text-3xl font-black tracking-tight">Select Theme</h2>
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-3 hover:bg-white/5 rounded-2xl text-text-secondary hover:text-white transition-all active:scale-90"
+                        className="p-3 hover:bg-white/5 rounded-2xl text-text-secondary hover:text-text-primary transition-all active:scale-90"
                     >
                         <X size={24} />
                     </button>
                 </div>
 
-                <div className="p-8 md:p-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {themes.map((theme) => (
-                        <button
-                            key={theme.id}
-                            onClick={() => changeTheme(theme.id)}
-                            className={`group text-left p-6 rounded-3xl border-2 transition-all relative overflow-hidden ${currentTheme === theme.id
-                                    ? 'border-accent-blue bg-accent-blue/10 shadow-[inner_0_0_20px_rgba(37,99,235,0.1)]'
-                                    : 'border-border/50 hover:border-accent-blue/30 bg-background/30'
-                                }`}
-                        >
-                            <div className="flex items-center justify-between mb-4 relative z-10">
-                                <span className="font-black text-sm tracking-tight">{theme.name}</span>
-                                {currentTheme === theme.id ? (
-                                    <div className="p-1.5 bg-accent-blue rounded-lg shadow-lg shadow-accent-blue/40">
-                                        <Check size={14} className="text-white" />
+                <div className="p-6 md:p-8">
+                    <div className="grid grid-cols-2 gap-3 md:gap-4">
+                        {themes.map((theme) => {
+                            const colors = getThemeColors(theme.id);
+                            return (
+                                <button
+                                    key={theme.id}
+                                    onClick={() => setSelectedTheme(theme.id)}
+                                    className={cn(
+                                        "relative flex flex-col items-center p-4 md:p-6 rounded-[2rem] border-2 transition-all duration-300 group active:scale-95",
+                                        selectedTheme === theme.id
+                                            ? "bg-accent-blue/5 border-accent-blue shadow-lg shadow-accent-blue/5"
+                                            : "bg-background border-border hover:border-accent-blue/20"
+                                    )}
+                                >
+                                    <div
+                                        className="w-6 h-6 md:w-5 md:h-5 rounded-lg flex items-center justify-center mb-3 shadow-sm transition-transform group-hover:scale-110 duration-500"
+                                        style={{ backgroundColor: colors.accent }}
+                                    >
+                                        <Palette className="text-white" size={14} />
                                     </div>
-                                ) : (
-                                    <div className="w-2 h-2 rounded-full bg-border group-hover:bg-accent-blue/50 transition-colors" />
-                                )}
-                            </div>
+                                    <span className={cn(
+                                        "text-[10px] md:text-[11px] font-black uppercase tracking-widest text-center",
+                                        selectedTheme === theme.id ? "text-accent-blue" : "text-text-primary"
+                                    )}>
+                                        {theme.name}
+                                    </span>
 
-                            <div className="flex space-x-1.5 h-16 rounded-2xl overflow-hidden mb-4 border border-white/5 relative z-10">
-                                <div className="flex-1" style={{ backgroundColor: theme.colors.bg }} />
-                                <div className="flex-1" style={{ backgroundColor: theme.colors.panel }} />
-                                <div className="flex-1" style={{ backgroundColor: theme.colors.accent }} />
-                            </div>
+                                    {selectedTheme === theme.id && (
+                                        <div className="absolute top-2 right-2 w-5 h-5 bg-accent-blue text-white rounded-full flex items-center justify-center shadow-md animate-in zoom-in duration-300">
+                                            <Check size={10} />
+                                        </div>
+                                    )}
+                                </button>
+                            );
+                        })}
+                    </div>
 
-                            <div className="flex items-center space-x-2 relative z-10">
-                                <Sparkles size={12} className={currentTheme === theme.id ? 'text-accent-blue' : 'text-text-secondary opacity-50'} />
-                                <p className={`text-[10px] font-bold uppercase tracking-widest ${currentTheme === theme.id ? 'text-accent-blue' : 'text-text-secondary opacity-60'
-                                    }`}>
-                                    {theme.desc}
-                                </p>
-                            </div>
-
-                            {/* Hover highlight effect */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-accent-blue/0 via-transparent to-accent-blue/0 group-hover:from-accent-blue/5 transition-all duration-700 pointer-events-none" />
+                    <div className="flex flex-col sm:flex-row gap-3 mt-8">
+                        <button
+                            onClick={onClose}
+                            className="flex-1 px-6 py-4 rounded-xl font-black text-text-secondary hover:text-text-primary hover:bg-white/5 transition-all uppercase tracking-widest text-[10px]"
+                        >
+                            Cancel
                         </button>
-                    ))}
-                </div>
-
-                <div className="px-10 py-8 bg-background/50 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <p className="text-[10px] font-mono text-text-secondary uppercase tracking-widest">Global scaling: 100%</p>
-                    <button
-                        onClick={onClose}
-                        className="w-full md:w-auto bg-accent-blue hover:bg-accent-blue/90 text-white px-10 py-3.5 rounded-2xl text-sm font-black transition-all shadow-2xl shadow-accent-blue/20 active:scale-95"
-                    >
-                        Apply Changes
-                    </button>
+                        <button
+                            onClick={() => {
+                                setTheme(selectedTheme);
+                                onClose();
+                            }}
+                            className="flex-1 px-6 py-4 bg-accent-blue text-white rounded-xl font-black shadow-lg shadow-accent-blue/20 hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest text-[10px]"
+                        >
+                            Apply Theme
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

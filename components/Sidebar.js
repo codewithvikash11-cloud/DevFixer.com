@@ -31,23 +31,27 @@ const Sidebar = ({ isOpen, onClose }) => {
                 "lg:top-16"
             )}
         >
-            {/* Mobile Header in Sidebar */}
-            <div className="flex items-center justify-between w-full px-6 mb-8 lg:hidden">
+            {/* Sidebar Header for Mobile */}
+            <div className="lg:hidden flex items-center justify-between p-4 border-b border-border mb-4">
                 <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 rounded bg-accent-blue flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-accent-blue/20">
-                        D
+                    <div className="w-8 h-8 rounded-lg overflow-hidden bg-accent-blue/10 border border-accent-blue/20">
+                        <img src="/logo.png" alt="DevFixer" className="w-full h-full object-contain" />
                     </div>
-                    <span className="font-bold text-xl tracking-tight">DevFixer</span>
+                    <span className="font-black text-lg tracking-tighter">DevFixer</span>
                 </div>
-                <button
-                    onClick={onClose}
-                    className="p-2 text-text-secondary hover:text-text-primary hover:bg-white/5 rounded-lg transition-colors"
-                >
-                    <X size={24} />
+                <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-lg active:scale-90 transition-all">
+                    <X size={20} />
                 </button>
             </div>
 
-            <div className="flex flex-col items-center w-full px-4 lg:px-0 space-y-2 lg:space-y-4">
+            {/* Sidebar Header for Desktop (Logo only) */}
+            <div className="hidden lg:flex items-center justify-center h-16 mb-4">
+                <div className="w-10 h-10 rounded-xl overflow-hidden bg-accent-blue/10 border border-accent-blue/20 flex items-center justify-center p-1.5 group-hover:scale-110 transition-transform">
+                    <img src="/logo.png" alt="D" className="w-full h-full object-contain" />
+                </div>
+            </div>
+
+            <div className="space-y-2 lg:space-y-4">
                 {navItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
@@ -57,34 +61,31 @@ const Sidebar = ({ isOpen, onClose }) => {
                             key={item.href}
                             href={item.href}
                             onClick={onClose}
-                            className={cn(
-                                "flex items-center lg:justify-center w-full p-3 rounded-xl transition-all group relative",
-                                isActive
-                                    ? "text-accent-blue bg-accent-blue/10 shadow-inner"
-                                    : "text-text-secondary hover:text-text-primary hover:bg-white/5"
-                            )}
+                            className={`flex items-center lg:justify-center px-4 py-3 lg:px-0 lg:w-12 lg:h-12 mx-auto rounded-xl transition-all duration-300 relative group/item active:scale-95 ${isActive
+                                ? 'bg-accent-blue text-white shadow-lg shadow-accent-blue/20'
+                                : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
+                                }`}
                         >
-                            <Icon size={24} className="shrink-0" />
-                            <span className="ml-4 lg:hidden font-medium">{item.label}</span>
+                            <Icon size={22} className={`${!isActive && 'group-hover/item:scale-110 transition-transform'}`} />
+                            <span className="ml-3 lg:hidden font-bold tracking-tight">{item.label}</span>
 
-                            {/* Desktop Tooltip */}
-                            <span className="hidden lg:block absolute left-16 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-panel border border-border rounded-lg text-xs font-semibold text-text-primary opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none shadow-xl transform translate-x-2 group-hover:translate-x-0 z-50 whitespace-nowrap">
-                                {item.label}
-                            </span>
-
-                            {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-accent-blue rounded-r-full hidden lg:block" />}
+                            {/* Tooltip for desktop */}
+                            <div className="hidden lg:block absolute left-14 px-3 py-1.5 bg-panel border border-border rounded-lg text-xs font-black tracking-widest text-white whitespace-nowrap opacity-0 translate-x-[-10px] group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all pointer-events-none z-50 shadow-2xl">
+                                {item.label.toUpperCase()}
+                            </div>
                         </Link>
                     );
                 })}
             </div>
 
-            <div className="mt-auto w-full px-4 lg:px-0 lg:hidden">
-                <div className="p-4 bg-background/50 border border-border rounded-xl">
-                    <p className="text-[10px] font-mono uppercase tracking-widest text-text-secondary mb-1">Status</p>
-                    <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
-                        <span className="text-xs font-semibold">Production Ready</span>
-                    </div>
+            <div className="mt-auto p-4 lg:p-0 lg:pb-6 flex flex-col items-center">
+                <div className="hidden lg:block w-8 h-8 rounded-lg bg-accent-green/10 border border-accent-green/20 flex items-center justify-center text-accent-green mb-4">
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse" />
+                </div>
+
+                <div className="lg:hidden p-4 bg-accent-blue/5 border border-accent-blue/10 rounded-2xl w-full">
+                    <p className="text-[10px] font-mono text-accent-blue font-black tracking-[0.2em] mb-1">SYSTEM_STATUS</p>
+                    <p className="text-xs font-bold text-text-primary uppercase">Production Ready v1.0</p>
                 </div>
             </div>
         </aside>

@@ -48,38 +48,50 @@ export default function Home() {
     return (
         <LayoutWrapper>
             {/* Hero Section */}
-            <section className="relative py-12 md:py-20 overflow-hidden">
-                <div className="absolute top-0 right-0 -z-10 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-accent-blue/10 blur-[80px] md:blur-[120px] rounded-full"></div>
-                <div className="absolute bottom-0 left-0 -z-10 w-[200px] md:w-[300px] h-[200px] md:h-[300px] bg-accent-purple/10 blur-[70px] md:blur-[100px] rounded-full"></div>
+            <section className="relative pt-10 md:pt-20 pb-20 md:pb-32 overflow-hidden">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 blur-[120px] pointer-events-none">
+                    <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-blue rounded-full animate-pulse" />
+                    <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-purple rounded-full animate-pulse delay-700" />
+                </div>
 
-                <div className="max-w-4xl mx-auto text-center mb-12 md:mb-16">
-                    <div className="inline-flex items-center space-x-2 px-3 py-1 bg-accent-blue/10 border border-accent-blue/20 rounded-full text-accent-blue text-xs font-semibold mb-6 animate-pulse">
-                        <Zap size={14} className="fill-current" />
-                        <span>Production-Grade Platform</span>
+                <div className="text-center max-w-5xl mx-auto px-4">
+                    <div className="inline-flex items-center space-x-2 px-4 py-2 bg-panel border-2 border-border/50 rounded-2xl mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-xl">
+                        <Zap size={16} className="text-accent-blue animate-bounce" />
+                        <span className="text-[10px] md:text-sm font-black tracking-[0.2em] uppercase text-text-secondary">Production-Grade Platform</span>
                     </div>
-                    <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
-                        Fix errors <span className="text-accent-blue bg-clip-text text-transparent bg-gradient-to-r from-accent-blue to-accent-purple">faster</span> than ever.
+
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.05] tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
+                        Fix errors <span className="text-accent-blue relative inline-block">faster<div className="absolute -bottom-2 left-0 w-full h-2 bg-accent-blue/20 -rotate-2 rounded-full" /></span> <br className="hidden sm:block" /> than ever.
                     </h1>
-                    <p className="text-lg md:text-xl text-text-secondary mb-10 max-w-2xl mx-auto leading-relaxed px-4">
+
+                    <p className="text-lg md:text-2xl text-text-secondary mb-12 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-10 duration-1000">
                         The ultimate developer workspace for debugging. Search error codes,
                         paste stack traces, and get production-quality solutions.
                     </p>
-                    <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 px-4">
-                        <Link href="/editor" className="w-full sm:w-auto px-8 py-4 bg-accent-blue hover:bg-accent-blue/90 text-white rounded-xl font-bold transition-all shadow-lg shadow-accent-blue/20 flex items-center justify-center space-x-2 active:scale-95">
-                            <Terminal size={20} />
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
+                        <Link
+                            href="/editor"
+                            className="w-full sm:w-auto px-10 py-5 bg-accent-blue text-white rounded-[1.5rem] font-black text-lg shadow-2xl shadow-accent-blue/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-3 group"
+                        >
+                            <Terminal size={24} />
                             <span>Open Editor</span>
+                            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                         </Link>
-                        <Link href="/errors" className="w-full sm:w-auto px-8 py-4 bg-panel border border-border hover:border-accent-blue/50 rounded-xl font-bold transition-all flex items-center justify-center space-x-2 active:scale-95">
-                            <Search size={20} />
+                        <Link
+                            href="/errors"
+                            className="w-full sm:w-auto px-10 py-5 bg-panel border-2 border-border/80 hover:border-accent-blue/50 text-text-primary rounded-[1.5rem] font-black text-lg hover:bg-accent-blue/5 transition-all flex items-center justify-center space-x-3 active:scale-95"
+                        >
+                            <Search size={22} />
                             <span>Browse Fixes</span>
                         </Link>
                     </div>
                 </div>
-
-                <div className="max-w-4xl mx-auto px-4 transform hover:scale-[1.01] transition-transform duration-500 hidden md:block">
-                    <CodeBlock code={homeCode} language="javascript" fileName="solution_helper.js" />
-                </div>
             </section>
+
+            <div className="max-w-4xl mx-auto px-4 transform hover:scale-[1.01] transition-transform duration-500 hidden md:block">
+                <CodeBlock code={homeCode} language="javascript" fileName="solution_helper.js" />
+            </div>
 
             {/* Languages Grid */}
             <section className="py-16 md:py-24">

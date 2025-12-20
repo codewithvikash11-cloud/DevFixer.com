@@ -39,54 +39,67 @@ export default function EditorPage() {
                     <Code size={16} />
                     <span className="uppercase tracking-widest">Workspace</span>
                 </div>
-                <h1 className="text-3xl md:text-5xl font-bold mb-4">Error Analyze Tool</h1>
-                <p className="text-text-secondary max-w-2xl text-lg leading-relaxed">
+                <h1 className="text-3xl md:text-5xl font-black mb-4">Error Analyze Tool</h1>
+                <p className="text-text-secondary max-w-2xl text-base md:text-lg leading-relaxed">
                     Paste your stack traces, console logs, or buggy code snippets below. Our compiler-grade
                     analysis engine will identify the root cause instantly.
                 </p>
             </div>
 
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 mb-12">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 md:gap-8 mb-12 px-2 md:px-0">
                 {/* Input area */}
                 <div className="flex flex-col h-[500px] md:h-[600px] group">
-                    <div className="flex items-center justify-between px-6 py-3 bg-panel border border-border border-b-0 rounded-t-2xl group-focus-within:border-accent-blue/50 transition-colors">
-                        <div className="flex items-center space-x-3">
-                            <div className="flex space-x-1.5">
-                                <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
-                                <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
-                                <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
+                    <div className="flex-1 min-h-[400px] md:min-h-0 bg-[#1E1E1E] flex flex-col group/editor transition-all duration-500 overflow-hidden rounded-3xl border border-border">
+                        <div className="flex items-center justify-between px-5 py-4 bg-[#2D2D2D]/50 border-b border-white/5">
+                            <div className="flex items-center space-x-2">
+                                <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]" />
+                                <div className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
+                                <div className="w-2.5 h-2.5 rounded-full bg-[#27C93F]" />
+                                <span className="ml-3 text-[10px] font-mono text-white/40 tracking-[0.2em] uppercase">input.terminal</span>
                             </div>
-                            <span className="text-xs font-mono text-text-secondary font-semibold">input.terminal</span>
+                            <button
+                                onClick={handleClear}
+                                className="p-2 hover:bg-white/10 rounded-xl text-white/40 hover:text-white transition-all active:scale-90"
+                            >
+                                <Trash2 size={14} />
+                            </button>
                         </div>
-                        <button
-                            onClick={handleClear}
-                            className="p-1.5 hover:bg-white/5 rounded-lg transition-colors text-text-secondary hover:text-red-400 active:scale-95"
-                            title="Clear all"
-                        >
-                            <Trash2 size={16} />
-                        </button>
+                        <div className="flex-1 relative font-mono text-sm md:text-base selection:bg-accent-blue/40">
+                            <div className="absolute left-0 top-0 bottom-0 w-10 md:w-12 bg-[#1E1E1E] border-r border-white/5 flex flex-col items-center py-4 text-white/10 select-none z-10 text-[10px] md:text-xs">
+                                {Array.from({ length: 15 }).map((_, i) => (
+                                    <div key={i} className="leading-relaxed md:leading-6 h-6">{i + 1}</div>
+                                ))}
+                            </div>
+                            <textarea
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                                placeholder="// Paste your error message or stack trace here..."
+                                className="w-full h-full bg-transparent text-[#9CDCFE] p-4 pl-14 md:pl-16 focus:outline-none resize-none leading-relaxed md:leading-6 placeholder:text-white/10 min-h-[400px]"
+                                spellCheck="false"
+                            />
+                            {content.trim() && (
+                                <div className="absolute bottom-4 right-4 animate-in fade-in zoom-in duration-300">
+                                    <div className="px-3 py-1 bg-accent-blue/10 border border-accent-blue/20 rounded-lg text-[9px] text-accent-blue font-black tracking-widest uppercase backdrop-blur-md">
+                                        UTF-8 • CRLF
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    <textarea
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        placeholder="// Paste your error message here..."
-                        className="flex-1 w-full bg-background/50 border border-border p-6 font-mono text-sm focus:outline-none focus:border-accent-blue/50 transition-all resize-none rounded-b-2xl group-focus-within:shadow-[0_0_30px_rgba(37,99,235,0.05)] border-opacity-60"
-                        spellCheck="false"
-                    />
-                    <div className="mt-6">
+                    <div className="mt-4 md:mt-6">
                         <button
                             onClick={handleAnalyze}
                             disabled={isAnalyzing || !content.trim()}
-                            className="w-full bg-accent-blue hover:bg-accent-blue/90 disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl flex items-center justify-center space-x-3 transition-all shadow-xl shadow-accent-blue/10 active:scale-[0.98]"
+                            className="w-full bg-accent-blue hover:bg-accent-blue/90 disabled:opacity-30 disabled:cursor-not-allowed text-white font-black py-4 md:py-5 rounded-2xl flex items-center justify-center space-x-3 transition-all shadow-xl shadow-accent-blue/10 active:scale-[0.98] uppercase tracking-widest text-xs"
                         >
                             {isAnalyzing ? (
                                 <>
-                                    <div className="w-5 h-5 border-[3px] border-white/30 border-t-white rounded-full animate-spin"></div>
+                                    <div className="w-4 h-4 border-[3px] border-white/30 border-t-white rounded-full animate-spin"></div>
                                     <span>Compiling Analysis...</span>
                                 </>
                             ) : (
                                 <>
-                                    <Play size={20} className="fill-current" />
+                                    <Play size={18} className="fill-current" />
                                     <span>Run Diagnostic</span>
                                 </>
                             )}
@@ -95,54 +108,54 @@ export default function EditorPage() {
                 </div>
 
                 {/* Output area */}
-                <div className="flex flex-col h-[500px] md:h-[600px] mt-8 lg:mt-0">
-                    <div className="h-full bg-panel/50 backdrop-blur-sm border border-border rounded-2xl flex flex-col overflow-hidden shadow-2xl shadow-black/20">
-                        <div className="px-6 py-4 border-b border-border flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                                <Zap size={18} className="text-accent-yellow fill-accent-yellow/20" />
-                                <h2 className="font-bold text-sm uppercase tracking-wider">Analysis Engine v1.0</h2>
+                <div className="flex flex-col h-[500px] md:h-[600px] mt-4 lg:mt-0">
+                    <div className="h-full bg-panel/30 backdrop-blur-md border border-border rounded-3xl flex flex-col overflow-hidden shadow-2xl">
+                        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-panel/20">
+                            <div className="flex items-center space-x-3">
+                                <Zap size={16} className="text-accent-yellow fill-accent-yellow/20" />
+                                <h2 className="font-black text-[10px] uppercase tracking-[0.2em] text-text-secondary">Analysis Engine v1.0</h2>
                             </div>
                             {result && (
-                                <span className="text-[10px] font-mono bg-accent-green/10 text-accent-green px-2 py-0.5 rounded-full border border-accent-green/20">Success</span>
+                                <span className="text-[9px] font-black bg-accent-green/10 text-accent-green px-3 py-1 rounded-full border border-accent-green/20 tracking-widest uppercase">Success</span>
                             )}
                         </div>
 
-                        <div className="flex-1 overflow-y-auto p-6 md:p-8">
+                        <div className="flex-1 overflow-y-auto p-6 md:p-10">
                             {!result && !isAnalyzing && (
-                                <div className="h-full flex flex-col items-center justify-center text-center">
-                                    <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-text-secondary mb-6 mb-4 animate-pulse">
+                                <div className="h-full flex flex-col items-center justify-center text-center opacity-40">
+                                    <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center text-text-secondary mb-6 group-hover:scale-110 transition-transform">
                                         <Search size={32} />
                                     </div>
-                                    <h3 className="font-bold text-lg mb-2">System Idle</h3>
-                                    <p className="text-sm text-text-secondary max-w-[240px] leading-relaxed">
-                                        Input your code or error logs in the terminal to begin debugging process.
+                                    <h3 className="font-black text-xl mb-3 tracking-tight">System Idle</h3>
+                                    <p className="text-sm text-text-secondary max-w-[280px] leading-relaxed font-medium">
+                                        Input your code or error logs in the terminal to begin the debugging process.
                                     </p>
                                 </div>
                             )}
 
                             {isAnalyzing && (
-                                <div className="space-y-8">
+                                <div className="space-y-8 animate-pulse">
                                     <div className="flex items-center space-x-4">
-                                        <div className="w-10 h-10 bg-white/5 rounded-full animate-pulse" />
-                                        <div className="h-4 bg-white/5 rounded animate-pulse w-3/4" />
+                                        <div className="w-12 h-12 bg-white/5 rounded-2xl" />
+                                        <div className="h-4 bg-white/5 rounded-full w-3/4" />
                                     </div>
-                                    <div className="space-y-3">
-                                        <div className="h-3 bg-white/5 rounded animate-pulse w-full" />
-                                        <div className="h-3 bg-white/5 rounded animate-pulse w-[95%]" />
-                                        <div className="h-3 bg-white/5 rounded animate-pulse w-[80%]" />
+                                    <div className="space-y-4">
+                                        <div className="h-3 bg-white/5 rounded-full w-full" />
+                                        <div className="h-3 bg-white/5 rounded-full w-[95%]" />
+                                        <div className="h-3 bg-white/5 rounded-full w-[80%]" />
                                     </div>
-                                    <div className="h-48 bg-white/5 rounded-xl animate-pulse" />
+                                    <div className="h-48 bg-white/5 rounded-3xl" />
                                 </div>
                             )}
 
                             {result && (
-                                <div className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out">
-                                    <div className="p-5 bg-red-500/5 border border-red-500/20 rounded-xl">
-                                        <div className="flex items-center space-x-2 text-red-400 text-xs font-mono mb-3">
+                                <div className="space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out">
+                                    <div className="p-6 bg-red-500/5 border border-red-500/10 rounded-2xl">
+                                        <div className="flex items-center space-x-2 text-red-400 text-[10px] font-black mb-4 uppercase tracking-widest">
                                             <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                                             <span>CRITICAL_ERROR_DETECTED</span>
                                         </div>
-                                        <p className="font-mono text-base md:text-lg font-bold text-text-primary break-words">
+                                        <p className="font-mono text-base md:text-lg font-bold text-text-primary break-words leading-relaxed overflow-hidden">
                                             {result.error}
                                         </p>
                                     </div>

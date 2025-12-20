@@ -49,26 +49,62 @@
         border-color: var(--border);
     }
 
+    /* Hover only for devices that support it */
+    @media (hover: hover) {
+        * {
+            transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    }
+
     html {
         scroll-behavior: smooth;
         -webkit-tap-highlight-color: transparent;
+        font-size: 16px;
     }
 
     body {
         background-color: var(--background);
         color: var(--text-primary);
         font-family: var(--font-inter), 'Inter', sans-serif;
-        transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         overflow-x: hidden;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        /* Mobile-first text size */
+        @apply text-base;
     }
 
     pre,
     code,
     .font-mono {
         font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        letter-spacing: -0.025em;
+        @apply font-black leading-tight;
+    }
+
+    /* Responsive Headings */
+    h1 {
+        @apply text-4xl sm:text-5xl md:text-7xl lg:text-8xl;
+    }
+
+    h2 {
+        @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+    }
+
+    h3 {
+        @apply text-2xl sm:text-3xl md:text-4xl;
     }
 }
 
@@ -124,6 +160,12 @@
     .text-accent-yellow {
         color: var(--accent-yellow);
     }
+
+    /* Force horizontal scroll for code containers on mobile */
+    .code-container {
+        @apply overflow-x-auto max-w-full;
+        scrollbar-width: thin;
+    }
 }
 
 /* Scrollbar styling inspired by VS Code */
@@ -141,13 +183,20 @@
     border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
+@media (hover: hover) {
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-secondary);
+    }
 }
 
 /* Custom Utilities */
 @layer utilities {
     .shadow-3xl {
         box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Touch friendly active state */
+    .active-scale {
+        @apply active:scale-95 transition-transform;
     }
 }
