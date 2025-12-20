@@ -8,21 +8,30 @@ export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('dark');
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem('devfixer-theme');
-        if (savedTheme) {
-            setTheme(savedTheme);
-            document.documentElement.setAttribute('data-theme', savedTheme);
+        const savedTheme = localStorage.getItem('devfixer-theme') || 'dark';
+        setTheme(savedTheme);
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
     }, []);
 
-    const changeTheme = (newTheme) => {
+    const toggleTheme = () => {
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
         setTheme(newTheme);
         localStorage.setItem('devfixer-theme', newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
+        if (newTheme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, changeTheme }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
         </ThemeContext.Provider>
     );

@@ -4,12 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Code, Hash, Edit3, BookOpen, Settings, X } from 'lucide-react';
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-function cn(...inputs) {
-    return twMerge(clsx(inputs));
-}
+import { cn } from '@/lib/utils';
+import Logo from './Logo';
 
 const Sidebar = ({ isOpen, onClose }) => {
     const pathname = usePathname();
@@ -33,12 +29,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         >
             {/* Sidebar Header for Mobile */}
             <div className="lg:hidden flex items-center justify-between p-4 border-b border-border mb-4">
-                <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 rounded-lg overflow-hidden bg-accent-blue/10 border border-accent-blue/20">
-                        <img src="/logo.png" alt="DevFixer" className="w-full h-full object-contain" />
-                    </div>
-                    <span className="font-black text-lg tracking-tighter">DevFixer</span>
-                </div>
+                <Logo />
                 <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-lg active:scale-90 transition-all">
                     <X size={20} />
                 </button>
@@ -46,9 +37,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
             {/* Sidebar Header for Desktop (Logo only) */}
             <div className="hidden lg:flex items-center justify-center h-16 mb-4">
-                <div className="w-10 h-10 rounded-xl overflow-hidden bg-accent-blue/10 border border-accent-blue/20 flex items-center justify-center p-1.5 group-hover:scale-110 transition-transform">
-                    <img src="/logo.png" alt="D" className="w-full h-full object-contain" />
-                </div>
+                <Logo iconOnly />
             </div>
 
             <div className="space-y-2 lg:space-y-4">

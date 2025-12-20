@@ -1,47 +1,27 @@
 @import "tailwindcss";
 
 :root {
-    --background: #1E1E1E;
-    --panel: #111827;
-    --text-primary: #E5E7EB;
-    --text-secondary: #9CA3AF;
-    --accent-blue: #2563EB;
-    --accent-yellow: #FACC15;
-    --accent-purple: #BB9AF7;
-    --accent-green: #22C55E;
-    --border: #374151;
-}
-
-[data-theme='tokyo-night'] {
-    --background: #1A1B26;
-    --panel: #16161E;
-    --text-primary: #C0CAF5;
-    --text-secondary: #787C99;
-    --accent-blue: #7AA2F7;
-    --accent-purple: #BB9AF7;
-    --border: #24283B;
-}
-
-[data-theme='light'] {
     --background: #FFFFFF;
     --panel: #F9FAFB;
     --text-primary: #111827;
     --text-secondary: #6B7280;
-    --accent-blue: #2563EB;
-    --accent-purple: #7C3AED;
-    --accent-green: #16A34A;
+    --accent-blue: #3B82F6;
+    --accent-yellow: #EAB308;
+    --accent-purple: #8B5CF6;
+    --accent-green: #10B981;
     --border: #E5E7EB;
 }
 
-[data-theme='solarized-light'] {
-    --background: #FDF6E3;
-    --panel: #EEE8D5;
-    --text-primary: #586E75;
-    --text-secondary: #657B83;
-    --accent-blue: #268BD2;
-    --accent-purple: #D33682;
-    --accent-green: #859900;
-    --border: #93A1A1;
+[data-theme='dark'] {
+    --background: #0F0F12;
+    --panel: #16161E;
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --accent-blue: #3B82F6;
+    --accent-yellow: #FACC15;
+    --accent-purple: #BB9AF7;
+    --accent-green: #22C55E;
+    --border: #24283B;
 }
 
 @layer base {
@@ -75,7 +55,8 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         /* Mobile-first text size */
-        @apply text-base;
+        font-size: 1rem;
+        line-height: 1.5rem;
     }
 
     pre,
@@ -91,20 +72,80 @@
     h5,
     h6 {
         letter-spacing: -0.025em;
-        @apply font-black leading-tight;
+        font-weight: 900;
+        line-height: 1.25;
     }
 
     /* Responsive Headings */
     h1 {
-        @apply text-4xl sm:text-5xl md:text-7xl lg:text-8xl;
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+    }
+
+    @media (min-width: 640px) {
+        h1 {
+            font-size: 3rem;
+            line-height: 1;
+        }
+    }
+
+    @media (min-width: 768px) {
+        h1 {
+            font-size: 4.5rem;
+            line-height: 1;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        h1 {
+            font-size: 6rem;
+            line-height: 1;
+        }
     }
 
     h2 {
-        @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    @media (min-width: 640px) {
+        h2 {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+        }
+    }
+
+    @media (min-width: 768px) {
+        h2 {
+            font-size: 3rem;
+            line-height: 1;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        h2 {
+            font-size: 3.75rem;
+            line-height: 1;
+        }
     }
 
     h3 {
-        @apply text-2xl sm:text-3xl md:text-4xl;
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+    @media (min-width: 640px) {
+        h3 {
+            font-size: 1.875rem;
+            line-height: 2.25rem;
+        }
+    }
+
+    @media (min-width: 768px) {
+        h3 {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+        }
     }
 }
 
@@ -163,7 +204,8 @@
 
     /* Force horizontal scroll for code containers on mobile */
     .code-container {
-        @apply overflow-x-auto max-w-full;
+        overflow-x: auto;
+        max-width: 100%;
         scrollbar-width: thin;
     }
 }
@@ -197,6 +239,12 @@
 
     /* Touch friendly active state */
     .active-scale {
-        @apply active:scale-95 transition-transform;
+        transition-property: transform;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+    }
+
+    .active-scale:active {
+        transform: scale(0.95);
     }
 }

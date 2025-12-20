@@ -1,81 +1,75 @@
-import React, { useState } from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Search, Palette, Menu, X, Command } from 'lucide-react';
-import ThemeSelector from './ThemeSelector';
+import { usePathname, useRouter } from 'next/navigation';
+import { Search, Menu, X, Command } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import ThemeToggle from './ThemeToggle';
+import Logo from './Logo';
 
 const Navbar = ({ onMenuClick, isSidebarOpen }) => {
-    const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
+    const pathname = usePathname();
     const router = useRouter();
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const handleSearch = (e) => {
-        if (e.key === 'Enter' && searchQuery.trim()) {
-            router.push(`/errors?q=${encodeURIComponent(searchQuery.trim())}`);
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            router.push(`/errors?q=${encodeURIComponent(searchQuery)}`);
         }
     };
 
     return (
-        <>
-            <nav className="fixed top-0 left-0 right-0 h-16 bg-panel/80 backdrop-blur-md border-b border-border flex items-center justify-between px-4 md:px-6 z-50 transition-all duration-300">
-                <div className="flex items-center space-x-4">
+        <nav className={cn(
+            "fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-500",
+            isScrolled
+                ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-lg"
+                : "bg-transparent border-b border-transparent"
+        )}>
+            <div className="h-full px-4 md:px-8 flex items-center justify-between gap-4 max-w-[1920px] mx-auto">
+                <div className="flex items-center gap-4 lg:gap-8">
                     <button
                         onClick={onMenuClick}
-                        className="lg:hidden p-2 text-text-secondary hover:text-text-primary hover:bg-white/5 rounded-lg transition-all active:scale-90"
-                        aria-label="Toggle Menu"
+                        className="p-2 lg:hidden hover:bg-white/5 rounded-xl text-text-secondary transition-all active:scale-90"
                     >
                         {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
 
-                    <Link href="/" className="flex items-center space-x-3 group">
-                        <div className="relative w-10 h-10 overflow-hidden rounded-xl bg-accent-blue/10 border border-accent-blue/20 group-hover:scale-105 transition-transform active:scale-95">
-                            <img src="/logo.png" alt="DevFixer Logo" className="w-full h-full object-contain" />
-                        </div>
-                        <span className="font-black text-xl tracking-tighter hidden sm:block bg-gradient-to-r from-text-primary to-text-secondary bg-clip-text text-transparent">DevFixer</span>
+                    <Link href="/">
+                        <Logo />
                     </Link>
                 </div>
 
-                <div className="flex-1 max-w-xl px-4 md:px-8">
-                    <div className="relative group hidden sm:block">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-accent-blue transition-colors" size={16} />
+                <div className="flex-1 max-w-2xl px-2">
+                    <form onSubmit={handleSearch} className="relative group">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary transition-colors group-focus-within:text-accent-blue" size={18} />
                         <input
                             type="text"
-                            placeholder="Search errors... (⌘K)"
+                            placeholder="Search for errors, fixes, or languages..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            onKeyDown={handleSearch}
-                            className="w-full bg-background/50 border border-border rounded-xl py-1.5 pl-10 pr-4 text-sm focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue/30 transition-all border-opacity-50 hover:border-accent-blue/30"
+                            className="w-full h-11 md:h-12 pl-12 pr-12 bg-panel border-2 border-border rounded-2xl text-sm transition-all focus:border-accent-blue focus:ring-4 focus:ring-accent-blue/10 outline-none text-text-primary placeholder:text-text-secondary/50 group-hover:border-border/60"
                         />
-                        <div className="absolute right-2 top-1/2 -translate-y-1/2 hidden md:flex items-center space-x-1 px-1.5 py-0.5 bg-panel border border-border rounded text-[10px] text-text-secondary font-mono">
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-1.5 px-2 py-1 rounded-lg bg-background border border-border text-[10px] font-black text-text-secondary uppercase select-none">
                             <Command size={10} />
                             <span>K</span>
                         </div>
-                    </div>
-                    {/* Small screen search icon */}
-                    <button
-                        onClick={() => router.push('/errors')}
-                        className="sm:hidden p-2 text-text-secondary hover:text-text-primary ml-auto flex active:scale-90 transition-all"
-                    >
-                        <Search size={20} />
-                    </button>
+                    </form>
                 </div>
 
-                <div className="flex items-center space-x-2 md:space-x-4">
-                    <button
-                        onClick={() => setIsThemeModalOpen(true)}
-                        className="p-2 hover:bg-white/5 rounded-xl text-text-secondary hover:text-text-primary transition-all flex items-center space-x-2 active:scale-90"
-                        title="Choose a theme"
-                    >
-                        <Palette size={20} />
-                        <span className="hidden md:block text-sm font-bold tracking-tight">Theme</span>
-                    </button>
+                <div className="flex items-center gap-3 md:gap-4">
+                    <ThemeToggle />
                 </div>
-            </nav>
-
-            {isThemeModalOpen && (
-                <ThemeSelector onClose={() => setIsThemeModalOpen(false)} />
-            )}
-        </>
+            </div>
+        </nav>
     );
 };
 
