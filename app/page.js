@@ -5,13 +5,18 @@ import LayoutWrapper from '@/components/LayoutWrapper';
 import CodeBlock from '@/components/CodeBlock';
 import {
     Zap,
+    Check,
+    FileJson,
+    Play,
+    Code2,
+    Atom,
+    Server,
     Search,
     ArrowRight,
     Terminal,
     Shield,
     Bug,
-    Settings,
-    Check
+    Settings
 } from 'lucide-react';
 import Link from 'next/link';
 import { LANGUAGES } from '@/lib/languages';
@@ -135,6 +140,110 @@ export default function Home() {
                             </div>
                         </Link>
                     ))}
+                </div>
+            </section>
+
+            {/* Interactive Code / Editor Showcase */}
+            <section className="py-24 bg-background relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="flex flex-col lg:flex-row items-center gap-16">
+
+                        {/* Left Column: Code Editor Preview */}
+                        <div className="w-full lg:w-1/2 order-2 lg:order-1">
+                            <div className="rounded-2xl overflow-hidden border border-border bg-[#1e1e1e] shadow-2xl shadow-black/50 group hover:border-accent-blue/30 transition-all duration-500">
+                                {/* Editor Top Bar */}
+                                <div className="flex items-center justify-between px-4 py-3 bg-[#252526] border-b border-white/5">
+                                    <div className="flex items-center space-x-2">
+                                        <div className="flex space-x-1.5">
+                                            <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                                            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                                            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                                        </div>
+                                        <div className="h-4 w-px bg-white/10 mx-2" />
+                                        <div className="flex items-center space-x-2 text-xs text-text-secondary bg-[#1e1e1e] px-3 py-1 rounded-md border border-white/5">
+                                            <FileJson size={12} className="text-yellow-400" />
+                                            <span>solution.js</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center space-x-3">
+                                        <div className="text-[10px] text-text-secondary">JavaScript</div>
+                                        <Play size={14} className="text-green-500 fill-green-500/20" />
+                                    </div>
+                                </div>
+
+                                {/* Editor Content */}
+                                <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto">
+                                    <div className="flex">
+                                        <div className="text-gray-600 select-none text-right pr-4 border-r border-white/5 mr-4 space-y-1">
+                                            {Array.from({ length: 9 }).map((_, i) => <div key={i}>{i + 1}</div>)}
+                                        </div>
+                                        <div className="text-gray-300 space-y-1 whitespace-pre">
+                                            <div><span className="text-purple-400">function</span> <span className="text-blue-400">fixNullError</span>(data) {'{'}</div>
+                                            <div>  <span className="text-gray-500">// Check if data exists before accessing</span></div>
+                                            <div>  <span className="text-purple-400">if</span> (!data || !data.user) {'{'}</div>
+                                            <div>    <span className="text-purple-400">throw</span> <span className="text-purple-400">new</span> <span className="text-yellow-400">Error</span>(<span className="text-green-400">'Invalid user data'</span>);</div>
+                                            <div>  {'}'}</div>
+                                            <br />
+                                            <div>  <span className="text-purple-400">return</span> data.user.id;</div>
+                                            <div>{'}'}</div>
+                                            <br />
+                                            <div><span className="text-gray-500">// Run analysis...</span></div>
+                                        </div>
+                                    </div>
+
+                                    {/* Output Terminal */}
+                                    <div className="mt-6 pt-4 border-t border-white/10">
+                                        <div className="flex items-center space-x-2 text-xs text-gray-400 mb-2">
+                                            <Terminal size={12} />
+                                            <span>Console Output</span>
+                                        </div>
+                                        <div className="font-mono text-xs text-green-400">
+                                            {'>'} Data processed successfully.<br />
+                                            {'>'} User ID: 49201 extracted.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Column: Content & Actions */}
+                        <div className="w-full lg:w-1/2 order-1 lg:order-2 space-y-8">
+                            <div className="inline-flex items-center space-x-2 px-3 py-1 bg-accent-purple/10 text-accent-purple rounded-full text-xs font-bold uppercase tracking-wider">
+                                <Zap size={12} />
+                                <span>Code. Debug. Fix.</span>
+                            </div>
+
+                            <h2 className="text-4xl md:text-5xl font-black leading-tight">
+                                Write, Test, and <br />
+                                <span className="text-white">Understand Code.</span>
+                            </h2>
+
+                            <p className="text-lg text-text-secondary leading-relaxed max-w-lg">
+                                DevFixer isn't just a library—it's an interactive workspace.
+                                Visualize execution, catch errors in real-time, and master the logic behind the fix.
+                            </p>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {[
+                                    { label: 'JavaScript Errors', icon: FileJson, color: 'text-yellow-400', bg: 'bg-yellow-400/10' },
+                                    { label: 'Python Errors', icon: Code2, color: 'text-blue-400', bg: 'bg-blue-400/10' },
+                                    { label: 'React Issues', icon: Atom, color: 'text-cyan-400', bg: 'bg-cyan-400/10' },
+                                    { label: 'API Failures', icon: Server, color: 'text-green-400', bg: 'bg-green-400/10' }
+                                ].map((item, i) => (
+                                    <button key={i} className="flex items-center space-x-3 p-4 bg-panel border border-border rounded-xl hover:bg-white/5 hover:border-accent-blue/30 hover:scale-[1.02] transition-all text-left group">
+                                        <div className={`p-2 rounded-lg ${item.bg}`}>
+                                            <item.icon size={20} className={item.color} />
+                                        </div>
+                                        <span className="font-bold text-sm group-hover:text-accent-blue transition-colors">
+                                            {item.label}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
