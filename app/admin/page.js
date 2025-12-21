@@ -41,8 +41,8 @@ export default function AdminPanel() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Protection: admin123
-        if (accessCode === 'admin123') {
+        // Protection: @Vikash22
+        if (accessCode === '@Vikash22') {
             setIsAuthenticated(true);
         } else {
             alert('Invalid Access Code');

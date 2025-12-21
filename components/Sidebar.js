@@ -16,7 +16,6 @@ const Sidebar = ({ isOpen, onClose }) => {
         { icon: Code, label: 'Languages', href: '/languages' },
         { icon: Edit3, label: 'Editor', href: '/editor' },
         { icon: BookOpen, label: 'Blogs', href: '/blogs' },
-        { icon: Settings, label: 'Admin', href: '/admin' },
     ];
 
     return (
