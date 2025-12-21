@@ -205,12 +205,43 @@
         color: var(--accent-yellow);
     }
 
-    /* Force horizontal scroll for code containers on mobile */
-    .code-container {
-        overflow-x: auto;
-        max-width: 100%;
-        scrollbar-width: thin;
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-20px) rotate(5deg);
+        }
     }
+
+    @keyframes float-delayed {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-15px) rotate(-5deg);
+        }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+        animation: float-delayed 7s ease-in-out infinite;
+    }
+
+    .animate-spin-slow {
+        animation: spin 12s linear infinite;
+    }
+
 }
 
 /* Scrollbar styling inspired by VS Code */

@@ -4,32 +4,23 @@ import React from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import CodeBlock from '@/components/CodeBlock';
 import {
-    FileJson,
-    Code2,
-    Layout,
-    Palette,
-    Server,
-    Atom,
-    Database,
-    GitBranch,
-    Terminal,
     Zap,
-    Shield,
     Search,
-    ArrowRight
+    ArrowRight,
+    Terminal,
+    Shield,
+    Bug,
+    Settings,
+    Check
 } from 'lucide-react';
 import Link from 'next/link';
+import { LANGUAGES } from '@/lib/languages';
 
-const languages = [
-    { name: 'JavaScript', icon: FileJson, color: 'text-yellow-400', slug: 'javascript' },
-    { name: 'Python', icon: Code2, color: 'text-blue-400', slug: 'python' },
-    { name: 'HTML', icon: Layout, color: 'text-orange-400', slug: 'html' },
-    { name: 'CSS', icon: Palette, color: 'text-blue-500', slug: 'css' },
-    { name: 'Node.js', icon: Server, color: 'text-green-500', slug: 'nodejs' },
-    { name: 'React', icon: Atom, color: 'text-cyan-400', slug: 'react' },
-    { name: 'SQL', icon: Database, color: 'text-indigo-400', slug: 'sql' },
-    { name: 'Git', icon: GitBranch, color: 'text-orange-600', slug: 'git' },
-];
+// Use the central LANGUAGES configuration
+const languages = LANGUAGES;
+
+// Select a subset of iconic languages for the hero background
+const HERO_ICONS = LANGUAGES.filter(l => ['js', 'python', 'react', 'docker', 'css', 'ts', 'java', 'git'].includes(l.id));
 
 const homeCode = `// Debugging a common error
 function solveIssue(error) {
@@ -49,13 +40,41 @@ export default function Home() {
         <LayoutWrapper>
             {/* Hero Section */}
             <section className="relative pt-10 md:pt-20 pb-20 md:pb-32 overflow-hidden max-w-[100vw]">
+                {/* Background Effects */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 blur-[120px] pointer-events-none">
                     <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-blue rounded-full animate-pulse" />
                     <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-purple rounded-full animate-pulse delay-700" />
                 </div>
 
-                <div className="text-center max-w-5xl mx-auto px-4">
-                    <div className="inline-flex items-center space-x-2 px-4 py-2 bg-panel border-2 border-border/50 rounded-2xl mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-xl">
+                {/* Floating Icons Background */}
+                <div className="absolute inset-0 -z-5 overflow-hidden pointer-events-none select-none">
+                    {HERO_ICONS.map((lang, i) => {
+                        const Icon = lang.icon;
+                        // Pre-calculated positions to span the screen roughly
+                        const left = [10, 85, 15, 80, 5, 90, 20, 75][i];
+                        const top = [20, 15, 60, 50, 85, 80, 10, 10][i];
+                        const delay = i * 1.5;
+                        const duration = 6 + i;
+
+                        return (
+                            <div
+                                key={lang.id}
+                                className={`absolute opacity-[0.07] dark:opacity-[0.15] ${i % 2 === 0 ? 'animate-float' : 'animate-float-delayed'}`}
+                                style={{
+                                    left: `${left}%`,
+                                    top: `${top}%`,
+                                    animationDelay: `${delay}s`,
+                                    animationDuration: `${duration}s`
+                                }}
+                            >
+                                <Icon size={64} className={`md:w-32 md:h-32 ${lang.color}`} />
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div className="text-center max-w-5xl mx-auto px-4 relative z-10">
+                    <div className="inline-flex items-center space-x-2 px-4 py-2 bg-panel border-2 border-border/50 rounded-2xl mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-xl backdrop-blur-sm">
                         <Zap size={16} className="text-accent-blue animate-bounce" />
                         <span className="text-[10px] md:text-sm font-black tracking-[0.2em] uppercase text-text-secondary">Production-Grade Platform</span>
                     </div>
@@ -100,7 +119,7 @@ export default function Home() {
                     <p className="text-text-secondary">Comprehensive guides for the modern tech stack</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4">
-                    {languages.map((lang) => (
+                    {LANGUAGES.slice(0, 8).map((lang) => (
                         <Link
                             key={lang.slug}
                             href={`/languages/${lang.slug}`}
