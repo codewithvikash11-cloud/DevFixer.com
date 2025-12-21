@@ -24,17 +24,9 @@ const Sidebar = ({ isOpen, onClose }) => {
             className={cn(
                 "fixed left-0 top-0 bottom-0 w-64 lg:w-16 bg-panel border-r border-border flex flex-col items-center py-4 z-40 transition-transform duration-300 transform",
                 isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
-                "lg:top-16"
+                "top-16 lg:top-16"
             )}
         >
-            {/* Sidebar Header for Mobile */}
-            <div className="lg:hidden flex items-center justify-between p-4 border-b border-border mb-4">
-                <Logo />
-                <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-lg active:scale-90 transition-all">
-                    <X size={20} />
-                </button>
-            </div>
-
             {/* Sidebar Header for Desktop (Logo only) */}
             <div className="hidden lg:flex items-center justify-center h-16 mb-4">
                 <Logo iconOnly />
