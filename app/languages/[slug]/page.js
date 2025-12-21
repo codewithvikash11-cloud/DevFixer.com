@@ -1,7 +1,5 @@
-"use client";
-
 import React from 'react';
-import { useParams, notFound } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { getLanguageBySlug } from '@/lib/languages';
 import {
@@ -17,8 +15,27 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function LanguagePage() {
-    const { slug } = useParams();
+export async function generateMetadata(props) {
+    const params = await props.params;
+    const language = getLanguageBySlug(params.slug);
+
+    if (!language) return { title: 'Language Not Found' };
+
+    return {
+        title: `${language.name} Error Solutions & Debugging`,
+        description: `Fix common ${language.name} errors instantly. Browse our comprehensive database of ${language.name} debugging guides and performance tips.`,
+        keywords: [`${language.name} errors`, `fix ${language.name}`, `${language.name} debugging`, 'programming solutions'],
+        openGraph: {
+            title: `${language.name} Error Solutions | DevFixer`,
+            description: `Master ${language.name} debugging with DevFixer.`,
+            type: 'website',
+        }
+    };
+}
+
+export default async function LanguagePage(props) {
+    const params = await props.params;
+    const { slug } = params;
     const language = getLanguageBySlug(slug);
 
     if (!language) {
@@ -47,8 +64,34 @@ export default function LanguagePage() {
         }
     ];
 
+    // Schema.org Structured Data
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: `${language.name} Error Solutions`,
+        description: `A collection of debugging guides and error fixes for ${language.name}.`,
+        publisher: {
+            '@type': 'Organization',
+            name: 'DevFixer'
+        },
+        about: {
+            '@type': 'ComputerLanguage',
+            name: language.name
+        },
+        hasPart: posts.map(post => ({
+            '@type': 'TechArticle',
+            headline: post.title,
+            description: post.excerpt,
+            difficulty: post.difficulty
+        }))
+    };
+
     return (
         <LayoutWrapper>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="mb-8 md:mb-12">
                 <Link href="/languages" className="inline-flex items-center space-x-2 text-text-secondary hover:text-accent-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest">
                     <ArrowLeft size={16} />

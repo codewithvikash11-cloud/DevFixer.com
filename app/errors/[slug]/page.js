@@ -1,9 +1,7 @@
-"use client";
-
 import React from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import CodeBlock from '@/components/CodeBlock';
+import BackButton from '@/components/BackButton'; // Import the client component
 import {
     AlertCircle,
     CheckCircle2,
@@ -12,19 +10,37 @@ import {
     MessageSquare,
     ThumbsUp,
     ChevronRight,
-    ArrowLeft,
     Zap,
     ShieldCheck,
     Award
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function ErrorDetailPage() {
-    const { slug } = useParams();
-    const router = useRouter();
+export async function generateMetadata(props) {
+    const params = await props.params;
+    const error = getErrorData(params.slug);
 
-    const mockError = {
+    if (!error) return { title: 'Error Not Found' };
+
+    return {
+        title: `${error.title} – Causes & Fix`,
+        description: `Learn how to fix ${error.title} in ${error.language}. ${error.summary}`,
+        keywords: [error.title, `${error.language} error`, 'debugging', 'fix code'],
+        openGraph: {
+            title: `${error.title} – Causes & Fix | DevFixer`,
+            description: error.summary,
+            type: 'article',
+            publishedTime: new Date().toISOString(),
+            authors: [error.author.name],
+        }
+    };
+}
+
+// Mock data fetcher - In real app this would fetch from DB
+function getErrorData(slug) {
+    return {
         title: "TypeError: Cannot read property 'map' of undefined",
+        slug: slug || "typeerror-map-undefined",
         summary: "This error occurs when you attempt to iterate over a variable that is supposed to be an array but is instead undefined.",
         language: "JavaScript",
         difficulty: "Beginner",
@@ -44,17 +60,57 @@ export default function ErrorDetailPage() {
             "TypeError: data.push is not a function"
         ]
     };
+}
+
+export default async function ErrorDetailPage(props) {
+    const params = await props.params;
+    const { slug } = params;
+    // router is not available in Server Components
+    const mockError = getErrorData(slug);
+
+    // Schema.org Structured Data
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'TechArticle',
+        headline: mockError.title,
+        description: mockError.summary,
+        articleBody: mockError.explanation,
+        author: {
+            '@type': 'Person',
+            name: mockError.author.name
+        },
+        publisher: {
+            '@type': 'Organization',
+            name: 'DevFixer',
+            logo: {
+                '@type': 'ImageObject',
+                url: 'https://devfixer.com/logo.png'
+            }
+        },
+        mainEntity: {
+            '@type': 'HowTo',
+            name: `How to fix ${mockError.title} `,
+            step: [
+                {
+                    '@type': 'HowToStep',
+                    text: 'Identify if the variable is undefined before calling .map()'
+                },
+                {
+                    '@type': 'HowToStep',
+                    text: 'Use optional chaining (?.) or provide a default empty array (|| [])'
+                }
+            ]
+        }
+    };
 
     return (
         <LayoutWrapper>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <button
-                    onClick={() => router.back()}
-                    className="flex items-center space-x-2 text-text-secondary hover:text-accent-blue transition-colors group px-3 py-1.5 hover:bg-white/5 rounded-xl border border-transparent hover:border-border w-fit"
-                >
-                    <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-black text-[10px] uppercase tracking-widest">Return to Archive</span>
-                </button>
+                <BackButton label="Return to Archive" />
                 <div className="flex items-center space-x-2">
                     <div className="w-6 h-6 rounded-lg bg-accent-blue/10 flex items-center justify-center text-accent-blue shadow-lg shadow-accent-blue/10">
                         <ShieldCheck size={14} />
@@ -194,7 +250,7 @@ export default function ErrorDetailPage() {
                                     href="#"
                                     className="flex items-start space-x-4 group py-1"
                                 >
-                                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-background border border-border flex items-center justify-center text-text-secondary group-hover:text-accent-blue group-hover:border-accent-blue/30 transition-all shrink-0">
+                                    <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-background border border-border flex items-center justify-center text-text-secondary group-hover:text-text-blue group-hover:border-accent-blue/30 transition-all shrink-0">
                                         <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                                     </div>
                                     <span className="text-xs md:text-sm font-black uppercase tracking-tight text-text-secondary group-hover:text-text-primary transition-colors leading-snug">

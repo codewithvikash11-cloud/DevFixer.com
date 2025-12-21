@@ -41,8 +41,38 @@ const result = solveIssue({ type: 'ReferenceError' });
 console.log(result);`;
 
 export default function Home() {
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'WebSite',
+                name: 'DevFixer',
+                url: 'https://devfixer.com',
+                potentialAction: {
+                    '@type': 'SearchAction',
+                    target: 'https://devfixer.com/search?q={search_term_string}',
+                    'query-input': 'required name=search_term_string'
+                }
+            },
+            {
+                '@type': 'Organization',
+                name: 'DevFixer',
+                url: 'https://devfixer.com',
+                logo: 'https://devfixer.com/logo.png',
+                sameAs: [
+                    'https://twitter.com/devfixer',
+                    'https://github.com/devfixer'
+                ]
+            }
+        ]
+    };
+
     return (
         <LayoutWrapper>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Hero Section */}
             <section className="relative pt-10 md:pt-20 pb-20 md:pb-32 overflow-hidden max-w-[100vw]">
                 {/* Background Effects */}
