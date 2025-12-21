@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+import Footer from './Footer';
 
 const LayoutWrapper = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -29,20 +30,7 @@ const LayoutWrapper = ({ children }) => {
                 </div>
             </main>
 
-            <footer className="lg:pl-16 py-8 border-t border-border bg-panel text-center text-text-secondary text-sm">
-                <div className="flex flex-col items-center justify-center space-y-4">
-                    <div className="flex items-center space-x-2">
-                        <div className="w-6 h-6 rounded bg-accent-blue flex items-center justify-center text-white font-bold text-sm">
-                            D
-                        </div>
-                        <span className="font-bold text-lg tracking-tight">DevFixer</span>
-                    </div>
-                    <div>
-                        <p>&copy; {new Date().getFullYear()} DevFixer. All rights reserved.</p>
-                        <p className="mt-2 text-xs opacity-50 font-mono">Precision coding support for modern developers.</p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 };
