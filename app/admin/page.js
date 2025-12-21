@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import CodeBlock from '@/components/CodeBlock';
 import { cn } from '@/lib/utils';
+import { LANGUAGES } from '@/lib/languages';
 
 export default function AdminPanel() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -177,10 +178,9 @@ export default function AdminPanel() {
                                                 onChange={handleChange}
                                                 className="w-full bg-background/50 border-2 border-border px-12 md:px-14 py-4 md:py-5 rounded-xl md:rounded-2xl focus:outline-none focus:border-accent-blue/50 transition-all font-black appearance-none cursor-pointer text-xs md:text-sm uppercase tracking-widest"
                                             >
-                                                <option value="javascript">JavaScript v8</option>
-                                                <option value="python">Python 3.10+</option>
-                                                <option value="react">React Engine</option>
-                                                <option value="node">Node.js Runtime</option>
+                                                {LANGUAGES.map(lang => (
+                                                    <option key={lang.id} value={lang.slug}>{lang.name}</option>
+                                                ))}
                                             </select>
                                         </div>
                                     </div>

@@ -48,7 +48,7 @@ export default function Home() {
     return (
         <LayoutWrapper>
             {/* Hero Section */}
-            <section className="relative pt-10 md:pt-20 pb-20 md:pb-32 overflow-hidden">
+            <section className="relative pt-10 md:pt-20 pb-20 md:pb-32 overflow-hidden max-w-[100vw]">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 blur-[120px] pointer-events-none">
                     <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-blue rounded-full animate-pulse" />
                     <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-purple rounded-full animate-pulse delay-700" />
@@ -99,7 +99,7 @@ export default function Home() {
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">Supported Technologies</h2>
                     <p className="text-text-secondary">Comprehensive guides for the modern tech stack</p>
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4">
                     {languages.map((lang) => (
                         <Link
                             key={lang.slug}

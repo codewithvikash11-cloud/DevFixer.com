@@ -1,73 +1,72 @@
 "use client";
 
 import React from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, notFound } from 'next/navigation';
 import LayoutWrapper from '@/components/LayoutWrapper';
+import { getLanguageBySlug } from '@/lib/languages';
 import {
-    FileJson,
-    Code2,
-    Layout,
-    Palette,
-    Server,
-    Atom,
-    Database,
-    GitBranch,
-    ChevronRight,
+    ArrowLeft,
     TrendingUp,
     Clock,
     Zap,
     ArrowRight,
-    Star
+    Star,
+    ChevronRight,
+    Search,
+    AlertCircle
 } from 'lucide-react';
 import Link from 'next/link';
 
-const langInfo = {
-    javascript: { name: 'JavaScript', icon: FileJson, color: 'text-yellow-400', desc: 'The language of the web. From frontend interactivity to backend scalability.', level: 'Universal' },
-    python: { name: 'Python', icon: Code2, color: 'text-blue-400', desc: 'Powerful, clear, and readable. Used for data science, AI, and web backend.', level: 'Multi-purpose' },
-    html: { name: 'HTML', icon: Layout, color: 'text-orange-400', desc: 'The backbone of every website. Structure and semantics.', level: 'Foundation' },
-    css: { name: 'CSS', icon: Palette, color: 'text-blue-500', desc: 'Bringing style and beauty to the web. Layouts, animations, and typography.', level: 'Presentation' },
-    nodejs: { name: 'Node.js', icon: Server, color: 'text-green-500', desc: 'JavaScript on the server. Efficient, event-driven, and lightning fast.', level: 'Backend' },
-    react: { name: 'React', icon: Atom, color: 'text-cyan-400', desc: 'A declarative, efficient, and flexible JavaScript library for building user interfaces.', level: 'Frontend' },
-    sql: { name: 'SQL', icon: Database, color: 'text-indigo-400', desc: 'Structured Query Language. The standard for managing relational databases.', level: 'Storage' },
-    git: { name: 'Git', icon: GitBranch, color: 'text-orange-600', desc: 'Distributed version control system. Essential for collaboration.', level: 'VCS' },
-};
-
-const mockErrors = [
-    { id: 1, title: "Uncaught ReferenceError: x is not defined", difficulty: "Beginner", solved: "12k+" },
-    { id: 2, title: "TypeError: Cannot set property 'id' of undefined", difficulty: "Intermediate", solved: "45k+" },
-    { id: 3, title: "SyntaxError: Unexpected token 'export'", difficulty: "Intermediate", solved: "8k+" },
-    { id: 4, title: "RangeError: Maximum call stack size exceeded", difficulty: "Advanced", solved: "2k+" },
-    { id: 5, title: "Promise { <pending> } - Why my async function is not returning data?", difficulty: "Beginner", solved: "30k+" },
-    { id: 6, title: "CORS policy: No 'Access-Control-Allow-Origin' header", difficulty: "Advanced", solved: "100k+" },
-];
-
 export default function LanguagePage() {
     const { slug } = useParams();
-    const info = langInfo[slug] || { name: slug, icon: Code2, color: 'text-text-primary', desc: 'Documentation and errors for this technology.', level: 'Community' };
-    const Icon = info.icon;
+    const language = getLanguageBySlug(slug);
+
+    if (!language) {
+        notFound();
+    }
+
+    const Icon = language.icon;
+
+    // Mock posts for demonstration
+    const posts = [
+        {
+            id: 1,
+            title: `Common ${language.name} Errors: detailed guide`,
+            excerpt: `Learn how to debug the most frequent issues in ${language.name} environments.`,
+            views: '2.4k',
+            difficulty: 'Beginner',
+            solved: '12k+'
+        },
+        {
+            id: 2,
+            title: `Best practices for ${language.name} performance`,
+            excerpt: "Optimization techniques widely used in production.",
+            views: '1.8k',
+            difficulty: 'Intermediate',
+            solved: '8k+'
+        }
+    ];
 
     return (
         <LayoutWrapper>
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 md:gap-8 mb-10 md:mb-16">
-                <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 md:gap-8">
-                    <div className={`p-5 md:p-6 bg-panel border-2 border-border/50 rounded-2xl md:rounded-[2rem] ${info.color} shadow-xl shadow-black/10`}>
-                        <Icon size={40} className="md:w-16 md:h-16" />
-                    </div>
-                    <div>
-                        <div className="flex items-center justify-center sm:justify-start space-x-2 text-text-secondary font-mono text-[9px] md:text-xs mb-2">
-                            <Star size={10} className="text-accent-yellow fill-accent-yellow" />
-                            <span className="uppercase tracking-widest">{info.level} Stack</span>
+            <div className="mb-8 md:mb-12">
+                <Link href="/languages" className="inline-flex items-center space-x-2 text-text-secondary hover:text-accent-blue transition-colors mb-6 text-sm font-bold uppercase tracking-widest">
+                    <ArrowLeft size={16} />
+                    <span>Back to Languages</span>
+                </Link>
+
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 md:gap-8 mb-10 md:mb-16">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 md:gap-8">
+                        <div className={`p-5 md:p-6 bg-panel border-2 border-border/50 rounded-2xl md:rounded-[2rem] ${language.bg} border-white/5 shadow-xl shadow-black/10`}>
+                            <Icon size={40} className={`md:w-16 md:h-16 ${language.color}`} />
                         </div>
-                        <h1 className="text-3xl md:text-6xl font-black mb-3 tracking-tight">{info.name}</h1>
-                        <p className="text-text-secondary max-w-xl text-base md:text-lg leading-relaxed font-medium">{info.desc}</p>
-                    </div>
-                </div>
-                <div className="flex items-center justify-center sm:justify-start">
-                    <div className="px-5 py-3 bg-panel/30 border-2 border-border/50 rounded-xl flex items-center space-x-3 shadow-sm">
-                        <TrendingUp size={16} className="text-accent-green" />
                         <div>
-                            <p className="text-[9px] font-black uppercase tracking-widest text-text-secondary opacity-60">Active Fixes</p>
-                            <p className="text-xs font-black tracking-tight">852 this week</p>
+                            <div className="flex items-center justify-center sm:justify-start space-x-2 text-text-secondary font-mono text-[9px] md:text-xs mb-2">
+                                <Star size={10} className="text-accent-yellow fill-accent-yellow" />
+                                <span className="uppercase tracking-widest">{language.category} Stack</span>
+                            </div>
+                            <h1 className="text-3xl md:text-6xl font-black mb-3 tracking-tight">{language.name}</h1>
+                            <p className="text-text-secondary max-w-xl text-base md:text-lg leading-relaxed font-medium">{language.description}</p>
                         </div>
                     </div>
                 </div>
@@ -77,47 +76,47 @@ export default function LanguagePage() {
                 <div className="lg:col-span-8 space-y-4 md:space-y-6">
                     <div className="flex items-center justify-between mb-6 md:mb-8">
                         <h2 className="text-xl md:text-2xl font-black flex items-center space-x-3 uppercase tracking-tight">
-                            <span className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-accent-blue/10 flex items-center justify-center text-accent-blue font-mono text-xs md:text-sm">01</span>
-                            <span>Common {info.name} Pitfalls</span>
+                            <AlertCircle size={24} className="text-accent-blue" />
+                            <span>Latest Solutions</span>
                         </h2>
-                        <div className="h-px flex-1 bg-border/50 ml-6 hidden md:block"></div>
                     </div>
 
-                    <div className="space-y-3 md:space-y-4">
-                        {mockErrors.map((error) => (
-                            <Link
-                                key={error.id}
-                                href={`/errors/detail`}
-                                className="group flex items-center justify-between p-4 md:p-6 bg-panel/20 border border-border/50 rounded-2xl hover:border-accent-blue/40 hover:bg-panel/40 transition-all active:scale-95 duration-200"
-                            >
-                                <div className="flex items-center space-x-4 md:space-x-5 flex-1 min-w-0">
-                                    <div className="hidden sm:flex w-12 h-12 bg-background border border-border rounded-xl items-center justify-center text-text-secondary group-hover:text-accent-blue group-hover:border-accent-blue/20 transition-all shadow-inner shrink-0">
-                                        <Clock size={24} />
-                                    </div>
-                                    <div className="min-w-0 flex-1">
-                                        <h3 className="text-base md:text-lg font-black group-hover:text-accent-blue transition-colors mb-1 truncate">{error.title}</h3>
-                                        <div className="flex items-center space-x-3 md:space-x-4">
-                                            <span className="text-[9px] font-black px-2 py-0.5 bg-border/50 rounded uppercase tracking-widest text-text-secondary">{error.difficulty}</span>
-                                            <span className="text-[10px] md:text-xs text-accent-green font-black flex items-center space-x-1 uppercase tracking-widest">
-                                                <Zap size={10} className="fill-current" />
-                                                <span>{error.solved} Solved</span>
-                                            </span>
+                    {posts.length > 0 ? (
+                        <div className="space-y-3 md:space-y-4">
+                            {posts.map((post) => (
+                                <Link
+                                    key={post.id}
+                                    href={`/errors/${language.slug}-error-${post.id}`}
+                                    className="group flex items-center justify-between p-4 md:p-6 bg-panel/20 border border-border/50 rounded-2xl hover:border-accent-blue/40 hover:bg-panel/40 transition-all active:scale-95 duration-200"
+                                >
+                                    <div className="flex items-center space-x-4 md:space-x-5 flex-1 min-w-0">
+                                        <div className="hidden sm:flex w-12 h-12 bg-background border border-border rounded-xl items-center justify-center text-text-secondary group-hover:text-accent-blue group-hover:border-accent-blue/20 transition-all shadow-inner shrink-0">
+                                            <Clock size={24} />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <h3 className="text-base md:text-lg font-black group-hover:text-accent-blue transition-colors mb-1 truncate">{post.title}</h3>
+                                            <div className="flex items-center space-x-3 md:space-x-4">
+                                                <span className="text-[9px] font-black px-2 py-0.5 bg-border/50 rounded uppercase tracking-widest text-text-secondary">{post.difficulty}</span>
+                                                <span className="text-[10px] md:text-xs text-accent-green font-black flex items-center space-x-1 uppercase tracking-widest">
+                                                    <Zap size={10} className="fill-current" />
+                                                    <span>{post.solved} Solved</span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl border border-border flex items-center justify-center text-text-secondary group-hover:bg-accent-blue group-hover:text-white group-hover:border-accent-blue transition-all shrink-0 ml-4">
-                                    <ChevronRight size={18} />
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-
-                    <div className="pt-6 md:pt-8">
-                        <button className="w-full py-4 border-2 border-dashed border-border hover:border-accent-blue/50 hover:bg-accent-blue/5 rounded-2xl text-[10px] md:text-xs text-text-secondary hover:text-accent-blue font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center space-x-2 group">
-                            <span>Load More Documentation</span>
-                            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                        </button>
-                    </div>
+                                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl border border-border flex items-center justify-center text-text-secondary group-hover:bg-accent-blue group-hover:text-white group-hover:border-accent-blue transition-all shrink-0 ml-4">
+                                        <ChevronRight size={18} />
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="p-12 text-center border-2 border-dashed border-border rounded-3xl bg-panel/30">
+                            <Search size={48} className="mx-auto mb-4 text-text-secondary/20" />
+                            <h3 className="text-xl font-bold mb-2">No solutions yet</h3>
+                            <p className="text-text-secondary">Be the first to contribute a fix for {language.name}.</p>
+                        </div>
+                    )}
                 </div>
 
                 <div className="lg:col-span-4 space-y-6 md:space-y-8 mt-6 lg:mt-0">
@@ -148,14 +147,17 @@ export default function LanguagePage() {
                         </button>
                     </div>
 
-                    <div className="p-6 md:p-8 bg-panel/30 border border-border/50 rounded-3xl">
-                        <h3 className="font-black text-lg md:text-xl mb-6 uppercase tracking-tight">Explore Ecosystem</h3>
-                        <div className="flex flex-wrap gap-2">
-                            {['Module Federation', 'ES Build', 'TypeScript 5.0', 'Turbopack', 'Vite', 'SWC'].map((tag) => (
-                                <span key={tag} className="px-3 py-2 bg-background border border-border rounded-xl text-[10px] font-black tracking-widest text-text-secondary hover:text-accent-blue hover:border-accent-blue/30 transition-all cursor-pointer uppercase">
-                                    {tag}
-                                </span>
-                            ))}
+                    <div className="space-y-6">
+                        <div className="p-6 bg-gradient-to-br from-panel to-background border border-border rounded-2xl">
+                            <h3 className="text-lg font-bold mb-4 uppercase tracking-widest text-text-secondary text-[10px]">Documentation</h3>
+                            <Link href="#" className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors group">
+                                <span className="font-medium text-sm">Official Docs</span>
+                                <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </Link>
+                            <Link href="#" className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors group">
+                                <span className="font-medium text-sm">Community Forum</span>
+                                <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </Link>
                         </div>
                     </div>
                 </div>
