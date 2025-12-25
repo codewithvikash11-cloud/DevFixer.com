@@ -10,6 +10,12 @@ import {
     Search,
     ArrowRight
 } from 'lucide-react';
+import FeaturesSection from '@/components/home/FeaturesSection';
+import HowItWorksSection from '@/components/home/HowItWorksSection';
+import RecentPostsSection from '@/components/home/RecentPostsSection';
+import LanguagesSection from '@/components/home/LanguagesSection';
+import TrustSection from '@/components/home/TrustSection';
+import CTASection from '@/components/home/CTASection';
 
 export default function Home() {
     // Generate structured data for SEO
@@ -102,6 +108,24 @@ export default function Home() {
                     </div>
                 </div>
             </section>
+
+            {/* FEATURES SECTION: Why DevFixer? */}
+            <FeaturesSection />
+
+            {/* HOW IT WORKS: 3-Step Flow */}
+            <HowItWorksSection />
+
+            {/* RECENT POSTS: Dynamic Content */}
+            <RecentPostsSection />
+
+            {/* LANGUAGES: Technology Grid */}
+            <LanguagesSection />
+
+            {/* TRUST: Social Proof */}
+            <TrustSection />
+
+            {/* CTA: Final Conversion */}
+            <CTASection />
         </LayoutWrapper>
     );
 }
