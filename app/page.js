@@ -69,18 +69,18 @@ export default function Home() {
 
                             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                                 <Link
-                                    href="/admin"
+                                    href="/errors"
                                     className="w-full sm:w-auto h-12 px-8 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-sm tracking-wide hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2"
                                 >
                                     <span>Start Fixing</span>
                                     <ArrowRight size={16} />
                                 </Link>
                                 <Link
-                                    href="/errors"
+                                    href="/languages"
                                     className="w-full sm:w-auto h-12 px-8 bg-transparent border border-gray-200 dark:border-white/20 text-gray-900 dark:text-white rounded-full font-bold text-sm tracking-wide hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2"
                                 >
                                     <Search size={16} />
-                                    <span>Search Database</span>
+                                    <span>Browse Languages</span>
                                 </Link>
                             </div>
 

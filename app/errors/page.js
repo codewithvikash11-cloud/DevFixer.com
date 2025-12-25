@@ -57,26 +57,26 @@ export default function ErrorsListingPage() {
             </div>
 
             {/* Global Search Interface */}
-            <div className="max-w-5xl mx-auto mb-12 md:mb-20 px-2 md:px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
+            <div className="max-w-3xl mx-auto mb-10 md:mb-16 px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
                 <div className="relative group">
-                    <div className="absolute inset-0 bg-accent-blue/10 blur-[100px] opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000" />
-                    <div className="relative flex items-center bg-panel border-2 border-border group-focus-within:border-accent-blue/50 rounded-[1.5rem] md:rounded-[2.5rem] p-2 md:p-3 pr-4 md:pr-8 shadow-3xl transition-all h-20 md:h-24 hover:border-accent-blue/30 overflow-hidden">
-                        <div className="w-14 md:w-20 h-full flex items-center justify-center text-text-secondary group-focus-within:text-accent-blue transition-colors shrink-0">
-                            <Search size={24} className="md:w-8 md:h-8" />
+                    <div className="absolute inset-0 bg-accent-blue/10 blur-[60px] opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000" />
+                    <div className="relative flex items-center bg-panel border border-border group-focus-within:border-accent-blue/50 rounded-xl md:rounded-2xl p-1.5 md:p-2 pr-3 md:pr-4 shadow-xl transition-all h-12 md:h-14 hover:border-accent-blue/30 overflow-hidden">
+                        <div className="w-10 md:w-12 h-full flex items-center justify-center text-text-secondary group-focus-within:text-accent-blue transition-colors shrink-0">
+                            <Search size={18} className="md:w-5 md:h-5" />
                         </div>
                         <input
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Search by error message..."
-                            className="flex-1 bg-transparent border-none focus:outline-none text-base md:text-2xl font-bold placeholder:text-text-secondary/30 min-w-0"
+                            className="flex-1 bg-transparent border-none focus:outline-none text-sm md:text-base font-medium placeholder:text-text-secondary/50 min-w-0"
                         />
-                        <div className="hidden md:flex items-center space-x-3 shrink-0">
-                            <div className="text-[10px] font-black text-text-secondary/40 border border-border px-2 py-1 rounded-lg uppercase tracking-widest">
-                                CMD + K
+                        <div className="hidden md:flex items-center space-x-2 shrink-0">
+                            <div className="text-[9px] font-bold text-text-secondary/50 border border-border px-1.5 py-0.5 rounded uppercase tracking-widest">
+                                CMD+K
                             </div>
-                            <button className="p-4 bg-background border-2 border-border rounded-2xl text-text-secondary hover:text-accent-blue hover:border-accent-blue/20 transition-all active:scale-90">
-                                <Filter size={24} />
+                            <button className="p-2 bg-background border border-border rounded-lg text-text-secondary hover:text-accent-blue hover:border-accent-blue/20 transition-all active:scale-95">
+                                <Filter size={16} />
                             </button>
                         </div>
                     </div>
