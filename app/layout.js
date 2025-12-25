@@ -44,6 +44,9 @@ export const metadata = {
         description: 'Fix code errors faster than ever.',
         creator: '@devfixer',
     },
+    alternates: {
+        canonical: '/',
+    },
     robots: {
         index: true,
         follow: true,

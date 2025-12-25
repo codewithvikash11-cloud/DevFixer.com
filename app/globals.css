@@ -43,7 +43,8 @@
     html {
         scroll-behavior: smooth;
         -webkit-tap-highlight-color: transparent;
-        font-size: 16px;
+        font-size: 14px;
+        /* Reduced from 16px */
         overflow-x: hidden;
         max-width: 100vw;
     }
@@ -75,79 +76,82 @@
     h5,
     h6 {
         letter-spacing: -0.025em;
-        font-weight: 900;
+        font-weight: 800;
+        /* Slightly reduced weight for elegance */
         line-height: 1.25;
     }
 
-    /* Responsive Headings */
+    /* Responsive Headings - Scaled Down */
     h1 {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
+        font-size: 2rem;
+        line-height: 2.25rem;
     }
 
     @media (min-width: 640px) {
         h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             line-height: 1;
         }
     }
 
     @media (min-width: 768px) {
         h1 {
-            font-size: 4.5rem;
+            font-size: 3.5rem;
             line-height: 1;
         }
     }
 
     @media (min-width: 1024px) {
         h1 {
-            font-size: 6rem;
+            font-size: 4.5rem;
+            /* Reduced from 6rem */
             line-height: 1;
         }
     }
 
     h2 {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-    }
-
-    @media (min-width: 640px) {
-        h2 {
-            font-size: 2.25rem;
-            line-height: 2.5rem;
-        }
-    }
-
-    @media (min-width: 768px) {
-        h2 {
-            font-size: 3rem;
-            line-height: 1;
-        }
-    }
-
-    @media (min-width: 1024px) {
-        h2 {
-            font-size: 3.75rem;
-            line-height: 1;
-        }
-    }
-
-    h3 {
         font-size: 1.5rem;
         line-height: 2rem;
     }
 
     @media (min-width: 640px) {
-        h3 {
+        h2 {
             font-size: 1.875rem;
             line-height: 2.25rem;
         }
     }
 
     @media (min-width: 768px) {
+        h2 {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        h2 {
+            font-size: 3rem;
+            /* Reduced from 3.75rem */
+            line-height: 1;
+        }
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+
+    @media (min-width: 640px) {
         h3 {
-            font-size: 2.25rem;
-            line-height: 2.5rem;
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
+    }
+
+    @media (min-width: 768px) {
+        h3 {
+            font-size: 1.875rem;
+            line-height: 2.25rem;
         }
     }
 }

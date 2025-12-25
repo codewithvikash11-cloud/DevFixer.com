@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import {
     Search,
@@ -17,21 +17,29 @@ import {
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
-const allErrors = [
-    { id: 1, title: "Uncaught ReferenceError: x is not defined", language: "JavaScript", difficulty: "Beginner", solved: "12k+", description: "One of the most common JavaScript errors. Occurs when you try to access a variable that hasn't been declared." },
-    { id: 2, title: "TypeError: Cannot set property 'id' of undefined", language: "JavaScript", difficulty: "Intermediate", solved: "45k+", description: "Happens when accessing properties on undefined objects, often during async data fetching." },
-    { id: 3, title: "ZeroDivisionError: division by zero", language: "Python", difficulty: "Beginner", solved: "8k+", description: "Python throws this when it encounters a number divided by literals or variables containing zero." },
-    { id: 4, title: "RangeError: Maximum call stack size exceeded", language: "JavaScript", difficulty: "Advanced", solved: "2k+", description: "Usually caused by infinite recursion or circular object references during serialization." },
-    { id: 5, title: "ImportError: No module named 'django'", language: "Python", difficulty: "Intermediate", solved: "30k+", description: "Occurs when a required package is missing from the environment path or hasn't been installed." },
-    { id: 6, title: "CORS policy: No 'Access-Control-Allow-Origin' header", language: "Web", difficulty: "Advanced", solved: "100k+", description: "A browser security mechanism that blocks cross-origin requests unless explicitly allowed by the server." },
-];
-
 export default function ErrorsListingPage() {
     const [searchQuery, setSearchQuery] = useState('');
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const filteredErrors = allErrors.filter(err =>
-        err.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        err.language.toLowerCase().includes(searchQuery.toLowerCase())
+    useEffect(() => {
+        fetch('/api/posts')
+            .then(res => res.json())
+            .then(data => {
+                // Only show published posts
+                const published = data.filter(post => post.status === 'published');
+                setPosts(published);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error('Failed to load posts', err);
+                setLoading(false);
+            });
+    }, []);
+
+    const filteredErrors = posts.filter(post =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.language.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -84,53 +92,57 @@ export default function ErrorsListingPage() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 px-2 md:px-4">
-                {filteredErrors.map((error, index) => (
-                    <Link
-                        key={error.id}
-                        href={`/errors/detail`}
-                        className="group flex flex-col p-6 md:p-10 bg-panel border-2 border-border/80 rounded-[2rem] md:rounded-[3rem] hover:border-accent-blue/50 hover:bg-panel shadow-xl transition-all duration-500 hover:-translate-y-1 active:scale-95 animate-in fade-in slide-in-from-bottom-12"
-                        style={{ animationDelay: `${index * 50}ms` }}
-                    >
-                        <div className="flex items-start justify-between mb-6 md:mb-8">
-                            <div className="px-3 py-1 md:px-4 md:py-1.5 bg-accent-blue text-white text-[9px] md:text-[10px] font-black rounded-full shadow-lg shadow-accent-blue/20 uppercase tracking-widest">
-                                {error.language}
-                            </div>
-                            <div className="flex items-center space-x-1.5 text-accent-yellow">
-                                <Star size={14} className="md:w-4 md:h-4 fill-current" />
-                                <span className="text-xs md:text-sm font-black text-text-primary">4.9</span>
-                            </div>
-                        </div>
-
-                        <h3 className="text-xl md:text-2xl font-black mb-3 md:mb-4 leading-tight group-hover:text-accent-blue transition-colors tracking-tight line-clamp-2 md:min-h-[4rem]">
-                            {error.title}
-                        </h3>
-
-                        <p className="text-xs md:text-sm text-text-secondary mb-8 md:mb-10 line-clamp-2 md:line-clamp-3 leading-relaxed font-medium opacity-80">
-                            {error.description}
-                        </p>
-
-                        <div className="mt-auto pt-6 md:pt-8 border-t border-border/50 flex items-center justify-between">
-                            <div className="flex items-center space-x-4 md:space-x-6">
-                                <div className="flex flex-col">
-                                    <span className="text-[8px] md:text-[10px] font-black text-text-secondary uppercase tracking-widest opacity-50">Lvl</span>
-                                    <span className="text-[10px] md:text-xs font-black uppercase text-text-primary">{error.difficulty}</span>
+            {loading ? (
+                <div className="text-center py-20 animate-pulse text-text-secondary">Loading archive...</div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 px-2 md:px-4">
+                    {filteredErrors.map((error, index) => (
+                        <Link
+                            key={error.slug}
+                            href={`/errors/${error.slug}`}
+                            className="group flex flex-col p-6 md:p-10 bg-panel border-2 border-border/80 rounded-[2rem] md:rounded-[3rem] hover:border-accent-blue/50 hover:bg-panel shadow-xl transition-all duration-500 hover:-translate-y-1 active:scale-95 animate-in fade-in slide-in-from-bottom-12"
+                            style={{ animationDelay: `${index * 50}ms` }}
+                        >
+                            <div className="flex items-start justify-between mb-6 md:mb-8">
+                                <div className="px-3 py-1 md:px-4 md:py-1.5 bg-accent-blue text-white text-[9px] md:text-[10px] font-black rounded-full shadow-lg shadow-accent-blue/20 uppercase tracking-widest">
+                                    {error.language}
                                 </div>
-                                <div className="flex flex-col">
-                                    <span className="text-[8px] md:text-[10px] font-black text-text-secondary uppercase tracking-widest opacity-50">Fixes</span>
-                                    <span className="text-[10px] md:text-xs font-black text-accent-green uppercase tracking-tight">{error.solved}</span>
+                                <div className="flex items-center space-x-1.5 text-accent-yellow">
+                                    <Star size={14} className="md:w-4 md:h-4 fill-current" />
+                                    <span className="text-xs md:text-sm font-black text-text-primary">4.9</span>
                                 </div>
                             </div>
 
-                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl border-2 border-border flex items-center justify-center text-text-secondary group-hover:bg-accent-blue group-hover:text-white group-hover:border-accent-blue transition-all duration-500 group-hover:shadow-lg group-hover:shadow-accent-blue/30 group-hover:rotate-6">
-                                <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-0.5 transition-transform" />
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-            </div>
+                            <h3 className="text-xl md:text-2xl font-black mb-3 md:mb-4 leading-tight group-hover:text-accent-blue transition-colors tracking-tight line-clamp-2 md:min-h-[4rem]">
+                                {error.title}
+                            </h3>
 
-            {filteredErrors.length === 0 && (
+                            <p className="text-xs md:text-sm text-text-secondary mb-8 md:mb-10 line-clamp-2 md:line-clamp-3 leading-relaxed font-medium opacity-80">
+                                {error.description}
+                            </p>
+
+                            <div className="mt-auto pt-6 md:pt-8 border-t border-border/50 flex items-center justify-between">
+                                <div className="flex items-center space-x-4 md:space-x-6">
+                                    <div className="flex flex-col">
+                                        <span className="text-[8px] md:text-[10px] font-black text-text-secondary uppercase tracking-widest opacity-50">Lvl</span>
+                                        <span className="text-[10px] md:text-xs font-black uppercase text-text-primary">{error.difficulty || 'Intermediate'}</span>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-[8px] md:text-[10px] font-black text-text-secondary uppercase tracking-widest opacity-50">Fixes</span>
+                                        <span className="text-[10px] md:text-xs font-black text-accent-green uppercase tracking-tight">Verified</span>
+                                    </div>
+                                </div>
+
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl border-2 border-border flex items-center justify-center text-text-secondary group-hover:bg-accent-blue group-hover:text-white group-hover:border-accent-blue transition-all duration-500 group-hover:shadow-lg group-hover:shadow-accent-blue/30 group-hover:rotate-6">
+                                    <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-0.5 transition-transform" />
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            )}
+
+            {!loading && filteredErrors.length === 0 && (
                 <div className="py-20 flex flex-col items-center justify-center text-center opacity-30">
                     <Terminal size={48} className="md:w-16 md:h-16 mb-6" />
                     <h3 className="text-lg md:text-2xl font-black uppercase tracking-widest">No results found</h3>

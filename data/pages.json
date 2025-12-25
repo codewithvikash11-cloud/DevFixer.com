@@ -1,0 +1,18 @@
+[
+    {
+        "slug": "home",
+        "isSystem": true,
+        "title": "Home Page",
+        "sections": {
+            "heroTitle": "The Error Archive",
+            "heroSubtitle": "Access thousands of verified solutions, technical breakdowns, and preventative guidelines curated by senior software architects.",
+            "heroTag": "Universal Solution Database"
+        }
+    },
+    {
+        "slug": "about-us",
+        "isSystem": false,
+        "title": "About DevFixer",
+        "content": "# About DevFixer\n\nDevFixer is a community-driven database of verified coding solutions.\n\n## Our Mission\n\nTo help developers solve problems faster by providing accurate, tested solutions to common programming errors.\n\n## The Team\n\nBuilt by developers, for developers."
+    }
+]

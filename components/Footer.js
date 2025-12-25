@@ -3,9 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-    Github,
-    Twitter,
-    Linkedin,
+
     Mail,
     Heart,
     ArrowRight,
@@ -41,11 +39,7 @@ const Footer = () => {
                         <p className="text-text-secondary leading-relaxed max-w-sm font-medium">
                             The ultimate encyclopedia for coding errors. We help developers fix bugs faster with precise solutions, detailed explanations, and copy-paste ready code.
                         </p>
-                        <div className="flex items-center gap-4 pt-2">
-                            <SocialLink href="https://github.com" icon={Github} label="GitHub" />
-                            <SocialLink href="https://twitter.com" icon={Twitter} label="Twitter" />
-                            <SocialLink href="https://linkedin.com" icon={Linkedin} label="LinkedIn" />
-                        </div>
+
                     </div>
 
                     {/* Quick Link Columns */}
@@ -118,17 +112,7 @@ const Footer = () => {
 };
 
 // Helper Components
-const SocialLink = ({ href, icon: Icon, label }) => (
-    <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-10 h-10 flex items-center justify-center rounded-xl bg-background border-2 border-border text-text-secondary hover:text-white hover:bg-black hover:border-black dark:hover:bg-white dark:hover:text-black dark:hover:border-white transition-all duration-300 group"
-        aria-label={label}
-    >
-        <Icon size={18} className="group-hover:scale-110 transition-transform" />
-    </a>
-);
+
 
 const FooterLink = ({ href, children }) => (
     <li>

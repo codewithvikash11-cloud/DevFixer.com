@@ -88,16 +88,16 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
                 {/* Center Section: Desktop Search */}
                 <div className="hidden md:block flex-1 max-w-2xl px-8">
                     <form onSubmit={handleSearch} className="relative group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary transition-colors group-focus-within:text-accent-blue" size={18} />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary transition-colors group-focus-within:text-accent-blue" size={16} />
                         <input
                             type="text"
                             placeholder="Search for errors, fixes, or languages..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full h-11 md:h-12 pl-12 pr-12 bg-panel border-2 border-border rounded-2xl text-sm transition-all focus:border-accent-blue focus:ring-4 focus:ring-accent-blue/10 outline-none text-text-primary placeholder:text-text-secondary/50 group-hover:border-border/60"
+                            className="w-full h-9 md:h-10 pl-10 pr-10 bg-panel border border-border rounded-xl text-xs md:text-sm transition-all focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/10 outline-none text-text-primary placeholder:text-text-secondary/50 group-hover:border-border/80"
                         />
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden lg:flex items-center gap-1.5 px-2 py-1 rounded-lg bg-background border border-border text-[10px] font-black text-text-secondary uppercase select-none">
-                            <Command size={10} />
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden lg:flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-background border border-border text-[9px] font-black text-text-secondary uppercase select-none">
+                            <Command size={9} />
                             <span>K</span>
                         </div>
                     </form>

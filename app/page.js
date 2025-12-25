@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import CodeBlock from '@/components/CodeBlock';
 import {
@@ -41,6 +41,46 @@ const result = solveIssue({ type: 'ReferenceError' });
 console.log(result);`;
 
 export default function Home() {
+    const [pageData, setPageData] = useState(null);
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        // Fetch Posts
+        fetch('/api/posts')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    const sorted = data
+                        .filter(post => post.status === 'published')
+                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                        .slice(0, 4);
+                    setPosts(sorted);
+                } else {
+                    setPosts([]);
+                }
+            })
+            .catch(err => {
+                console.error("Failed to load posts", err);
+                setPosts([]);
+            });
+
+        // Fetch Home Page Content
+        fetch('/api/pages')
+            .then(res => res.json())
+            .then(pages => {
+                if (Array.isArray(pages)) {
+                    const home = pages.find(p => p.slug === 'home');
+                    if (home) setPageData(home);
+                }
+            })
+            .catch(err => console.error("Failed to load page content", err));
+    }, []);
+
+    // Fallback data if loading or missing
+    const heroTitle = pageData?.sections?.heroTitle || "The Error Archive";
+    const heroSubtitle = pageData?.sections?.heroSubtitle || "Access thousands of verified solutions, technical breakdowns, and preventative guidelines curated by senior software architects.";
+    const heroTag = pageData?.sections?.heroTag || "Universal Solution Database";
+
     const jsonLd = {
         '@context': 'https://schema.org',
         '@graph': [
@@ -76,25 +116,29 @@ export default function Home() {
             {/* Hero Section */}
             <section className="relative pt-10 md:pt-20 pb-20 md:pb-32 overflow-hidden max-w-[100vw]">
                 {/* Background Effects */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 opacity-20 blur-[120px] pointer-events-none">
-                    <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-blue rounded-full animate-pulse" />
-                    <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-purple rounded-full animate-pulse delay-700" />
+                {/* Background Effects */}
+                <div className="absolute inset-0 -z-20">
+                    <img
+                        src="/hero_bg_premium.png"
+                        alt="Background"
+                        className="w-full h-full object-cover opacity-30 dark:opacity-20 select-none pointer-events-none"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
                 </div>
 
-                {/* Floating Icons Background */}
-                <div className="absolute inset-0 -z-5 overflow-hidden pointer-events-none select-none">
+                {/* Floating Icons Background (Subtle) */}
+                <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none select-none mask-image-linear-to-b">
                     {HERO_ICONS.map((lang, i) => {
                         const Icon = lang.icon;
-                        // Pre-calculated positions to span the screen roughly
                         const left = [10, 85, 15, 80, 5, 90, 20, 75][i];
                         const top = [20, 15, 60, 50, 85, 80, 10, 10][i];
                         const delay = i * 1.5;
-                        const duration = 6 + i;
+                        const duration = 12 + i; // Viewer requested slower, more subtle float
 
                         return (
                             <div
                                 key={lang.id}
-                                className={`absolute opacity-[0.07] dark:opacity-[0.15] ${i % 2 === 0 ? 'animate-float' : 'animate-float-delayed'}`}
+                                className={`absolute opacity-[0.03] dark:opacity-[0.05] ${i % 2 === 0 ? 'animate-float' : 'animate-float-delayed'}`}
                                 style={{
                                     left: `${left}%`,
                                     top: `${top}%`,
@@ -102,7 +146,7 @@ export default function Home() {
                                     animationDuration: `${duration}s`
                                 }}
                             >
-                                <Icon size={64} className={`md:w-32 md:h-32 ${lang.color}`} />
+                                <Icon size={64} className={`md:w-32 md:h-32 ${lang.color} grayscale`} />
                             </div>
                         );
                     })}
@@ -111,25 +155,24 @@ export default function Home() {
                 <div className="text-center max-w-5xl mx-auto px-4 relative z-10">
                     <div className="inline-flex items-center space-x-2 px-4 py-2 bg-panel border-2 border-border/50 rounded-2xl mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-xl backdrop-blur-sm">
                         <Zap size={16} className="text-accent-blue animate-bounce" />
-                        <span className="text-[10px] md:text-sm font-black tracking-[0.2em] uppercase text-text-secondary">Production-Grade Platform</span>
+                        <span className="text-[10px] md:text-sm font-black tracking-[0.2em] uppercase text-text-secondary">{heroTag}</span>
                     </div>
 
                     <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.05] tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700">
-                        Fix errors <span className="text-accent-blue relative inline-block">faster<div className="absolute -bottom-2 left-0 w-full h-2 bg-accent-blue/20 -rotate-2 rounded-full" /></span> <br className="hidden sm:block" /> than ever.
+                        {heroTitle}
                     </h1>
 
                     <p className="text-lg md:text-2xl text-text-secondary mb-12 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-10 duration-1000">
-                        The ultimate developer workspace for debugging. Search error codes,
-                        paste stack traces, and get production-quality solutions.
+                        {heroSubtitle}
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
                         <Link
-                            href="/editor"
+                            href="/admin"
                             className="w-full sm:w-auto px-10 py-5 bg-accent-blue text-white rounded-[1.5rem] font-black text-lg shadow-2xl shadow-accent-blue/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center space-x-3 group"
                         >
                             <Terminal size={24} />
-                            <span>Open Editor</span>
+                            <span>Open Admin</span>
                             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                         </Link>
                         <Link
@@ -323,21 +366,31 @@ export default function Home() {
                     </Link>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {[1, 2, 3, 4].map((i) => (
-                        <Link key={i} href="/errors/typeerror-map" className="p-6 bg-panel border border-border rounded-2xl hover:border-accent-blue/30 transition-all cursor-pointer group hover:shadow-xl hover:shadow-accent-blue/5">
-                            <div className="flex items-start justify-between mb-4">
-                                <span className="px-2 py-1 bg-accent-blue/10 text-accent-blue text-[10px] font-bold rounded uppercase tracking-wider">JavaScript</span>
-                                <span className="text-xs text-text-secondary font-mono">Dec 20, 2025</span>
-                            </div>
-                            <h4 className="text-xl font-bold group-hover:text-accent-blue transition-colors mb-3 leading-tight underline-offset-4 decoration-accent-blue/30 group-hover:underline">Uncaught TypeError: Cannot read property 'map' of undefined</h4>
-                            <p className="text-sm text-text-secondary line-clamp-2 leading-relaxed">
-                                This error typically occurs when you're trying to call the .map() method on a variable that hasn't been initialized as an array...
-                            </p>
-                            <div className="mt-6 flex items-center space-x-4 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                                <span className="text-xs font-bold text-accent-blue">Read full solution</span>
-                            </div>
-                        </Link>
-                    ))}
+                    {posts?.length > 0 ? (
+                        posts.map((post) => (
+                            <Link key={post.slug} href={`/errors/${post.slug}`} className="p-6 bg-panel border border-border rounded-2xl hover:border-accent-blue/30 transition-all cursor-pointer group hover:shadow-xl hover:shadow-accent-blue/5">
+                                <div className="flex items-start justify-between mb-4">
+                                    <span className="px-2 py-1 bg-accent-blue/10 text-accent-blue text-[10px] font-bold rounded uppercase tracking-wider">{post.language}</span>
+                                    <span className="text-xs text-text-secondary font-mono">
+                                        {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Just now'}
+                                    </span>
+                                </div>
+                                <h4 className="text-xl font-bold group-hover:text-accent-blue transition-colors mb-3 leading-tight underline-offset-4 decoration-accent-blue/30 group-hover:underline">
+                                    {post.title}
+                                </h4>
+                                <p className="text-sm text-text-secondary line-clamp-2 leading-relaxed">
+                                    {post.description}
+                                </p>
+                                <div className="mt-6 flex items-center space-x-4 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                                    <span className="text-xs font-bold text-accent-blue">Read full solution</span>
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+                        <div className="col-span-1 md:col-span-2 text-center py-12 text-text-secondary">
+                            No recent fixes found. Check back later!
+                        </div>
+                    )}
                 </div>
             </section>
         </LayoutWrapper>

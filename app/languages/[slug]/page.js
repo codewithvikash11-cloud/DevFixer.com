@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { getLanguageBySlug } from '@/lib/languages';
+import { getPosts } from '@/lib/posts'; // Import data fetcher
 import {
     ArrowLeft,
     TrendingUp,
@@ -44,25 +45,12 @@ export default async function LanguagePage(props) {
 
     const Icon = language.icon;
 
-    // Mock posts for demonstration
-    const posts = [
-        {
-            id: 1,
-            title: `Common ${language.name} Errors: detailed guide`,
-            excerpt: `Learn how to debug the most frequent issues in ${language.name} environments.`,
-            views: '2.4k',
-            difficulty: 'Beginner',
-            solved: '12k+'
-        },
-        {
-            id: 2,
-            title: `Best practices for ${language.name} performance`,
-            excerpt: "Optimization techniques widely used in production.",
-            views: '1.8k',
-            difficulty: 'Intermediate',
-            solved: '8k+'
-        }
-    ];
+    // Fetch and filter posts for this language
+    const allPosts = getPosts();
+    const posts = allPosts.filter(p =>
+        (p.language.toLowerCase() === language.name.toLowerCase() || p.language.toLowerCase() === language.slug.toLowerCase()) &&
+        p.status === 'published'
+    );
 
     // Schema.org Structured Data
     const jsonLd = {
@@ -81,8 +69,8 @@ export default async function LanguagePage(props) {
         hasPart: posts.map(post => ({
             '@type': 'TechArticle',
             headline: post.title,
-            description: post.excerpt,
-            difficulty: post.difficulty
+            description: post.description,
+            difficulty: 'Intermediate' // Default if not in post
         }))
     };
 
@@ -128,8 +116,8 @@ export default async function LanguagePage(props) {
                         <div className="space-y-3 md:space-y-4">
                             {posts.map((post) => (
                                 <Link
-                                    key={post.id}
-                                    href={`/errors/${language.slug}-error-${post.id}`}
+                                    key={post.slug}
+                                    href={`/errors/${post.slug}`}
                                     className="group flex items-center justify-between p-4 md:p-6 bg-panel/20 border border-border/50 rounded-2xl hover:border-accent-blue/40 hover:bg-panel/40 transition-all active:scale-95 duration-200"
                                 >
                                     <div className="flex items-center space-x-4 md:space-x-5 flex-1 min-w-0">
@@ -139,10 +127,10 @@ export default async function LanguagePage(props) {
                                         <div className="min-w-0 flex-1">
                                             <h3 className="text-base md:text-lg font-black group-hover:text-accent-blue transition-colors mb-1 truncate">{post.title}</h3>
                                             <div className="flex items-center space-x-3 md:space-x-4">
-                                                <span className="text-[9px] font-black px-2 py-0.5 bg-border/50 rounded uppercase tracking-widest text-text-secondary">{post.difficulty}</span>
+                                                <span className="text-[9px] font-black px-2 py-0.5 bg-border/50 rounded uppercase tracking-widest text-text-secondary">Intermediate</span>
                                                 <span className="text-[10px] md:text-xs text-accent-green font-black flex items-center space-x-1 uppercase tracking-widest">
                                                     <Zap size={10} className="fill-current" />
-                                                    <span>{post.solved} Solved</span>
+                                                    <span>Verified</span>
                                                 </span>
                                             </div>
                                         </div>

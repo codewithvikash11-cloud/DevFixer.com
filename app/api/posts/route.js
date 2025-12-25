@@ -30,3 +30,18 @@ export async function POST(request) {
     savePosts(posts);
     return NextResponse.json({ success: true, message: 'Post saved successfully' });
 }
+
+export async function DELETE(request) {
+    const { searchParams } = new URL(request.url);
+    const slug = searchParams.get('slug');
+
+    if (!slug) {
+        return NextResponse.json({ error: 'Slug is required' }, { status: 400 });
+    }
+
+    const posts = getPosts();
+    const newPosts = posts.filter(p => p.slug !== slug);
+    savePosts(newPosts);
+
+    return NextResponse.json({ success: true, message: 'Post deleted successfully' });
+}
