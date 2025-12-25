@@ -2,110 +2,28 @@
 
 import React, { useEffect, useState } from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
-import CodeBlock from '@/components/CodeBlock';
-import {
-    Zap,
-    Check,
-    FileJson,
-    Play,
-    Code2,
-    Atom,
-    Server,
-    Search,
-    ArrowRight,
-    Terminal,
-    Shield,
-    Bug,
-    Settings
-} from 'lucide-react';
+import AuroraBackground from '@/components/hero/AuroraBackground';
+import GlassEcosystem from '@/components/hero/GlassEcosystem';
 import Link from 'next/link';
-import Image from 'next/image';
-import { LANGUAGES } from '@/lib/languages';
-
-// Use the central LANGUAGES configuration
-const languages = LANGUAGES;
-
-// Select a subset of iconic languages for the hero background
-const HERO_ICONS = LANGUAGES.filter(l => ['js', 'python', 'react', 'docker', 'css', 'ts', 'java', 'git'].includes(l.id));
-
-const homeCode = `// Debugging a common error
-function solveIssue(error) {
-  if (error.type === 'ReferenceError') {
-    return "Check if the variable is defined before usage.";
-  }
-  
-  return "DevFixer can help you find a tailored solution.";
-}
-
-// Search for thousands of solutions instantly
-const result = solveIssue({ type: 'ReferenceError' });
-console.log(result);`;
+import {
+    Terminal,
+    Search,
+    ArrowRight
+} from 'lucide-react';
 
 export default function Home() {
-    const [pageData, setPageData] = useState(null);
-    const [posts, setPosts] = useState([]);
-
-    useEffect(() => {
-        // Fetch Posts
-        fetch('/api/posts')
-            .then(res => res.json())
-            .then(data => {
-                if (Array.isArray(data)) {
-                    const sorted = data
-                        .filter(post => post.status === 'published')
-                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                        .slice(0, 4);
-                    setPosts(sorted);
-                } else {
-                    setPosts([]);
-                }
-            })
-            .catch(err => {
-                console.error("Failed to load posts", err);
-                setPosts([]);
-            });
-
-        // Fetch Home Page Content
-        fetch('/api/pages')
-            .then(res => res.json())
-            .then(pages => {
-                if (Array.isArray(pages)) {
-                    const home = pages.find(p => p.slug === 'home');
-                    if (home) setPageData(home);
-                }
-            })
-            .catch(err => console.error("Failed to load page content", err));
-    }, []);
-
-    // Fallback data if loading or missing
-    const heroTitle = pageData?.sections?.heroTitle || "The Error Archive";
-    const heroSubtitle = pageData?.sections?.heroSubtitle || "Access thousands of verified solutions, technical breakdowns, and preventative guidelines curated by senior software architects.";
-    const heroTag = pageData?.sections?.heroTag || "Universal Solution Database";
-
+    // Generate structured data for SEO
     const jsonLd = {
-        '@context': 'https://schema.org',
-        '@graph': [
-            {
-                '@type': 'WebSite',
-                name: 'DevFixer',
-                url: 'https://devfixer.com',
-                potentialAction: {
-                    '@type': 'SearchAction',
-                    target: 'https://devfixer.com/search?q={search_term_string}',
-                    'query-input': 'required name=search_term_string'
-                }
-            },
-            {
-                '@type': 'Organization',
-                name: 'DevFixer',
-                url: 'https://devfixer.com',
-                logo: 'https://devfixer.com/logo.png',
-                sameAs: [
-                    'https://twitter.com/devfixer',
-                    'https://github.com/devfixer'
-                ]
-            }
-        ]
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "DevFixer",
+        "url": "https://devfixer.com",
+        "description": "The world's most comprehensive database of developer solutions.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://devfixer.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
     };
 
     return (
@@ -114,292 +32,74 @@ export default function Home() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            {/* Hero Section */}
-            <section className="relative w-full min-h-[95vh] flex items-center overflow-hidden">
-                {/* Background Layer - Full Size */}
-                <div className="absolute inset-0 z-0">
-                    <Image
-                        src="/hero_bg_v3.png"
-                        alt="DevFixer Background"
-                        fill
-                        priority
-                        className="object-cover object-center opacity-90 dark:opacity-70 select-none pointer-events-none transition-opacity duration-1000"
-                    />
-                    {/* Dynamic Overlays for Readability */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-transparent pointer-events-none" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute inset-0 bg-black/5 dark:bg-black/20 pointer-events-none" />
-                </div>
+            {/* Hero Section - The "Aurora" Concept */}
+            <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#030303] transition-colors duration-500">
+
+                {/* 1. Aurora Mesh Background */}
+                <AuroraBackground />
 
                 {/* Content Grid */}
-                <div className="container mx-auto px-6 lg:px-12 relative z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-20">
+                    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 
-                        {/* Left Column: Premium Typography */}
-                        <div className="max-w-2xl text-center lg:text-left space-y-8 animate-in fade-in slide-in-from-left-12 duration-1000">
-                            <div className="inline-flex items-center space-x-3 px-4 py-2 bg-accent-blue/10 backdrop-blur-xl border border-accent-blue/20 rounded-full shadow-2xl transition-transform hover:scale-105 cursor-default">
-                                <span className="relative flex h-3 w-3">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-blue"></span>
+                        {/* Left Column: Typographic Mastery */}
+                        <div className="flex-1 text-center lg:text-left space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+
+                            {/* Premium Status Chip */}
+                            <div className="inline-flex items-center space-x-2.5 px-3 py-1 bg-white/40 dark:bg-white/5 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-full shadow-sm hover:scale-105 transition-transform cursor-default">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
                                 </span>
-                                <span className="text-xs md:text-sm font-black tracking-widest uppercase text-accent-blue">{"The Developer's Second Brain"}</span>
+                                <span className="text-[10px] sm:text-xs font-bold tracking-widest uppercase text-gray-600 dark:text-gray-300">DevFixer v2.0</span>
                             </div>
 
-                            <div className="space-y-4">
-                                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-[0.95] tracking-tighter text-text-primary drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
-                                    {"Master every error"}
+                            <div className="space-y-6">
+                                <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-gray-900 dark:text-white leading-[1.1]">
+                                    Master every <br className="hidden lg:block" />
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-gradient-x">
+                                        exception.
+                                    </span>
                                 </h1>
-                                <p className="text-xl md:text-2xl text-text-secondary leading-relaxed max-w-lg mx-auto lg:mx-0 font-medium">
-                                    {"Stop searching, start solving. Access the world's most comprehensive database of developer solutions and preventative guidelines."}
+
+                                <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium tracking-wide">
+                                    The intelligent knowledge base that turns cryptic error logs into instant solutions. Stop debugging, start shipping.
                                 </p>
                             </div>
 
-                            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5 pt-6">
+                            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                                 <Link
                                     href="/admin"
-                                    className="w-full sm:w-auto group relative px-10 py-5 bg-accent-blue text-white rounded-2xl font-black text-xl shadow-[0_10px_30px_-10px_rgba(59,130,246,0.6)] hover:shadow-[0_15px_40px_-10px_rgba(59,130,246,0.8)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center space-x-3"
+                                    className="w-full sm:w-auto h-12 px-8 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-sm tracking-wide hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2"
                                 >
-                                    <Terminal size={24} />
-                                    <span>Open Admin</span>
-                                    <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform" />
+                                    <span>Start Fixing</span>
+                                    <ArrowRight size={16} />
                                 </Link>
                                 <Link
                                     href="/errors"
-                                    className="w-full sm:w-auto px-10 py-5 bg-panel/60 backdrop-blur-xl border-2 border-border shadow-xl hover:border-accent-blue/40 text-text-primary rounded-2xl font-black text-xl hover:bg-panel transition-all duration-300 flex items-center justify-center space-x-3 hover:-translate-y-1.5"
+                                    className="w-full sm:w-auto h-12 px-8 bg-transparent border border-gray-200 dark:border-white/20 text-gray-900 dark:text-white rounded-full font-bold text-sm tracking-wide hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2"
                                 >
-                                    <Search size={24} />
-                                    <span>Browse Fixes</span>
+                                    <Search size={16} />
+                                    <span>Search Database</span>
                                 </Link>
                             </div>
-                        </div>
 
-                        {/* Right Column: Clean 3D Asset */}
-                        <div className="relative hidden lg:flex justify-center items-center animate-in fade-in zoom-in duration-1000 delay-300">
-                            <div className="relative w-full max-w-xl aspect-square">
-                                {/* Glow Effect */}
-                                <div className="absolute inset-0 bg-accent-blue/30 blur-[120px] rounded-full mix-blend-screen animate-pulse-slow" />
-                                <Image
-                                    src="/hero_asset_code.png"
-                                    alt="DevFixer Interface"
-                                    width={800}
-                                    height={800}
-                                    priority
-                                    className="relative z-10 w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-float"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Subtle Decorative Elements */}
-                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-            </section>
-
-            <div className="max-w-4xl mx-auto px-4 transform hover:scale-[1.01] transition-transform duration-500 hidden md:block">
-                <CodeBlock code={homeCode} language="javascript" fileName="solution_helper.js" />
-            </div>
-
-            {/* Languages Grid */}
-            <section className="py-16 md:py-24">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">Supported Technologies</h2>
-                    <p className="text-text-secondary">Comprehensive guides for the modern tech stack</p>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4">
-                    {LANGUAGES.slice(0, 8).map((lang) => (
-                        <Link
-                            key={lang.slug}
-                            href={`/languages/${lang.slug}`}
-                            className="group p-6 md:p-8 bg-panel border border-border rounded-2xl hover:border-accent-blue/50 hover:shadow-2xl hover:shadow-accent-blue/5 transition-all flex flex-col items-center text-center transform hover:-translate-y-1 active:scale-95"
-                        >
-                            <div className={`p-4 rounded-xl bg-background border border-border group-hover:border-accent-blue/30 transition-colors mb-4`}>
-                                <lang.icon size={32} className={`md:w-10 md:h-10 ${lang.color} group-hover:scale-110 transition-transform`} />
-                            </div>
-                            <h3 className="font-bold text-lg">{lang.name}</h3>
-                            <div className="mt-2 text-xs font-semibold text-accent-blue opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1">
-                                <span>View errors</span>
-                                <ArrowRight size={12} />
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </section>
-
-            {/* Interactive Code / Editor Showcase */}
-            <section className="py-24 bg-background relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row items-center gap-16">
-
-                        {/* Left Column: Code Editor Preview */}
-                        <div className="w-full lg:w-1/2 order-2 lg:order-1">
-                            <div className="rounded-2xl overflow-hidden border border-border bg-[#1e1e1e] shadow-2xl shadow-black/50 group hover:border-accent-blue/30 transition-all duration-500">
-                                {/* Editor Top Bar */}
-                                <div className="flex items-center justify-between px-4 py-3 bg-[#252526] border-b border-white/5">
-                                    <div className="flex items-center space-x-2">
-                                        <div className="flex space-x-1.5">
-                                            <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                                            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                                            <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                                        </div>
-                                        <div className="h-4 w-px bg-white/10 mx-2" />
-                                        <div className="flex items-center space-x-2 text-xs text-text-secondary bg-[#1e1e1e] px-3 py-1 rounded-md border border-white/5">
-                                            <FileJson size={12} className="text-yellow-400" />
-                                            <span>solution.js</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center space-x-3">
-                                        <div className="text-[10px] text-text-secondary">JavaScript</div>
-                                        <Play size={14} className="text-green-500 fill-green-500/20" />
-                                    </div>
+                            {/* Trust Badge */}
+                            <div className="pt-8 flex items-center justify-center lg:justify-start space-x-4 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                                <div className="flex -space-x-3">
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className="w-8 h-8 rounded-full border-2 border-white dark:border-black bg-gray-300 dark:bg-gray-700" />
+                                    ))}
                                 </div>
-
-                                {/* Editor Content */}
-                                <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto">
-                                    <div className="flex">
-                                        <div className="text-gray-600 select-none text-right pr-4 border-r border-white/5 mr-4 space-y-1">
-                                            {Array.from({ length: 9 }).map((_, i) => <div key={i}>{i + 1}</div>)}
-                                        </div>
-                                        <div className="text-gray-300 space-y-1 whitespace-pre">
-                                            <div><span className="text-purple-400">function</span> <span className="text-blue-400">fixNullError</span>(data) {'{'}</div>
-                                            <div>  <span className="text-gray-500">// Check if data exists before accessing</span></div>
-                                            <div>  <span className="text-purple-400">if</span> (!data || !data.user) {'{'}</div>
-                                            <div>    <span className="text-purple-400">throw</span> <span className="text-purple-400">new</span> <span className="text-yellow-400">Error</span>(<span className="text-green-400">'Invalid user data'</span>);</div>
-                                            <div>  {'}'}</div>
-                                            <br />
-                                            <div>  <span className="text-purple-400">return</span> data.user.id;</div>
-                                            <div>{'}'}</div>
-                                            <br />
-                                            <div><span className="text-gray-500">// Run analysis...</span></div>
-                                        </div>
-                                    </div>
-
-                                    {/* Output Terminal */}
-                                    <div className="mt-6 pt-4 border-t border-white/10">
-                                        <div className="flex items-center space-x-2 text-xs text-gray-400 mb-2">
-                                            <Terminal size={12} />
-                                            <span>Console Output</span>
-                                        </div>
-                                        <div className="font-mono text-xs text-green-400">
-                                            {'>'} Data processed successfully.<br />
-                                            {'>'} User ID: 49201 extracted.
-                                        </div>
-                                    </div>
-                                </div>
+                                <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Trusted by 10,000+ developers</span>
                             </div>
                         </div>
 
-                        {/* Right Column: Content & Actions */}
-                        <div className="w-full lg:w-1/2 order-1 lg:order-2 space-y-8">
-                            <div className="inline-flex items-center space-x-2 px-3 py-1 bg-accent-purple/10 text-accent-purple rounded-full text-xs font-bold uppercase tracking-wider">
-                                <Zap size={12} />
-                                <span>Code. Debug. Fix.</span>
-                            </div>
-
-                            <h2 className="text-4xl md:text-5xl font-black leading-tight">
-                                Write, Test, and <br />
-                                <span className="text-white">Understand Code.</span>
-                            </h2>
-
-                            <p className="text-lg text-text-secondary leading-relaxed max-w-lg">
-                                DevFixer isn't just a library—it's an interactive workspace.
-                                Visualize execution, catch errors in real-time, and master the logic behind the fix.
-                            </p>
-
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {[
-                                    { label: 'JavaScript Errors', icon: FileJson, color: 'text-yellow-400', bg: 'bg-yellow-400/10' },
-                                    { label: 'Python Errors', icon: Code2, color: 'text-blue-400', bg: 'bg-blue-400/10' },
-                                    { label: 'React Issues', icon: Atom, color: 'text-cyan-400', bg: 'bg-cyan-400/10' },
-                                    { label: 'API Failures', icon: Server, color: 'text-green-400', bg: 'bg-green-400/10' }
-                                ].map((item, i) => (
-                                    <button key={i} className="flex items-center space-x-3 p-4 bg-panel border border-border rounded-xl hover:bg-white/5 hover:border-accent-blue/30 hover:scale-[1.02] transition-all text-left group">
-                                        <div className={`p-2 rounded-lg ${item.bg}`}>
-                                            <item.icon size={20} className={item.color} />
-                                        </div>
-                                        <span className="font-bold text-sm group-hover:text-accent-blue transition-colors">
-                                            {item.label}
-                                        </span>
-                                    </button>
-                                ))}
-                            </div>
+                        {/* Right Column: Glass Ecosystem */}
+                        <div className="flex-1 w-full max-w-[600px] lg:max-w-none relative animate-in fade-in zoom-in duration-1000 delay-200">
+                            <GlassEcosystem />
                         </div>
                     </div>
-                </div>
-            </section>
-
-            {/* How it works */}
-            <section className="py-16 md:py-24 border-t border-border/50 bg-panel/30">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 px-6">
-                    <div className="group p-8 bg-background border border-border rounded-3xl hover:border-accent-blue/30 transition-all">
-                        <div className="w-14 h-14 bg-accent-blue/10 rounded-2xl flex items-center justify-center text-accent-blue mb-8 group-hover:rotate-6 transition-transform">
-                            <Search size={28} />
-                        </div>
-                        <h3 className="text-2xl font-bold mb-4">1. Search or Paste</h3>
-                        <p className="text-text-secondary leading-relaxed">
-                            Find solutions by searching for error codes or simply paste your entire stack trace into our workspace.
-                        </p>
-                    </div>
-                    <div className="group p-8 bg-background border border-border rounded-3xl hover:border-accent-purple/30 transition-all">
-                        <div className="w-14 h-14 bg-accent-purple/10 rounded-2xl flex items-center justify-center text-accent-purple mb-8 group-hover:rotate-6 transition-transform">
-                            <Terminal size={28} />
-                        </div>
-                        <h3 className="text-2xl font-bold mb-4">2. Analyze Context</h3>
-                        <p className="text-text-secondary leading-relaxed">
-                            Our structured solutions provide line-by-line explanations of why the error occurred in your specific context.
-                        </p>
-                    </div>
-                    <div className="group p-8 bg-background border border-border rounded-3xl hover:border-accent-green/30 transition-all">
-                        <div className="w-14 h-14 bg-accent-green/10 rounded-2xl flex items-center justify-center text-accent-green mb-8 group-hover:rotate-6 transition-transform">
-                            <Shield size={28} />
-                        </div>
-                        <h3 className="text-2xl font-bold mb-4">3. Fix Permanently</h3>
-                        <p className="text-text-secondary leading-relaxed">
-                            Go beyond copy-pasting. Learn best practices and architectural adjustments to prevent similar issues.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Latest Fixes */}
-            <section className="py-16 md:py-24 px-6">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-12">
-                    <div>
-                        <h2 className="text-3xl font-bold mb-2">Latest community fixes</h2>
-                        <p className="text-text-secondary">Updated real-time by senior engineers</p>
-                    </div>
-                    <Link href="/errors" className="inline-flex items-center space-x-2 text-accent-blue hover:underline font-bold transition-all px-4 py-2 bg-accent-blue/5 rounded-lg border border-accent-blue/10">
-                        <span>View All Documentation</span>
-                        <ArrowRight size={16} />
-                    </Link>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {posts?.length > 0 ? (
-                        posts.map((post) => (
-                            <Link key={post.slug} href={`/errors/${post.slug}`} className="p-6 bg-panel border border-border rounded-2xl hover:border-accent-blue/30 transition-all cursor-pointer group hover:shadow-xl hover:shadow-accent-blue/5">
-                                <div className="flex items-start justify-between mb-4">
-                                    <span className="px-2 py-1 bg-accent-blue/10 text-accent-blue text-[10px] font-bold rounded uppercase tracking-wider">{post.language}</span>
-                                    <span className="text-xs text-text-secondary font-mono">
-                                        {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Just now'}
-                                    </span>
-                                </div>
-                                <h4 className="text-xl font-bold group-hover:text-accent-blue transition-colors mb-3 leading-tight underline-offset-4 decoration-accent-blue/30 group-hover:underline">
-                                    {post.title}
-                                </h4>
-                                <p className="text-sm text-text-secondary line-clamp-2 leading-relaxed">
-                                    {post.description}
-                                </p>
-                                <div className="mt-6 flex items-center space-x-4 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                                    <span className="text-xs font-bold text-accent-blue">Read full solution</span>
-                                </div>
-                            </Link>
-                        ))
-                    ) : (
-                        <div className="col-span-1 md:col-span-2 text-center py-12 text-text-secondary">
-                            No recent fixes found. Check back later!
-                        </div>
-                    )}
                 </div>
             </section>
         </LayoutWrapper>
