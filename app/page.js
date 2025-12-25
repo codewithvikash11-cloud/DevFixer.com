@@ -115,87 +115,84 @@ export default function Home() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
             {/* Hero Section */}
-            <section className="relative pt-20 md:pt-32 pb-24 md:pb-40 overflow-hidden max-w-[100vw]">
-                {/* Background Effects - Premium Layered Depth */}
+            <section className="relative w-full min-h-[95vh] flex items-center overflow-hidden">
+                {/* Background Layer - Full Size */}
                 <div className="absolute inset-0 z-0">
-                    <img
-                        src="/hero_bg_premium.png"
-                        alt="Background"
-                        className="w-full h-full object-cover opacity-70 dark:opacity-60 select-none pointer-events-none scale-105 animate-pulse-slow"
+                    <Image
+                        src="/hero_bg_v3.png"
+                        alt="DevFixer Background"
+                        fill
+                        priority
+                        className="object-cover object-center opacity-90 dark:opacity-70 select-none pointer-events-none transition-opacity duration-1000"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background pointer-events-none" />
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent-blue/10 via-transparent to-transparent opacity-50 blur-3xl pointer-events-none" />
+                    {/* Dynamic Overlays for Readability */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-black/5 dark:bg-black/20 pointer-events-none" />
                 </div>
 
-                {/* Floating Tech Particles - CSS Animation */}
-                <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none select-none">
-                    <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-accent-purple/20 rounded-full blur-[100px] animate-blob mix-blend-screen" />
-                    <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-accent-blue/20 rounded-full blur-[100px] animate-blob animation-delay-2000 mix-blend-screen" />
-                    <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-accent-green/20 rounded-full blur-[100px] animate-blob animation-delay-4000 mix-blend-screen" />
-                </div>
+                {/* Content Grid */}
+                <div className="container mx-auto px-6 lg:px-12 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-                {/* Floating Icons Background (Subtle) */}
-                <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none select-none mask-image-linear-to-b">
-                    {HERO_ICONS.map((lang, i) => {
-                        const Icon = lang.icon;
-                        const left = [10, 85, 15, 80, 5, 90, 20, 75][i];
-                        const top = [20, 15, 60, 50, 85, 80, 10, 10][i];
-                        const delay = i * 1.5;
-                        const duration = 15 + i; // Slower premium float
-
-                        return (
-                            <div
-                                key={lang.id}
-                                className={`absolute opacity-[0.04] dark:opacity-[0.06] ${i % 2 === 0 ? 'animate-float' : 'animate-float-delayed'}`}
-                                style={{
-                                    left: `${left}%`,
-                                    top: `${top}%`,
-                                    animationDelay: `${delay}s`,
-                                    animationDuration: `${duration}s`
-                                }}
-                            >
-                                <Icon size={64} className={`md:w-32 md:h-32 ${lang.color} grayscale blur-[1px]`} />
+                        {/* Left Column: Premium Typography */}
+                        <div className="max-w-2xl text-center lg:text-left space-y-8 animate-in fade-in slide-in-from-left-12 duration-1000">
+                            <div className="inline-flex items-center space-x-3 px-4 py-2 bg-accent-blue/10 backdrop-blur-xl border border-accent-blue/20 rounded-full shadow-2xl transition-transform hover:scale-105 cursor-default">
+                                <span className="relative flex h-3 w-3">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-blue"></span>
+                                </span>
+                                <span className="text-xs md:text-sm font-black tracking-widest uppercase text-accent-blue">{"The Developer's Second Brain"}</span>
                             </div>
-                        );
-                    })}
+
+                            <div className="space-y-4">
+                                <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-[0.95] tracking-tighter text-text-primary drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+                                    {"Master every error"}
+                                </h1>
+                                <p className="text-xl md:text-2xl text-text-secondary leading-relaxed max-w-lg mx-auto lg:mx-0 font-medium">
+                                    {"Stop searching, start solving. Access the world's most comprehensive database of developer solutions and preventative guidelines."}
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5 pt-6">
+                                <Link
+                                    href="/admin"
+                                    className="w-full sm:w-auto group relative px-10 py-5 bg-accent-blue text-white rounded-2xl font-black text-xl shadow-[0_10px_30px_-10px_rgba(59,130,246,0.6)] hover:shadow-[0_15px_40px_-10px_rgba(59,130,246,0.8)] hover:-translate-y-1.5 transition-all duration-300 flex items-center justify-center space-x-3"
+                                >
+                                    <Terminal size={24} />
+                                    <span>Open Admin</span>
+                                    <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform" />
+                                </Link>
+                                <Link
+                                    href="/errors"
+                                    className="w-full sm:w-auto px-10 py-5 bg-panel/60 backdrop-blur-xl border-2 border-border shadow-xl hover:border-accent-blue/40 text-text-primary rounded-2xl font-black text-xl hover:bg-panel transition-all duration-300 flex items-center justify-center space-x-3 hover:-translate-y-1.5"
+                                >
+                                    <Search size={24} />
+                                    <span>Browse Fixes</span>
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Right Column: Clean 3D Asset */}
+                        <div className="relative hidden lg:flex justify-center items-center animate-in fade-in zoom-in duration-1000 delay-300">
+                            <div className="relative w-full max-w-xl aspect-square">
+                                {/* Glow Effect */}
+                                <div className="absolute inset-0 bg-accent-blue/30 blur-[120px] rounded-full mix-blend-screen animate-pulse-slow" />
+                                <Image
+                                    src="/hero_asset_code.png"
+                                    alt="DevFixer Interface"
+                                    width={800}
+                                    height={800}
+                                    priority
+                                    className="relative z-10 w-full h-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] animate-float"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="text-center max-w-5xl mx-auto px-4 relative z-10">
-                    <div className="inline-flex items-center space-x-2 px-4 py-2 bg-panel/50 backdrop-blur-md border border-white/10 rounded-full mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700 shadow-2xl ring-1 ring-white/5">
-                        <span className="relative flex h-2 w-2 mr-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue"></span>
-                        </span>
-                        <span className="text-[10px] md:text-xs font-black tracking-[0.2em] uppercase text-text-secondary">{heroTag}</span>
-                    </div>
-
-                    <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.95] tracking-tighter animate-in fade-in slide-in-from-bottom-8 duration-1000 bg-clip-text text-transparent bg-gradient-to-b from-text-primary to-text-secondary/50 drop-shadow-sm">
-                        {heroTitle}
-                    </h1>
-
-                    <p className="text-lg md:text-2xl text-text-secondary mb-12 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-10 duration-1000 font-medium">
-                        {heroSubtitle}
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6 animate-in fade-in slide-in-from-bottom-12 duration-1000">
-                        <Link
-                            href="/admin"
-                            className="w-full sm:w-auto overflow-hidden relative group px-10 py-5 bg-accent-blue text-white rounded-full font-black text-lg shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] hover:shadow-[0_0_60px_-10px_rgba(59,130,246,0.7)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-3"
-                        >
-                            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
-                            <Terminal size={24} />
-                            <span>Open Admin</span>
-                            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                        <Link
-                            href="/errors"
-                            className="w-full sm:w-auto px-10 py-5 bg-panel/80 backdrop-blur-sm border border-border hover:border-accent-blue/50 text-text-primary rounded-full font-black text-lg hover:bg-panel transition-all duration-300 flex items-center justify-center space-x-3 hover:-translate-y-1 hover:shadow-lg"
-                        >
-                            <Search size={22} />
-                            <span>Browse Fixes</span>
-                        </Link>
-                    </div>
-                </div>
+                {/* Subtle Decorative Elements */}
+                <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
             </section>
 
             <div className="max-w-4xl mx-auto px-4 transform hover:scale-[1.01] transition-transform duration-500 hidden md:block">
