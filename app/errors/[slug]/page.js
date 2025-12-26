@@ -17,6 +17,7 @@ import {
 import Link from 'next/link';
 import { LANGUAGES } from '@/lib/languages';
 import SocialShare from '@/components/SocialShare';
+import VoteButtons from '@/components/VoteButtons';
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -124,13 +125,21 @@ export default async function ErrorDetailPage(props) {
                         <div className="p-6 bg-panel border-2 border-border/60 rounded-3xl space-y-6">
                             <div className="flex items-center space-x-4">
                                 <div className="w-12 h-12 bg-accent-blue/10 rounded-full flex items-center justify-center text-accent-blue font-bold text-xl">
-                                    {(post.author?.[0] || 'D').toUpperCase()}
+                                    {(post.authorName?.[0] || 'D').toUpperCase()}
                                 </div>
                                 <div>
                                     <p className="text-xs uppercase tracking-widest text-text-secondary font-bold">Contributor</p>
-                                    <p className="font-bold text-lg">{post.author || 'DevFixer Admin'}</p>
+                                    <p className="font-bold text-lg">{post.authorName || 'DevFixer Admin'}</p>
                                 </div>
                             </div>
+
+                            <VoteButtons
+                                slug={post.slug}
+                                initialLikes={post.likes || 0}
+                                initialDislikes={post.dislikes || 0}
+                                likedBy={post.likedBy || []}
+                                dislikedBy={post.dislikedBy || []}
+                            />
 
                             <div className="h-px bg-border/50" />
 

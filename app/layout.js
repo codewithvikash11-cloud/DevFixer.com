@@ -1,6 +1,7 @@
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/context/ThemeContext';
+import { AuthProvider } from '@/context/AuthContext';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -65,7 +66,9 @@ export default function RootLayout({ children }) {
         <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
             <body suppressHydrationWarning>
                 <ThemeProvider>
-                    {children}
+                    <AuthProvider>
+                        {children}
+                    </AuthProvider>
                 </ThemeProvider>
             </body>
         </html>

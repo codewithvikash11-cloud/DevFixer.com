@@ -46,10 +46,9 @@ export default async function LanguagePage(props) {
     const Icon = language.icon;
 
     // Fetch and filter posts for this language
-    const allPosts = getPosts();
+    const allPosts = await getPosts(100, 'published');
     const posts = allPosts.filter(p =>
-        (p.language.toLowerCase() === language.name.toLowerCase() || p.language.toLowerCase() === language.slug.toLowerCase()) &&
-        p.status === 'published'
+        (p.language.toLowerCase() === language.name.toLowerCase() || p.language.toLowerCase() === language.slug.toLowerCase())
     );
 
     // Schema.org Structured Data

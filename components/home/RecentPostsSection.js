@@ -9,11 +9,10 @@ const RecentPostsSection = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('/api/posts')
+        fetch('/api/posts?status=published&limit=3')
             .then(res => res.json())
             .then(data => {
-                const published = data.filter(p => p.status === 'published').slice(0, 3);
-                setPosts(published);
+                setPosts(data);
                 setLoading(false);
             })
             .catch(err => {

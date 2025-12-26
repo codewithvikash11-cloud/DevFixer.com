@@ -35,5 +35,18 @@
     "seoDescription": "",
     "createdAt": "2025-12-25T10:07:45.209Z",
     "author": "DevFixer Admin"
+  },
+  {
+    "title": "how to center a div",
+    "slug": "how-to-center-a-div",
+    "language": "javascript",
+    "description": "hey in this blog i teach you how to center a div.",
+    "content": "",
+    "code": "div{\n display:flex;\n justify-content:center;\n align-items:center;\n}",
+    "status": "published",
+    "seoTitle": "",
+    "seoDescription": "",
+    "createdAt": "2025-12-25T17:50:17.724Z",
+    "author": "DevFixer Admin"
   }
 ]

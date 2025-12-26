@@ -23,12 +23,10 @@ export default function ErrorsListingPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('/api/posts')
+        fetch('/api/posts?status=published')
             .then(res => res.json())
             .then(data => {
-                // Only show published posts
-                const published = data.filter(post => post.status === 'published');
-                setPosts(published);
+                setPosts(data);
                 setLoading(false);
             })
             .catch(err => {

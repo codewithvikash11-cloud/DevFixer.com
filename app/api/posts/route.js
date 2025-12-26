@@ -1,47 +1,22 @@
 import { NextResponse } from 'next/server';
-import { getPosts, savePosts } from '@/lib/posts';
+import { getPosts, createPost, updatePost, deletePost, getPostBySlug } from '@/lib/posts';
 
-export async function GET() {
-    const posts = getPosts();
+export async function GET(request) {
+    const { searchParams } = new URL(request.url);
+    const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')) : 100;
+    const status = searchParams.get('status');
+    const userId = searchParams.get('userId');
+    const posts = await getPosts(limit, status, userId);
     return NextResponse.json(posts);
 }
 
-export async function POST(request) {
-    const body = await request.json();
-    const posts = getPosts();
+// POST and DELETE are handled Client-Side in Dashboard to verify Appwrite Session (RLS).
+// API Proxying loses session context unless cookies are forwarded.
 
-    // Check if updating existing post
-    const existingIndex = posts.findIndex(p => p.slug === body.slug);
+// export async function POST(request) {
+//     return NextResponse.json({ error: 'Use Client SDK for writes' }, { status: 405 });
+// }
 
-    if (existingIndex > -1) {
-        // Update existing
-        posts[existingIndex] = { ...posts[existingIndex], ...body, updatedAt: new Date().toISOString() };
-    } else {
-        // Create new
-        const newPost = {
-            ...body,
-            status: 'published',
-            createdAt: new Date().toISOString(),
-            author: "DevFixer Admin"
-        };
-        posts.push(newPost);
-    }
-
-    savePosts(posts);
-    return NextResponse.json({ success: true, message: 'Post saved successfully' });
-}
-
-export async function DELETE(request) {
-    const { searchParams } = new URL(request.url);
-    const slug = searchParams.get('slug');
-
-    if (!slug) {
-        return NextResponse.json({ error: 'Slug is required' }, { status: 400 });
-    }
-
-    const posts = getPosts();
-    const newPosts = posts.filter(p => p.slug !== slug);
-    savePosts(newPosts);
-
-    return NextResponse.json({ success: true, message: 'Post deleted successfully' });
-}
+// export async function DELETE(request) {
+//     return NextResponse.json({ error: 'Use Client SDK for deletes' }, { status: 405 });
+// }
