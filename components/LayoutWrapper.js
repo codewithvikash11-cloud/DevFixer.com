@@ -24,7 +24,7 @@ const LayoutWrapper = ({ children }) => {
 
             <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
-            <main className="pt-16 lg:pl-16 min-h-screen transition-all duration-300">
+            <main className="pt-16 md:pt-20 lg:pl-20 min-h-screen transition-all duration-300">
                 <div className="max-w-7xl mx-auto p-4 md:p-8 lg:p-10">
                     {children}
                 </div>
