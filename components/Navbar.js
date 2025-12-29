@@ -100,7 +100,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
                     <div className="hidden lg:flex items-center gap-1 ml-4">
                         <NavLink href="/errors">Errors</NavLink>
                         <NavLink href="/languages">Languages</NavLink>
-                        <NavLink href="/pricing">Pricing</NavLink>
+
                     </div>
                 </div>
 

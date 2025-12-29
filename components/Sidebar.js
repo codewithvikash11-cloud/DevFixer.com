@@ -36,7 +36,9 @@ const Sidebar = ({ isOpen, onClose }) => {
         >
             {/* Mobile Header in Sidebar */}
             <div className="lg:hidden w-full px-6 mb-8 flex items-center justify-between">
-                <span className="text-xs font-black uppercase tracking-widest text-text-secondary">Navigation</span>
+                <div className="scale-90 origin-left">
+                    <Logo />
+                </div>
                 <button onClick={onClose} className="p-1 hover:bg-white/5 rounded-full">
                     <X size={18} className="text-text-secondary" />
                 </button>

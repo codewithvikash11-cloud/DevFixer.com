@@ -6,7 +6,7 @@ import AuroraBackground from '@/components/hero/AuroraBackground';
 import Link from 'next/link';
 import { ArrowRight, Zap, CheckCircle, Search, Terminal, Cpu } from 'lucide-react';
 import CTASection from '@/components/home/CTASection';
-import TrustSection from '@/components/home/TrustSection';
+
 
 export default function SolutionsPage() {
     return (
@@ -44,7 +44,7 @@ export default function SolutionsPage() {
             </section>
 
             {/* TRUST */}
-            <TrustSection />
+
 
             {/* VISUAL DEMO SECTION */}
             <section className="py-24 bg-surface border-y border-border relative overflow-hidden">

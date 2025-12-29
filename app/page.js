@@ -10,7 +10,7 @@ import FeaturesSection from '@/components/home/FeaturesSection';
 import HowItWorksSection from '@/components/home/HowItWorksSection';
 import RecentPostsSection from '@/components/home/RecentPostsSection';
 import LanguagesSection from '@/components/home/LanguagesSection';
-import TrustSection from '@/components/home/TrustSection';
+
 import CTASection from '@/components/home/CTASection';
 
 export default function Home() {
@@ -40,14 +40,7 @@ export default function Home() {
                         {/* Left Column: Typography */}
                         <div className="flex-1 text-center lg:text-left space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
 
-                            {/* Version Chip */}
-                            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-surface border border-border/50 shadow-sm backdrop-blur-sm hover:border-accent-primary/50 transition-colors cursor-default">
-                                <span className="relative flex h-2 w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-primary"></span>
-                                </span>
-                                <span className="text-[10px] sm:text-xs font-bold tracking-widest uppercase text-text-secondary">DevFixer v2.0</span>
-                            </div>
+
 
                             <div className="space-y-6">
                                 <h1 className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-tighter text-text-primary leading-[1.05]">
@@ -78,7 +71,7 @@ export default function Home() {
                                 </Link>
                             </div>
 
-                            <TrustSection />
+
                         </div>
 
                         {/* Right Column: Visuals */}

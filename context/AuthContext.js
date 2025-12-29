@@ -17,6 +17,20 @@ export function AuthProvider({ children }) {
 
     const checkUser = async () => {
         try {
+            // Optimization: Check for session in localStorage before making network request
+            // This prevents 401 console errors for guest users
+            if (typeof window !== 'undefined') {
+                const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
+                const sessionKey = `a_session_${projectId}`;
+                const sessionLegacy = `a_session_${projectId}_legacy`;
+
+                if (!localStorage.getItem(sessionKey) && !localStorage.getItem(sessionLegacy)) {
+                    setUser(null);
+                    setLoading(false);
+                    return;
+                }
+            }
+
             const current = await account.get();
             setUser(current);
         } catch (error) {
