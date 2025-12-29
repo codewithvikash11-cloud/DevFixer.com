@@ -25,7 +25,8 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
 
     useEffect(() => {
         if (isSearchOpen && inputRef.current) {
-            inputRef.current.focus();
+            // Small delay to ensure render
+            setTimeout(() => inputRef.current?.focus(), 50);
         }
     }, [isSearchOpen]);
 
@@ -39,54 +40,71 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
 
     return (
         <nav className={cn(
-            "fixed top-0 left-0 right-0 z-50 h-16 md:h-20 transition-all duration-500",
-            isScrolled
-                ? "bg-background/70 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/5 supports-[backdrop-filter]:bg-background/60"
+            "fixed top-0 left-0 right-0 z-50 h-16 md:h-20 transition-all duration-300",
+            isScrolled || isSearchOpen
+                ? "bg-background/80 backdrop-blur-xl border-b border-white/5 shadow-sm supports-[backdrop-filter]:bg-background/60"
                 : "bg-transparent border-b border-transparent"
         )}>
-            <div className="h-full px-4 md:px-8 flex items-center justify-between gap-4 max-w-[1920px] mx-auto relative">
-
-                {/* Mobile Search Overlay */}
-                <div className={cn(
-                    "absolute inset-0 bg-background/95 backdrop-blur-xl z-50 flex items-center px-4 gap-3 md:hidden transition-all duration-300",
-                    isSearchOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-                )}>
-                    <button onClick={() => setIsSearchOpen(false)} className="p-2 hover:bg-white/5 rounded-lg text-text-secondary">
-                        <X size={20} />
+            {/* Mobile Search Overlay - Full Screen Mode */}
+            <div className={cn(
+                "absolute inset-0 z-50 flex items-center px-4 gap-4 md:hidden bg-background transition-opacity duration-300 ease-out",
+                isSearchOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+            )}>
+                <button
+                    onClick={() => setIsSearchOpen(false)}
+                    className="p-2 -ml-2 hover:bg-surface rounded-full text-text-secondary active:scale-95 transition-transform"
+                >
+                    <X size={24} />
+                </button>
+                <form onSubmit={handleSearch} className="flex-1">
+                    <input
+                        ref={inputRef}
+                        type="search"
+                        placeholder="Search solutions..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full h-10 bg-transparent text-lg font-medium text-text-primary placeholder:text-text-tertiary outline-none"
+                    />
+                </form>
+                {searchQuery && (
+                    <button
+                        onClick={handleSearch}
+                        className="p-2 bg-accent-primary text-white rounded-full"
+                    >
+                        <ArrowRight size={20} />
                     </button>
-                    <form onSubmit={handleSearch} className="flex-1 relative">
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            placeholder="Type to search..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full h-10 pl-4 pr-10 bg-surface border border-border/50 rounded-xl text-sm outline-none focus:border-accent-primary"
-                        />
-                    </form>
-                </div>
+                )}
+            </div>
 
-                {/* Left: Brand */}
-                <div className="flex items-center gap-4 lg:gap-8">
+            <div className={cn(
+                "h-full px-4 md:px-8 flex items-center justify-between gap-4 max-w-[1920px] mx-auto relative transition-opacity duration-300",
+                isSearchOpen ? "opacity-0 md:opacity-100" : "opacity-100"
+            )}>
+
+                {/* Left: Brand & Menu */}
+                <div className="flex items-center gap-3 lg:gap-8">
+                    {/* Mobile Hamburger - Larger Tap Target */}
                     <button
                         onClick={onMenuClick}
-                        className="p-2 -ml-2 lg:hidden hover:bg-surface rounded-xl text-text-secondary transition-all active:scale-95"
+                        className="p-2 -ml-2 lg:hidden text-text-secondary hover:text-text-primary active:scale-90 transition-transform"
+                        aria-label="Toggle Menu"
                     >
                         {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
+
                     <Link href="/" className="flex items-center gap-2 group">
                         <Logo />
                     </Link>
 
                     {/* Desktop Nav Links */}
-                    <div className="hidden lg:flex items-center gap-6 ml-4">
+                    <div className="hidden lg:flex items-center gap-1 ml-4">
                         <NavLink href="/errors">Errors</NavLink>
                         <NavLink href="/languages">Languages</NavLink>
                         <NavLink href="/pricing">Pricing</NavLink>
                     </div>
                 </div>
 
-                {/* Center: Omni-Search */}
+                {/* Center: Omni-Search (Desktop) */}
                 <div className="hidden md:block flex-1 max-w-sm lg:max-w-md px-4 absolute left-1/2 -translate-x-1/2">
                     <form onSubmit={handleSearch} className="relative group">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary transition-colors group-focus-within:text-accent-primary" size={16} />
@@ -106,8 +124,12 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
                 </div>
 
                 {/* Right: Actions */}
-                <div className="flex items-center gap-2 md:gap-4">
-                    <button onClick={() => setIsSearchOpen(true)} className="p-2 md:hidden hover:bg-surface rounded-xl text-text-secondary">
+                <div className="flex items-center gap-3 sm:gap-4">
+                    {/* Mobile Search Trigger */}
+                    <button
+                        onClick={() => setIsSearchOpen(true)}
+                        className="p-2 md:hidden text-text-secondary hover:text-text-primary active:scale-95 transition-transform"
+                    >
                         <Search size={22} />
                     </button>
 
@@ -130,11 +152,9 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
                             <Link href="/login" className="hidden sm:block text-sm font-bold text-text-secondary hover:text-text-primary transition-colors">
                                 Log In
                             </Link>
-                            <Link href="/signup" className="group relative px-5 py-2 rounded-full bg-text-primary text-background text-sm font-bold hover:shadow-lg hover:shadow-accent-primary/20 transition-all overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
-                                <span className="relative flex items-center gap-2">
-                                    Get Started <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-                                </span>
+                            <Link href="/signup" className="group relative px-4 sm:px-5 py-2 rounded-full bg-text-primary text-background text-sm font-bold hover:shadow-lg hover:shadow-accent-primary/20 transition-all overflow-hidden flex items-center gap-2">
+                                <span>Get Started</span>
+                                <ArrowRight size={14} className="hidden sm:block group-hover:translate-x-0.5 transition-transform" />
                             </Link>
                         </div>
                     )}
@@ -147,10 +167,9 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
 const NavLink = ({ href, children }) => (
     <Link
         href={href}
-        className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors relative group py-1"
+        className="px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors rounded-lg hover:bg-surface"
     >
         {children}
-        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-accent-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
     </Link>
 );
 
