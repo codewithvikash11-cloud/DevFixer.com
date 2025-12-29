@@ -15,6 +15,7 @@ import {
     ThumbsUp
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { LANGUAGES } from '@/lib/languages';
 import SocialShare from '@/components/SocialShare';
 import VoteButtons from '@/components/VoteButtons';
@@ -64,8 +65,19 @@ export default async function ErrorDetailPage(props) {
                 {/* Header */}
                 <header className="mb-10 md:mb-16">
                     <div className="flex flex-wrap items-center gap-4 mb-6">
-                        <span className={`inline-flex items-center space-x-2 px-3 py-1 bg-panel border border-border rounded-lg text-[10px] font-black uppercase tracking-widest ${languageConfig.color}`}>
-                            {Icon && <Icon size={14} />}
+                        <span className={`inline-flex items-center space-x-2 px-3 py-1 bg-panel border-2 border-border/50 rounded-lg text-[10px] font-black uppercase tracking-widest ${languageConfig.color}`}>
+                            {languageConfig.image ? (
+                                <div className="relative w-4 h-4">
+                                    <Image
+                                        src={languageConfig.image}
+                                        alt={`${languageConfig.name} icon`}
+                                        fill
+                                        className="object-contain"
+                                    />
+                                </div>
+                            ) : (
+                                Icon && <Icon size={14} />
+                            )}
                             <span>{languageConfig.name}</span>
                         </span>
                         {post.createdAt && (

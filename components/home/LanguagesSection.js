@@ -5,18 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Code } from 'lucide-react';
 
-const languages = [
-    { name: "JavaScript", count: "2.4k+", image: "/images/javascript.png", slug: "javascript" },
-    { name: "Python", count: "1.8k+", image: "/images/python.png", slug: "python" },
-    { name: "React", count: "1.2k+", image: "/images/react.png", slug: "react" },
-    { name: "TypeScript", count: "900+", image: "/images/typescript.png", slug: "typescript" },
-    { name: "Node.js", count: "850+", image: "/images/node.png", slug: "node" },
-    { name: "Java", count: "1.5k+", image: "/images/java.png", slug: "java" },
-    { name: "C++", count: "600+", image: "/images/cpp.png", slug: "cpp" },
-    { name: "Go", count: "400+", image: "/images/go.png", slug: "go" },
-    { name: "Rust", count: "300+", image: "/images/rust.png", slug: "rust" },
-    { name: "Docker", count: "12k+", image: "/images/docker.png", slug: "docker" },
-];
+import { LANGUAGES } from '@/lib/languages';
+
+const languages = LANGUAGES.filter(l => l.image).map(l => ({
+    name: l.name,
+    count: "1k+", // Dynamic counts would be better, but static for now
+    image: l.image,
+    slug: l.slug
+}));
 
 const LanguageChip = ({ lang }) => {
     const [imgError, setImgError] = useState(false);

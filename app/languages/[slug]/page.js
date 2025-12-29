@@ -15,6 +15,7 @@ import {
     AlertCircle
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export async function generateMetadata(props) {
     const params = await props.params;
@@ -87,8 +88,19 @@ export default async function LanguagePage(props) {
 
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 md:gap-8 mb-10 md:mb-16">
                     <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-6 md:gap-8">
-                        <div className={`p-5 md:p-6 bg-panel border-2 border-border/50 rounded-2xl md:rounded-[2rem] ${language.bg} border-white/5 shadow-xl shadow-black/10`}>
-                            <Icon size={40} className={`md:w-16 md:h-16 ${language.color}`} />
+                        <div className={`p-5 md:p-6 bg-panel border-2 border-border/50 rounded-2xl md:rounded-[2rem] ${language.bg} border-white/5 shadow-xl shadow-black/10 flex items-center justify-center`}>
+                            {language.image ? (
+                                <div className="relative w-10 h-10 md:w-16 md:h-16">
+                                    <Image
+                                        src={language.image}
+                                        alt={`${language.name} logo`}
+                                        fill
+                                        className="object-contain"
+                                    />
+                                </div>
+                            ) : (
+                                <Icon size={40} className={`md:w-16 md:h-16 ${language.color}`} />
+                            )}
                         </div>
                         <div>
                             <div className="flex items-center justify-center sm:justify-start space-x-2 text-text-secondary font-mono text-[9px] md:text-xs mb-2">
