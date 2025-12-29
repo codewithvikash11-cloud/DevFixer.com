@@ -50,7 +50,7 @@ export default function Home() {
                             </div>
 
                             <div className="space-y-6">
-                                <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tighter text-text-primary leading-[1.05]">
+                                <h1 className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-tighter text-text-primary leading-[1.05]">
                                     Master every <br className="hidden lg:block" />
                                     <span className="text-gradient-cosmic">exception.</span>
                                 </h1>

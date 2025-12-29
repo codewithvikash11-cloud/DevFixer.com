@@ -63,7 +63,7 @@ const GlassEcosystem = () => {
             </div>
 
             {/* FLOATING CARDS - Layered Depth */}
-            <div className="absolute -right-4 md:-right-8 top-12 z-30 p-4 rounded-xl glass-strong border border-white/10 shadow-2xl animate-float-slow" style={{ animationDelay: '2s' }}>
+            <div className="absolute right-0 md:-right-8 top-12 z-30 p-4 rounded-xl glass-strong border border-white/10 shadow-2xl animate-float-slow" style={{ animationDelay: '2s' }}>
                 <div className="flex items-center space-x-3">
                     <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
                         <Zap size={20} fill="currentColor" />

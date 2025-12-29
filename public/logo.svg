@@ -1,39 +1,56 @@
 <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="shieldGrad" x1="20" y1="20" x2="180" y2="180" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#0F172A" />
-      <stop offset="1" stop-color="#1E293B" />
+    <linearGradient id="shieldGrad" x1="100" y1="0" x2="100" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E293B" />
+      <stop offset="1" stop-color="#0F172A" />
     </linearGradient>
-    <linearGradient id="boltGrad" x1="100" y1="0" x2="100" y2="200" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#22D3EE" /> <!-- Cyan -->
-      <stop offset="1" stop-color="#3B82F6" /> <!-- Blue -->
+    <linearGradient id="glowGrad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE" />
+      <stop offset="1" stop-color="#3B82F6" />
     </linearGradient>
-     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6" result="coloredBlur" />
-      <feMerge>
-        <feMergeNode in="coloredBlur" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
 
-  <!-- Outer Rounded Square/Chip Background -->
-  <rect x="30" y="30" width="140" height="140" rx="30" fill="url(#shieldGrad)" stroke="#334155" stroke-width="2" />
-  
-  <!-- Circuit Traces -->
-  <path d="M30 80H50L60 90" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
-  <path d="M170 120H150L140 110" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="150" cy="50" r="4" fill="#334155" />
-  <circle cx="50" cy="150" r="4" fill="#334155" />
+  <!-- Animated Shield Container -->
+  <path d="M100 20C60 20 30 40 30 70V110C30 150 60 180 100 195C140 180 170 150 170 110V70C170 40 140 20 100 20Z" 
+        fill="url(#shieldGrad)" 
+        stroke="#334155" 
+        stroke-width="2" />
 
-  <!-- The "Fix" Motif: A Lightning Bolt cutting a Glitch -->
-  <g filter="url(#glow)">
-      <path d="M110 40L65 110H95L85 160L135 85H105L110 40Z" fill="url(#boltGrad)" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Inner Tech Circuit Lines -->
+  <path d="M100 20V50" stroke="#334155" stroke-width="2" opacity="0.5"/>
+  <path d="M100 195V170" stroke="#334155" stroke-width="2" opacity="0.5"/>
+  <path d="M30 70H50" stroke="#334155" stroke-width="2" opacity="0.5"/>
+  <path d="M170 70H150" stroke="#334155" stroke-width="2" opacity="0.5"/>
+
+  <!-- The "Bug" Representation (Abstract) -->
+  <g transform="translate(100, 105)">
+    <!-- Bug Body -->
+    <path d="M-25 -20C-25 -35 -15 -45 0 -45C15 -45 25 -35 25 -20V10C25 30 10 40 0 40C-10 40 -25 30 -25 10V-20Z" fill="#334155" opacity="0.8"/>
+    <!-- Legs -->
+    <path d="M-25 -10H-35 M25 -10H35 M-25 10H-35 M25 10H35 M-25 30L-32 35 M25 30L32 35" stroke="#334155" stroke-width="3" stroke-linecap="round"/>
   </g>
-  
-  <!-- Sparkles -->
-  <path d="M150 70L153 77L160 80L153 83L150 90L147 83L140 80L147 77L150 70Z" fill="#F472B6">
-      <animateTransform attributeName="transform" type="scale" values="0;1;0" dur="2s" repeatCount="indefinite" />
-  </path>
 
+  <!-- The "Fix" - A Glowing Checkmark/Lightning Slash overlaying the Bug -->
+  <path d="M85 105L100 120L135 85" 
+        stroke="url(#glowGrad)" 
+        stroke-width="8" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        filter="url(#softGlow)">
+      <animate attributeName="stroke-dasharray" from="0 100" to="100 0" dur="1.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1" />
+      <animate attributeName="opacity" values="0;1" dur="0.5s" fill="freeze" />
+  </path>
+  
+  <!-- "Fixed" Sparkles -->
+  <circle cx="140" cy="80" r="3" fill="#F472B6">
+    <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="75" cy="115" r="2" fill="#F472B6">
+     <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+  </circle>
+  
 </svg>

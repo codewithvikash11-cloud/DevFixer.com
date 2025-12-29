@@ -97,7 +97,7 @@ const BentoCard = ({ title, description, icon, className = "", href, ctaText, ch
  */
 const SolutionsVisual = () => {
     return (
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center translate-x-4 translate-y-2 md:translate-x-8 md:translate-y-4">
+        <div className="absolute inset-0 w-full h-full flex items-center justify-center translate-x-0 translate-y-2 md:translate-x-8 md:translate-y-4">
 
             {/* Main Interface Window */}
             <div className="relative w-[110%] bg-surface border border-border rounded-xl shadow-2xl p-4 overflow-hidden transform -rotate-2 hover:rotate-0 transition-transform duration-500">
