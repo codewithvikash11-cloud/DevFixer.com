@@ -2,47 +2,63 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 
 const languages = [
-    { name: "JavaScript", count: "2.4k+", color: "bg-yellow-400/10 text-yellow-500 border-yellow-400/20" },
-    { name: "Python", count: "1.8k+", color: "bg-blue-400/10 text-blue-500 border-blue-400/20" },
-    { name: "React", count: "1.2k+", color: "bg-cyan-400/10 text-cyan-500 border-cyan-400/20" },
-    { name: "TypeScript", count: "900+", color: "bg-blue-600/10 text-blue-600 border-blue-600/20" },
-    { name: "Node.js", count: "850+", color: "bg-green-500/10 text-green-500 border-green-500/20" },
-    { name: "Java", count: "1.5k+", color: "bg-orange-500/10 text-orange-500 border-orange-500/20" },
-    { name: "C++", count: "600+", color: "bg-indigo-500/10 text-indigo-500 border-indigo-500/20" },
-    { name: "Go", count: "400+", color: "bg-cyan-300/10 text-cyan-300 border-cyan-300/20" }
+    { name: "JavaScript", count: "2.4k+", color: "#F7DF1E" },
+    { name: "Python", count: "1.8k+", color: "#3776AB" },
+    { name: "React", count: "1.2k+", color: "#61DAFB" },
+    { name: "TypeScript", count: "900+", color: "#3178C6" },
+    { name: "Node.js", count: "850+", color: "#339933" },
+    { name: "Java", count: "1.5k+", color: "#007396" },
+    { name: "C++", count: "600+", color: "#00599C" },
+    { name: "Go", count: "400+", color: "#00ADD8" },
+    { name: "Rust", count: "300+", color: "#EF4926" },
+    { name: "Docker", count: "12k+", color: "#2496ED" },
 ];
 
 const LanguagesSection = () => {
     return (
-        <section className="py-24 bg-gray-50 dark:bg-[#0a0a0a] border-t border-gray-100 dark:border-white/5">
-            <div className="container mx-auto px-6 lg:px-12">
-                <div className="flex flex-col md:flex-row items-center justify-between mb-12">
-                    <h2 className="text-3xl font-black text-gray-900 dark:text-white">Popular Technologies</h2>
-                    <Link href="/languages" className="hidden md:flex items-center text-sm font-bold text-indigo-500 hover:text-indigo-400 transition-colors">
-                        View all ecosystems <ArrowUpRight size={16} className="ml-1" />
-                    </Link>
-                </div>
+        <section className="py-24 relative overflow-hidden bg-background border-y border-border">
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                    {languages.map((lang) => (
-                        <Link key={lang.name} href={`/languages?q=${lang.name.toLowerCase()}`} className="group p-6 bg-white dark:bg-[#121212] border border-gray-100 dark:border-white/5 rounded-2xl hover:border-indigo-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/5 flex items-center justify-between">
-                            <span className="font-bold text-gray-700 dark:text-gray-200 group-hover:text-indigo-500 transition-colors">{lang.name}</span>
-                            <span className={`text-[10px] font-black px-2 py-1 rounded-md border ${lang.color}`}>
-                                {lang.count}
-                            </span>
+            <div className="container mx-auto px-6 text-center mb-16 relative z-10">
+                <h2 className="text-3xl font-bold text-text-primary tracking-tight mb-4">Supported <span className="text-gradient-cosmic">Ecosystems</span></h2>
+                <p className="text-text-secondary">We track error patterns across the entire modern stack.</p>
+            </div>
+
+            {/* Infinite Marquee Container */}
+            <div className="relative flex overflow-x-hidden group">
+                {/* Gradient Masks */}
+                <div className="absolute top-0 bottom-0 left-0 w-24 z-20 bg-gradient-to-r from-background to-transparent" />
+                <div className="absolute top-0 bottom-0 right-0 w-24 z-20 bg-gradient-to-l from-background to-transparent" />
+
+                {/* Marquee Content (Duplicated for seamless loop) */}
+                <div className="py-12 animate-marquee flex space-x-8 whitespace-nowrap hover:[animation-play-state:paused]">
+                    {[...languages, ...languages, ...languages].map((lang, index) => (
+                        <Link
+                            key={`${lang.name}-${index}`}
+                            href={`/languages?q=${lang.name.toLowerCase()}`}
+                            className="inline-flex items-center space-x-3 px-8 py-4 rounded-full border border-border bg-surface hover:bg-surface-highlight hover:border-accent-primary/30 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 group/chip"
+                        >
+                            <span
+                                className="w-3 h-3 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.2)]"
+                                style={{ backgroundColor: lang.color, boxShadow: `0 0 12px ${lang.color}40` }}
+                            />
+                            <span className="font-bold text-text-primary text-lg">{lang.name}</span>
+                            <span className="text-xs font-mono text-text-tertiary opacity-60 group-hover/chip:opacity-100">{lang.count}</span>
                         </Link>
                     ))}
                 </div>
-
-                <div className="mt-8 md:hidden text-center">
-                    <Link href="/languages" className="inline-flex items-center text-sm font-bold text-indigo-500 hover:text-indigo-400 transition-colors">
-                        View all ecosystems <ArrowUpRight size={16} className="ml-1" />
-                    </Link>
-                </div>
             </div>
+
+            <style jsx>{`
+                @keyframes marquee {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+                .animate-marquee {
+                    animation: marquee 40s linear infinite;
+                }
+            `}</style>
         </section>
     );
 };

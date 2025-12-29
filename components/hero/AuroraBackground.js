@@ -1,25 +1,23 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const AuroraBackground = () => {
     return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-            {/* Base Background */}
-            <div className="absolute inset-0 bg-white dark:bg-[#030303] transition-colors duration-500" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none bg-background">
 
-            {/* Aurora Orbs - Optimized with CSS translate/scale instead of top/left for performance */}
-            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-purple-400/30 dark:bg-purple-600/20 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-blob" />
-            <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-cyan-400/30 dark:bg-cyan-600/20 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-blob animation-delay-2000" />
-            <div className="absolute bottom-[-10%] left-1/3 w-[600px] h-[600px] bg-pink-400/30 dark:bg-blue-600/20 rounded-full blur-[120px] mix-blend-multiply dark:mix-blend-screen animate-blob animation-delay-4000" />
+            {/* 1. Base Grid Layer */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-[0.4] mix-blend-overlay" />
 
-            {/* Grid Texture Overlay */}
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.4] dark:opacity-[0.2]"
-                style={{ backgroundImage: `radial-gradient(circle at 1px 1px, rgba(120, 120, 120, 0.2) 1px, transparent 0)` }}
-            />
+            {/* 2. Cosmic Nebulas - Deeper, slower moving */}
+            <div className="absolute top-[-20%] left-[20%] w-[60vw] h-[60vw] bg-accent-primary opacity-20 rounded-full blur-[150px] animate-float-slow mix-blend-screen" />
+            <div className="absolute bottom-[-10%] right-[10%] w-[50vw] h-[50vw] bg-accent-secondary opacity-15 rounded-full blur-[150px] animate-blob animation-delay-4000 mix-blend-screen" />
 
-            {/* Vignette for focus */}
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent dark:from-[#030303] dark:via-transparent dark:to-transparent" />
+            {/* 3. Central Spotlight - Focuses attention on content */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white opacity-[0.03] dark:opacity-[0.05] rounded-full blur-[100px]" />
+
+            {/* 4. Vignette for cinematic depth */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background/90" />
         </div>
     );
 };

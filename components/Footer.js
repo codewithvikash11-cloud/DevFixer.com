@@ -2,90 +2,72 @@
 
 import React from 'react';
 import Link from 'next/link';
-import {
-
-    Mail,
-    Heart,
-    ArrowRight,
-    Command,
-    Terminal,
-    Cpu
-} from 'lucide-react';
+import { Mail, ArrowRight, Command, Terminal, Cpu, Github, Twitter, Globe, Heart } from 'lucide-react';
 import Logo from './Logo';
 
 const Footer = () => {
     return (
-        <footer className="lg:pl-16 bg-panel border-t border-border relative overflow-hidden">
-            {/* Creative Background Elements */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-blue via-accent-purple to-accent-green opacity-50" />
-            <div className="absolute -top-24 -right-24 w-96 h-96 bg-accent-blue/5 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-accent-purple/5 rounded-full blur-3xl pointer-events-none" />
+        <footer className="lg:pl-16 bg-background border-t border-border relative overflow-hidden">
+            {/* Background Effects */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
+            <div className="absolute -top-[300px] left-1/4 w-[600px] h-[600px] bg-accent-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
-                    {/* Brand Section */}
-                    <div className="lg:col-span-5 space-y-6">
-                        <Link href="/" className="inline-block">
-                            <div className="flex items-center gap-3 group">
-                                <div className="p-2 bg-background border border-border rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
-                                    <Terminal size={32} className="text-accent-blue" />
-                                </div>
-                                <div>
-                                    <h2 className="text-2xl font-black tracking-tighter uppercase">Dev<span className="text-accent-blue">Fixer</span></h2>
-                                    <p className="text-[10px] font-mono text-text-secondary tracking-[0.3em] uppercase">Debug. Commit. Deploy.</p>
-                                </div>
+            <div className="max-w-7xl mx-auto px-6 py-20 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
+
+                    {/* Brand */}
+                    <div className="lg:col-span-4 space-y-6">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center text-white shadow-lg shadow-accent-primary/20">
+                                <Terminal size={20} />
                             </div>
-                        </Link>
-                        <p className="text-text-secondary leading-relaxed max-w-sm font-medium">
-                            The ultimate encyclopedia for coding errors. We help developers fix bugs faster with precise solutions, detailed explanations, and copy-paste ready code.
+                            <span className="text-xl font-bold tracking-tight text-text-primary">DevFixer</span>
+                        </div>
+                        <p className="text-text-secondary leading-relaxed max-w-sm text-sm">
+                            The intelligent error resolution platform for modern engineering teams. Fix faster, ship cleaner.
                         </p>
-
+                        <div className="flex items-center gap-4">
+                            <SocialLink icon={<Github size={18} />} href="https://github.com" />
+                            <SocialLink icon={<Twitter size={18} />} href="https://twitter.com" />
+                            <SocialLink icon={<Globe size={18} />} href="https://devfixer.com" />
+                        </div>
                     </div>
 
-                    {/* Quick Link Columns */}
+                    {/* Links */}
                     <div className="lg:col-span-2 space-y-6">
-                        <h4 className="font-black text-sm uppercase tracking-widest text-text-primary flex items-center gap-2">
-                            <Command size={14} className="text-accent-purple" />
-                            Platform
-                        </h4>
-                        <ul className="space-y-4 text-sm font-medium text-text-secondary">
-                            <FooterLink href="/errors">Error Database</FooterLink>
+                        <h4 className="font-bold text-sm text-text-primary">Platform</h4>
+                        <ul className="space-y-4 text-sm text-text-secondary">
+                            <FooterLink href="/errors">Database</FooterLink>
                             <FooterLink href="/languages">Languages</FooterLink>
-                            <FooterLink href="/editor">Online Editor</FooterLink>
-                            <FooterLink href="/extension">VS Code Extension</FooterLink>
+                            <FooterLink href="/pricing">Pricing</FooterLink>
+                            <FooterLink href="/enterprise">Enterprise</FooterLink>
                         </ul>
                     </div>
 
                     <div className="lg:col-span-2 space-y-6">
-                        <h4 className="font-black text-sm uppercase tracking-widest text-text-primary flex items-center gap-2">
-                            <Cpu size={14} className="text-accent-green" />
-                            Community
-                        </h4>
-                        <ul className="space-y-4 text-sm font-medium text-text-secondary">
-                            <FooterLink href="/contribute">Contribute Fixes</FooterLink>
-                            <FooterLink href="/leaderboard">Leaderboard</FooterLink>
-                            <FooterLink href="/discussions">Discussions</FooterLink>
-                            <FooterLink href="/api">API Access</FooterLink>
+                        <h4 className="font-bold text-sm text-text-primary">Resources</h4>
+                        <ul className="space-y-4 text-sm text-text-secondary">
+                            <FooterLink href="/docs">Documentation</FooterLink>
+                            <FooterLink href="/api">API Reference</FooterLink>
+                            <FooterLink href="/blog">Engineering Blog</FooterLink>
+                            <FooterLink href="/community">Community</FooterLink>
                         </ul>
                     </div>
 
-                    {/* Newsletter Section */}
-                    <div className="lg:col-span-3 space-y-6">
-                        <h4 className="font-black text-sm uppercase tracking-widest text-text-primary flex items-center gap-2">
-                            <Mail size={14} className="text-accent-yellow" />
-                            Stay Updated
-                        </h4>
-                        <p className="text-xs text-text-secondary font-medium">
-                            Get the latest bug fixes, interviews, and dev tips delivered to your inbox weekly.
+                    {/* Newsletter */}
+                    <div className="lg:col-span-4 space-y-6">
+                        <h4 className="font-bold text-sm text-text-primary">Stay updated</h4>
+                        <p className="text-xs text-text-secondary">
+                            Get the latest debugging tips and platform updates directly to your inbox.
                         </p>
-                        <form className="relative group">
+                        <form className="relative flex gap-2">
                             <input
                                 type="email"
-                                placeholder="dev@example.com"
-                                className="w-full bg-background border-2 border-border text-sm font-bold py-3 pl-4 pr-12 rounded-xl focus:outline-none focus:border-accent-blue transition-all placeholder:font-medium placeholder:text-text-secondary/50"
+                                placeholder="developer@company.com"
+                                className="w-full h-10 bg-surface border border-border rounded-lg px-4 text-sm outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/10 transition-all"
                             />
-                            <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-accent-blue text-white rounded-lg hover:scale-105 active:scale-95 transition-all shadow-lg shadow-accent-blue/20">
-                                <ArrowRight size={16} />
+                            <button type="submit" className="h-10 px-4 bg-text-primary text-background rounded-lg font-bold text-sm hover:opacity-90 transition-opacity">
+                                Subscribe
                             </button>
                         </form>
                     </div>
@@ -93,17 +75,13 @@ const Footer = () => {
 
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-                    <p className="text-xs font-bold text-text-secondary text-center md:text-left">
+                    <p className="text-xs font-medium text-text-tertiary">
                         &copy; {new Date().getFullYear()} DevFixer Inc. All rights reserved.
                     </p>
-                    <div className="flex items-center gap-6 text-xs font-bold text-text-secondary">
-                        <Link href="/privacy" className="hover:text-accent-blue transition-colors">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-accent-blue transition-colors">Terms of Service</Link>
-                    </div>
-                    <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-widest border border-border px-3 py-1.5 rounded-lg bg-background/50">
-                        <span>Made with</span>
-                        <Heart size={10} className="text-red-500 fill-red-500 animate-pulse" />
-                        <span>by Developers</span>
+                    <div className="flex items-center gap-1.5 text-xs font-medium text-text-tertiary border border-border px-3 py-1.5 rounded-full bg-surface/50">
+                        <span>Crafted by developers</span>
+                        <Heart size={10} className="text-red-500 fill-red-500" />
+                        <span>worldwide</span>
                     </div>
                 </div>
             </div>
@@ -111,16 +89,18 @@ const Footer = () => {
     );
 };
 
-// Helper Components
-
-
 const FooterLink = ({ href, children }) => (
     <li>
-        <Link href={href} className="hover:text-accent-blue hover:pl-2 transition-all duration-300 flex items-center gap-2 group">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-blue scale-0 group-hover:scale-100 transition-transform" />
+        <Link href={href} className="hover:text-accent-primary transition-colors block">
             {children}
         </Link>
     </li>
+);
+
+const SocialLink = ({ icon, href }) => (
+    <a href={href} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center text-text-secondary hover:bg-surface-highlight hover:text-text-primary transition-all hover:-translate-y-1">
+        {icon}
+    </a>
 );
 
 export default Footer;
