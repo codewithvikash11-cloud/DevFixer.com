@@ -5,6 +5,7 @@ import LayoutWrapper from '@/components/LayoutWrapper';
 import { LANGUAGES, CATEGORIES, getLanguagesByCategory } from '@/lib/languages';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function LanguagesPage() {
     return (
@@ -32,8 +33,19 @@ export default function LanguagesPage() {
                                     href={`/languages/${lang.slug}`}
                                     className="group p-6 bg-panel border border-border rounded-2xl hover:border-accent-blue/50 hover:shadow-2xl hover:shadow-accent-blue/5 transition-all flex items-center space-x-4 active:scale-95"
                                 >
-                                    <div className={`p-3 rounded-xl ${lang.bg} border border-transparent group-hover:border-white/10 transition-colors`}>
-                                        <lang.icon size={24} className={`${lang.color} group-hover:scale-110 transition-transform`} />
+                                    <div className={`p-3 rounded-xl ${lang.bg} border border-transparent group-hover:border-white/10 transition-colors flex items-center justify-center`}>
+                                        {lang.image ? (
+                                            <div className="w-6 h-6 relative">
+                                                <Image
+                                                    src={lang.image}
+                                                    alt={`${lang.name} logo`}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <lang.icon size={24} className={`${lang.color} group-hover:scale-110 transition-transform`} />
+                                        )}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <h3 className="font-bold text-lg truncate">{lang.name}</h3>

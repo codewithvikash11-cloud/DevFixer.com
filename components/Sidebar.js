@@ -3,19 +3,28 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Code, Hash, Edit3, BookOpen, Settings, X, Terminal, Activity } from 'lucide-react';
+import { X } from 'lucide-react'; // Keeping utility icons from Lucide
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
+import {
+    HomeIcon,
+    ErrorsIcon,
+    LanguagesIcon,
+    EditorIcon,
+    BlogsIcon,
+    SettingsIcon,
+    TerminalIcon
+} from '@/components/ui/PremiumIcons';
 
 const Sidebar = ({ isOpen, onClose }) => {
     const pathname = usePathname();
 
     const navItems = [
-        { icon: Home, label: 'Home', href: '/' },
-        { icon: Hash, label: 'Errors', href: '/errors' },
-        { icon: Code, label: 'Languages', href: '/languages' },
-        { icon: Edit3, label: 'Editor', href: '/editor' },
-        { icon: BookOpen, label: 'Blogs', href: '/blogs' },
+        { icon: HomeIcon, label: 'Home', href: '/' },
+        { icon: ErrorsIcon, label: 'Errors', href: '/errors' },
+        { icon: LanguagesIcon, label: 'Languages', href: '/languages' },
+        { icon: EditorIcon, label: 'Editor', href: '/editor' },
+        { icon: BlogsIcon, label: 'Blogs', href: '/blogs' },
     ];
 
     return (
@@ -60,23 +69,20 @@ const Sidebar = ({ isOpen, onClose }) => {
                                 // Desktop specific sizing
                                 "lg:justify-center lg:px-0 lg:w-12 lg:h-12 lg:mx-auto lg:rounded-2xl",
                                 isActive
-                                    ? "bg-accent-primary text-white shadow-lg shadow-accent-primary/25"
+                                    ? "bg-accent-primary/10 text-accent-primary shadow-[0_0_15px_rgba(59,130,246,0.3)] border border-accent-primary/20"
                                     : "text-text-secondary hover:bg-surface-highlight hover:text-text-primary"
                             )}
                         >
-                            <Icon
-                                size={20}
-                                className={cn(
-                                    "relative z-10 transition-transform duration-300",
-                                    !isActive && "group-hover/item:scale-110 group-hover/item:text-accent-primary"
-                                )}
-                            />
+                            <Icon isActive={isActive} />
 
                             {/* Label: Visible on Mobile, Hidden on Desktop */}
-                            <span className="lg:hidden font-bold text-sm tracking-tight">{item.label}</span>
+                            <span className={cn(
+                                "lg:hidden font-bold text-sm tracking-tight",
+                                isActive ? "text-accent-primary" : "text-text-secondary"
+                            )}>{item.label}</span>
 
                             {/* Desktop Tooltip */}
-                            <div className="hidden lg:block absolute left-16 px-3 py-1.5 bg-panel border border-border/50 rounded-lg text-[10px] font-bold uppercase tracking-widest text-text-primary shadow-xl opacity-0 translate-x-[-8px] group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all pointer-events-none z-50 whitespace-nowrap">
+                            <div className="hidden lg:block absolute left-14 px-3 py-1.5 bg-panel border border-border/50 rounded-lg text-[10px] font-bold uppercase tracking-widest text-text-primary shadow-xl opacity-0 translate-x-[-8px] group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all pointer-events-none z-50 whitespace-nowrap">
                                 {item.label}
                                 {/* Tooltip Arrow */}
                                 <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-panel border-l border-b border-border/50 transform rotate-45" />
@@ -91,15 +97,15 @@ const Sidebar = ({ isOpen, onClose }) => {
                 {/* Divider */}
                 <div className="w-8 h-px bg-border/50 hidden lg:block" />
 
-                <Link href="/settings" className="p-3 text-text-tertiary hover:text-text-primary transition-colors lg:block hidden">
-                    <Activity size={20} />
+                <Link href="/settings" className="p-3 text-text-tertiary hover:text-text-primary transition-colors lg:block hidden group">
+                    <SettingsIcon isActive={pathname.startsWith('/settings')} />
                 </Link>
 
                 {/* Mobile Status Card */}
                 <div className="lg:hidden w-full p-4 mt-8 bg-surface/50 border border-border/50 rounded-xl relative overflow-hidden group">
                     <div className="absolute inset-0 bg-gradient-to-r from-accent-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="flex items-center gap-3 mb-2">
-                        <Terminal size={16} className="text-accent-primary" />
+                        <TerminalIcon isActive={true} className="w-4 h-4" />
                         <span className="text-[10px] font-black uppercase tracking-widest text-text-secondary">System Status</span>
                     </div>
                     <div className="flex items-center gap-2">
