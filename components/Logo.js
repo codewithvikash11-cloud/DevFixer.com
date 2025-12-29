@@ -8,7 +8,7 @@ const Logo = ({ className, iconOnly = false }) => {
         <div className={cn("flex items-center gap-2.5 group select-none cursor-pointer", className)}>
             <div className="relative w-9 h-9 md:w-10 md:h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                 <img
-                    src="/logo.svg"
+                    src="/logo.png"
                     alt="DevFixer Logo"
                     className="w-full h-full object-contain filter drop-shadow-md group-hover:drop-shadow-xl transition-all duration-300"
                 />
