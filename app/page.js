@@ -31,18 +31,18 @@ export default function Home() {
             />
 
             {/* HERO SECTION */}
-            <section className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden bg-background">
+            <section className="relative w-full flex items-center justify-center overflow-hidden bg-background py-16 md:py-24">
                 <AuroraBackground />
 
-                <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-24 md:pt-32">
-                    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                <div className="container mx-auto px-6 lg:px-12 relative z-10">
+                    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
 
                         {/* Left Column: Typography */}
-                        <div className="flex-1 text-center lg:text-left space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                        <div className="flex-1 text-center lg:text-left space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
 
 
 
-                            <div className="space-y-6">
+                            <div className="space-y-5">
                                 <h1 className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-tighter text-text-primary leading-[1.05]">
                                     Master every <br className="hidden lg:block" />
                                     <span className="text-gradient-cosmic">exception.</span>
@@ -53,7 +53,7 @@ export default function Home() {
                                 </p>
                             </div>
 
-                            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                                 <Link
                                     href="/errors"
                                     className="group w-full sm:w-auto h-12 px-8 bg-text-primary text-background rounded-full font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-lg hover:shadow-accent-primary/20 hover:-translate-y-1 flex items-center justify-center space-x-2 relative overflow-hidden"
@@ -75,7 +75,7 @@ export default function Home() {
                         </div>
 
                         {/* Right Column: Visuals */}
-                        <div className="flex-1 w-full max-w-[600px] lg:max-w-none relative animate-in fade-in zoom-in duration-1000 delay-200 lg:h-[600px] flex items-center">
+                        <div className="flex-1 w-full max-w-[600px] lg:max-w-none relative animate-in fade-in zoom-in duration-1000 delay-200 flex items-center justify-center">
                             <GlassEcosystem />
                         </div>
                     </div>
