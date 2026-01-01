@@ -12,7 +12,8 @@ import {
     Copy,
     Share2,
     MessageSquare,
-    ThumbsUp
+    ThumbsUp,
+    ShieldCheck
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -117,6 +118,19 @@ export default async function ErrorDetailPage(props) {
                             </div>
                         </div>
 
+                        {/* MOCK: Root Cause - New Feature Enhancement */}
+                        <div className="p-6 bg-accent-warning/5 border border-accent-warning/20 rounded-2xl">
+                            <h2 className="text-xl font-bold mb-3 flex items-center space-x-2 text-accent-warning">
+                                <Tag size={20} />
+                                <span>Possible Root Cause</span>
+                            </h2>
+                            <ul className="list-disc list-inside space-y-2 text-text-secondary">
+                                <li>Incorrect environment configuration variables.</li>
+                                <li>Version mismatch between dependencies (e.g., peer dependency issues).</li>
+                                <li>Race conditions in async data fetching logic.</li>
+                            </ul>
+                        </div>
+
                         {/* Solution Code */}
                         <div className="space-y-4">
                             <h2 className="text-2xl font-bold mb-4 flex items-center space-x-3">
@@ -129,19 +143,33 @@ export default async function ErrorDetailPage(props) {
                                 fileName={`solution.${post.language === 'python' ? 'py' : 'js'}`}
                             />
                         </div>
+
+                        {/* MOCK: Prevention Tips - New Feature Enhancement */}
+                        <div className="p-6 bg-accent-blue/5 border border-accent-blue/20 rounded-2xl">
+                            <h2 className="text-xl font-bold mb-3 flex items-center space-x-2 text-accent-blue">
+                                <ShieldCheck size={20} />
+                                <span>Best Practices & Prevention</span>
+                            </h2>
+                            <p className="text-text-secondary mb-3">To avoid this error in the future:</p>
+                            <ul className="list-disc list-inside space-y-2 text-text-secondary">
+                                <li>Always use clear version pegging in your `package.json`.</li>
+                                <li>Implement proper error boundaries to catch this gracefully.</li>
+                                <li>Unit test your async functions for edge cases.</li>
+                            </ul>
+                        </div>
                     </div>
 
                     {/* Sidebar */}
                     <aside className="lg:col-span-4 space-y-6">
                         {/* Metadata Card */}
-                        <div className="p-6 bg-panel border-2 border-border/60 rounded-3xl space-y-6">
+                        <div className="p-6 spotlight-card rounded-3xl space-y-6 shadow-2xl">
                             <div className="flex items-center space-x-4">
-                                <div className="w-12 h-12 bg-accent-blue/10 rounded-full flex items-center justify-center text-accent-blue font-bold text-xl">
+                                <div className="w-12 h-12 bg-accent-primary/10 rounded-full flex items-center justify-center text-accent-primary font-bold text-xl border border-accent-primary/20">
                                     {(post.authorName?.[0] || 'D').toUpperCase()}
                                 </div>
                                 <div>
                                     <p className="text-xs uppercase tracking-widest text-text-secondary font-bold">Contributor</p>
-                                    <p className="font-bold text-lg">{post.authorName || 'DevFixer Admin'}</p>
+                                    <p className="font-bold text-lg text-text-primary">{post.authorName || 'DevFixer Admin'}</p>
                                 </div>
                             </div>
 
@@ -153,25 +181,33 @@ export default async function ErrorDetailPage(props) {
                                 dislikedBy={post.dislikedBy || []}
                             />
 
-                            <div className="h-px bg-border/50" />
+                            <div className="h-px bg-border group-hover:bg-border-hover transition-colors" />
 
                             <SocialShare title={post.title} />
                         </div>
 
-                        {/* Related Tags/Info */}
-                        <div className="p-6 bg-panel/30 border border-border rounded-3xl">
-                            <h3 className="font-bold text-sm uppercase tracking-widest mb-4 text-text-secondary">Tags</h3>
-                            <div className="flex flex-wrap gap-2">
-                                <span className="px-3 py-1 bg-background border border-border rounded-lg text-xs font-bold text-text-secondary">
+                        {/* Related and Best Practices Mock */}
+                        <div className="p-6 glass rounded-3xl border border-border">
+                            <h3 className="font-bold text-sm uppercase tracking-widest mb-4 text-text-secondary flex items-center gap-2">
+                                <Tag size={14} /> Context
+                            </h3>
+                            <div className="flex flex-wrap gap-2 mb-6">
+                                <span className="px-3 py-1 bg-surface border border-border rounded-lg text-xs font-bold text-text-secondary hover:border-accent-primary/50 transition-colors cursor-default">
                                     #{post.language}
                                 </span>
-                                <span className="px-3 py-1 bg-background border border-border rounded-lg text-xs font-bold text-text-secondary">
+                                <span className="px-3 py-1 bg-surface border border-border rounded-lg text-xs font-bold text-text-secondary hover:border-accent-primary/50 transition-colors cursor-default">
                                     #debugging
                                 </span>
-                                <span className="px-3 py-1 bg-background border border-border rounded-lg text-xs font-bold text-text-secondary">
-                                    #fix
+                                <span className="px-3 py-1 bg-surface border border-border rounded-lg text-xs font-bold text-text-secondary hover:border-accent-primary/50 transition-colors cursor-default">
+                                    #production
                                 </span>
                             </div>
+
+                            <h3 className="font-bold text-sm uppercase tracking-widest mb-2 text-text-secondary">Difficulty</h3>
+                            <div className="w-full bg-surface rounded-full h-2 mb-1 overflow-hidden">
+                                <div className="bg-accent-warning h-full rounded-full w-[60%] animate-pulse" />
+                            </div>
+                            <span className="text-xs text-text-tertiary">Intermediate Level</span>
                         </div>
                     </aside>
                 </div>

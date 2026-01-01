@@ -9,7 +9,7 @@ import { useAuth } from '@/context/AuthContext';
 import ThemeToggle from './ThemeToggle';
 import Logo from './Logo';
 
-const Navbar = ({ onMenuClick, isSidebarOpen }) => {
+const Navbar = ({ onMenuClick, isSidebarOpen, centerContent, customActions, hideSearch = false, hideLinks = false }) => {
     const router = useRouter();
     const { user, logout } = useAuth();
     const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -41,7 +41,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
     return (
         <nav className={cn(
             "fixed top-0 left-0 right-0 z-50 h-16 md:h-20 transition-all duration-300",
-            isScrolled || isSearchOpen
+            isScrolled || isSearchOpen || centerContent
                 ? "bg-background/80 backdrop-blur-xl border-b border-white/5 shadow-sm supports-[backdrop-filter]:bg-background/60"
                 : "bg-transparent border-b border-transparent"
         )}>
@@ -82,7 +82,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
             )}>
 
                 {/* Left: Brand & Menu */}
-                <div className="flex items-center gap-3 lg:gap-8">
+                <div className="flex items-center gap-3 lg:gap-8 shrink-0">
                     {/* Mobile Hamburger - Larger Tap Target */}
                     <button
                         onClick={onMenuClick}
@@ -92,71 +92,78 @@ const Navbar = ({ onMenuClick, isSidebarOpen }) => {
                         {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
 
-                    <Link href="/" className="flex items-center gap-2 group">
+                    <Link href="/" className="flex items-center gap-2 group shrink-0">
                         <Logo />
                     </Link>
 
                     {/* Desktop Nav Links */}
-                    <div className="hidden lg:flex items-center gap-1 ml-4">
-                        <NavLink href="/errors">Errors</NavLink>
-                        <NavLink href="/languages">Languages</NavLink>
-
-                    </div>
+                    {!hideLinks && (
+                        <div className="hidden lg:flex items-center gap-1 ml-4">
+                            <NavLink href="/compiler">Compiler</NavLink>
+                            <NavLink href="/snippets">Snippets</NavLink>
+                            <NavLink href="/errors">Errors</NavLink>
+                            <NavLink href="/languages">Languages</NavLink>
+                        </div>
+                    )}
                 </div>
 
-                {/* Center: Omni-Search (Desktop) */}
-                <div className="hidden md:block flex-1 max-w-sm lg:max-w-md px-4 absolute left-1/2 -translate-x-1/2">
-                    <form onSubmit={handleSearch} className="relative group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary transition-colors group-focus-within:text-accent-primary" size={16} />
-                        <input
-                            type="text"
-                            placeholder="Search 50k+ error solutions..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full h-10 pl-10 pr-12 bg-surface/50 border border-border/50 rounded-full text-sm transition-all focus:bg-background focus:border-accent-primary/50 focus:ring-4 focus:ring-accent-primary/10 outline-none text-text-primary placeholder:text-text-tertiary shadow-sm hover:border-border"
-                        />
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-50">
-                            <kbd className="hidden lg:inline-flex h-5 items-center gap-1 rounded border border-border bg-panel px-1.5 font-mono text-[10px] font-medium text-text-secondary">
-                                <span className="text-xs">⌘</span>K
-                            </kbd>
-                        </div>
-                    </form>
+                {/* Center: Omni-Search (Desktop) OR Custom Content */}
+                <div className="hidden md:block flex-1 max-w-sm lg:max-w-md px-4 absolute left-1/2 -translate-x-1/2 w-full text-center">
+                    {centerContent ? (
+                        centerContent
+                    ) : !hideSearch && (
+                        <form onSubmit={handleSearch} className="relative group w-full text-left">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary transition-colors group-focus-within:text-accent-primary" size={16} />
+                            <input
+                                type="text"
+                                placeholder="Search 50k+ error solutions..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full h-10 pl-10 pr-12 bg-surface/50 border border-border/50 rounded-full text-sm transition-all focus:bg-background focus:border-accent-primary/50 focus:ring-4 focus:ring-accent-primary/10 outline-none text-text-primary placeholder:text-text-tertiary shadow-sm hover:border-border"
+                            />
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-50">
+                                <kbd className="hidden lg:inline-flex h-5 items-center gap-1 rounded border border-border bg-panel px-1.5 font-mono text-[10px] font-medium text-text-secondary">
+                                    <span className="text-xs">⌘</span>K
+                                </kbd>
+                            </div>
+                        </form>
+                    )}
                 </div>
 
                 {/* Right: Actions */}
-                <div className="flex items-center gap-3 sm:gap-4">
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                    {customActions && (
+                        <>
+                            {customActions}
+                            <div className="h-6 w-px bg-border mx-1 hidden sm:block" />
+                        </>
+                    )}
+
                     {/* Mobile Search Trigger */}
-                    <button
-                        onClick={() => setIsSearchOpen(true)}
-                        className="p-2 md:hidden text-text-secondary hover:text-text-primary active:scale-95 transition-transform"
-                    >
-                        <Search size={22} />
-                    </button>
+                    {!hideSearch && !centerContent && (
+                        <button
+                            onClick={() => setIsSearchOpen(true)}
+                            className="p-2 md:hidden text-text-secondary hover:text-text-primary active:scale-95 transition-transform"
+                        >
+                            <Search size={22} />
+                        </button>
+                    )}
 
                     <ThemeToggle />
 
-                    <div className="h-6 w-px bg-border mx-1 hidden sm:block" />
-
-                    {user ? (
-                        <div className="flex items-center gap-3">
-                            <Link href="/dashboard" className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface border border-border text-xs font-bold hover:bg-surface-highlight transition-all">
-                                <span className="w-2 h-2 rounded-full bg-accent-success animate-pulse" />
-                                Dashboard
-                            </Link>
-                            <button onClick={logout} className="p-2 hover:bg-surface rounded-lg text-text-secondary transition-colors">
-                                <LogOut size={18} />
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="flex items-center gap-3">
-                            <Link href="/login" className="hidden sm:block text-sm font-bold text-text-secondary hover:text-text-primary transition-colors">
-                                Log In
-                            </Link>
-                            <Link href="/signup" className="group relative px-4 sm:px-5 py-2 rounded-full bg-text-primary text-background text-sm font-bold hover:shadow-lg hover:shadow-accent-primary/20 transition-all overflow-hidden flex items-center gap-2">
-                                <span>Get Started</span>
-                                <ArrowRight size={14} className="hidden sm:block group-hover:translate-x-0.5 transition-transform" />
-                            </Link>
-                        </div>
+                    {user && (
+                        <>
+                            <div className="h-6 w-px bg-border mx-1 hidden sm:block" />
+                            <div className="flex items-center gap-3">
+                                <Link href="/dashboard" className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface border border-border text-xs font-bold hover:bg-surface-highlight transition-all">
+                                    <span className="w-2 h-2 rounded-full bg-accent-success animate-pulse" />
+                                    Dashboard
+                                </Link>
+                                <button onClick={logout} className="p-2 hover:bg-surface rounded-lg text-text-secondary transition-colors">
+                                    <LogOut size={18} />
+                                </button>
+                            </div>
+                        </>
                     )}
                 </div>
             </div>

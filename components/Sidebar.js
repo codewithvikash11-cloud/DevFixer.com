@@ -12,7 +12,7 @@ import {
     LanguagesIcon,
     EditorIcon,
     BlogsIcon,
-    SettingsIcon,
+
     TerminalIcon
 } from '@/components/ui/PremiumIcons';
 
@@ -97,9 +97,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 {/* Divider */}
                 <div className="w-8 h-px bg-border/50 hidden lg:block" />
 
-                <Link href="/settings" className="p-3 text-text-tertiary hover:text-text-primary transition-colors lg:block hidden group">
-                    <SettingsIcon isActive={pathname.startsWith('/settings')} />
-                </Link>
+
 
                 {/* Mobile Status Card */}
                 <div className="lg:hidden w-full p-4 mt-8 bg-surface/50 border border-border/50 rounded-xl relative overflow-hidden group">

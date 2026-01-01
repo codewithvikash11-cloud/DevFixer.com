@@ -14,36 +14,36 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-    metadataBase: new URL('https://devfixer.com'),
+    metadataBase: new URL('https://codeorbit.dev'),
     title: {
-        default: 'DevFixer - The Developer Error Encyclopedia',
-        template: '%s | DevFixer'
+        default: 'CodeOrbit - The Ultimate Developer Playground',
+        template: '%s | CodeOrbit'
     },
-    description: 'Fix coding errors instantly. Search thousands of solutions for JavaScript, Python, Java, React, and more. The ultimate debugging platform.',
-    keywords: ['coding errors', 'debugging', 'programming fixes', 'stack trace analysis', 'developer tools', 'javascript errors', 'python errors'],
-    authors: [{ name: 'DevFixer Team' }],
-    creator: 'DevFixer',
+    description: 'Build, compile, and debug code instantly. The all-in-one developer platform for HTML, CSS, JavaScript, and more.',
+    keywords: ['online compiler', 'code playground', 'web development', 'codeorbit', 'developer tools'],
+    authors: [{ name: 'CodeOrbit Team' }],
+    creator: 'CodeOrbit',
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        url: 'https://devfixer.com',
-        siteName: 'DevFixer',
-        title: 'DevFixer - Fix Code Errors Faster',
-        description: 'The ultimate source for developer error solutions.',
+        url: 'https://codeorbit.dev',
+        siteName: 'CodeOrbit',
+        title: 'CodeOrbit - Build Faster',
+        description: 'The ultimate developer playground.',
         images: [
             {
-                url: '/og-image.jpg', // We should add an image eventually
+                url: '/og-image.jpg',
                 width: 1200,
                 height: 630,
-                alt: 'DevFixer Platform',
+                alt: 'CodeOrbit Platform',
             },
         ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'DevFixer',
-        description: 'Fix code errors faster than ever.',
-        creator: '@devfixer',
+        title: 'CodeOrbit',
+        description: 'Build code faster than ever.',
+        creator: '@codeorbit',
     },
     alternates: {
         canonical: '/',
@@ -61,12 +61,15 @@ export const metadata = {
     },
 };
 
+import SidebarToolbox from '@/components/SidebarToolbox';
+
 export default function RootLayout({ children }) {
     return (
         <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
             <body suppressHydrationWarning>
                 <ThemeProvider>
                     <AuthProvider>
+                        <SidebarToolbox />
                         {children}
                     </AuthProvider>
                 </ThemeProvider>

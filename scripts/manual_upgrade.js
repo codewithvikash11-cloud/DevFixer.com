@@ -1,5 +1,5 @@
 
-const { Client, Databases } = require('appwrite');
+const { Client, Databases } = require('node-appwrite');
 const fs = require('fs');
 const path = require('path');
 

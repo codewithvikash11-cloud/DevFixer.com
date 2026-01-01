@@ -237,9 +237,8 @@ export default function DashboardPage() {
                 {/* VIEW: DASHBOARD */}
                 {view === 'dashboard' && (
                     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        {/* Stats Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div onClick={() => setView('list')} className="p-6 bg-panel border-2 border-border/60 rounded-3xl cursor-pointer hover:border-accent-blue/50 transition-all group">
+                            <div onClick={() => setView('list')} className="p-6 spotlight-card rounded-3xl cursor-pointer group shadow-lg">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="p-3 bg-accent-blue/10 rounded-2xl text-accent-blue">
                                         <Hash size={24} />
@@ -250,7 +249,7 @@ export default function DashboardPage() {
                                 <p className="text-xs uppercase tracking-widest text-text-secondary font-bold">My Contributions</p>
                             </div>
 
-                            <div className="p-6 bg-panel border-2 border-border/60 rounded-3xl">
+                            <div className="p-6 spotlight-card rounded-3xl shadow-lg">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="p-3 bg-accent-green/10 rounded-2xl text-accent-green">
                                         <CheckCircle size={24} />
@@ -260,7 +259,7 @@ export default function DashboardPage() {
                                 <p className="text-xs uppercase tracking-widest text-text-secondary font-bold">Published</p>
                             </div>
 
-                            <div className="p-6 bg-panel border-2 border-border/60 rounded-3xl">
+                            <div className="p-6 spotlight-card rounded-3xl shadow-lg">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="p-3 bg-accent-yellow/10 rounded-2xl text-accent-yellow">
                                         <PenLine size={24} />
@@ -323,7 +322,7 @@ export default function DashboardPage() {
                         </div>
 
                         {/* List Table */}
-                        <div className="bg-panel border border-border rounded-[2rem] overflow-hidden shadow-2xl">
+                        <div className="glass rounded-[2rem] overflow-hidden shadow-2xl border border-border">
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left border-collapse">
                                     <thead>

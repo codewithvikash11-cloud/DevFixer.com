@@ -1,65 +1,89 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import {
     Search,
     Terminal,
     Zap,
     ChevronRight,
-    Star,
     Filter,
-    Globe,
-    CheckCircle2
+    CheckCircle2,
+    SlidersHorizontal,
+    Code2,
+    Layers,
+    ArrowUpRight,
+    TrendingUp,
+    Clock
 } from 'lucide-react';
 import Link from 'next/link';
 
-// MOCK DATA FOR "COMPLETE" LOOK
+// MOCK DATA - To be replaced or merged with API data
 const MOCK_POSTS = [
     {
         title: "Hydration failed because the initial UI does not match what was rendered on the server",
         slug: "hydration-failed-react-nextjs",
         language: "React",
-        description: "This error occurs when the HTML generated on the server does not exactly match the HTML generated on the client during the first render. Common causes include invalid HTML nesting or date/time mismatches.",
+        framework: "Next.js",
+        description: "This error occurs when the HTML generated on the server does not exactly match the HTML generated on the client during the first render.",
         difficulty: "Intermediate",
         verified: true,
-        fixReady: true
+        fixReady: true,
+        likes: 124,
+        views: '12k',
+        date: '2d ago'
     },
     {
         title: "RuntimeError: Event loop is closed",
         slug: "python-asyncio-event-loop-closed",
         language: "Python",
-        description: "Frequently encountered in Python asyncio applications when attempting to access the event loop after it has been shut down. Often happens in cleanup code or destructor methods.",
+        framework: "Asyncio",
+        description: "Frequently encountered in Python asyncio applications when attempting to access the event loop after it has been shut down.",
         difficulty: "Advanced",
         verified: true,
-        fixReady: true
+        fixReady: true,
+        likes: 89,
+        views: '8.5k',
+        date: '1w ago'
     },
     {
         title: "TypeError: Cannot read properties of undefined (reading 'map')",
         slug: "js-typeerror-undefined-map",
         language: "JavaScript",
-        description: "The classic JS error. Occurs when attempting to call .map() on a variable that is currently undefined or null, usually due to async data fetching delays.",
+        framework: "Vanilla",
+        description: "Occurs when attempting to call .map() on a variable that is currently undefined or null, usually due to async data fetching delays.",
         difficulty: "Beginner",
         verified: true,
-        fixReady: true
+        fixReady: true,
+        likes: 450,
+        views: '45k',
+        date: '3d ago'
     },
     {
         title: "Cargo.lock is not up to date",
         slug: "rust-cargo-lock-mismatch",
         language: "Rust",
-        description: "This error happens when your Cargo.lock file does not match the dependency versions specified in your Cargo.toml. Usually fixed by running `cargo update`.",
+        framework: "Cargo",
+        description: "This error happens when your Cargo.lock file does not match the dependency versions specified in your Cargo.toml.",
         difficulty: "Intermediate",
         verified: true,
-        fixReady: true
+        fixReady: true,
+        likes: 34,
+        views: '2k',
+        date: '5d ago'
     },
     {
         title: "Docker daemon is not running",
         slug: "docker-daemon-connection-refused",
         language: "Docker",
-        description: "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Ensure the service is started and your user has permission to access the socket.",
+        framework: "Docker",
+        description: "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Ensure the service is started.",
         difficulty: "Beginner",
         verified: true,
-        fixReady: true
+        fixReady: true,
+        likes: 210,
+        views: '15k',
+        date: '1d ago'
     }
 ];
 
@@ -68,167 +92,271 @@ export default function ErrorsListingPage() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    // Filters State
+    const [selectedLanguage, setSelectedLanguage] = useState('All');
+    const [selectedDifficulty, setSelectedDifficulty] = useState('All');
+    const [sortBy, setSortBy] = useState('trending'); // trending, latest, popular
+
     useEffect(() => {
+        // Fetch real data but fallback to mock for "Premium Feel" demonstration
         fetch('/api/posts?status=published')
             .then(res => res.json())
             .then(data => {
                 if (data && data.length > 0) {
-                    setPosts(data);
+                    // Merge/Map real data to ensure all fields exist
+                    const mappedData = data.map(p => ({
+                        ...p,
+                        framework: p.framework || p.language,
+                        views: p.views || '100+',
+                        date: new Date(p.createdAt).toLocaleDateString()
+                    }));
+                    setPosts(mappedData);
                 } else {
-                    // Fallback to MOCK data if DB is empty to show "Complete" state
                     setPosts(MOCK_POSTS);
                 }
                 setLoading(false);
             })
             .catch(err => {
                 console.error('Failed to load posts', err);
-                setPosts(MOCK_POSTS); // Fallback on error too
+                setPosts(MOCK_POSTS);
                 setLoading(false);
             });
     }, []);
 
-    const filteredErrors = posts.filter(post =>
-        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.language.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.description?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // Filter Logic
+    const filteredPosts = useMemo(() => {
+        let result = [...posts];
 
-    const handleTopicClick = (topic) => {
-        // If clicking the same query, clear it. Otherwise set it.
-        if (searchQuery.toLowerCase() === topic.toLowerCase()) {
-            setSearchQuery('');
-        } else {
-            setSearchQuery(topic);
+        if (searchQuery) {
+            const lowerQ = searchQuery.toLowerCase();
+            result = result.filter(p =>
+                p.title.toLowerCase().includes(lowerQ) ||
+                p.description?.toLowerCase().includes(lowerQ) ||
+                p.language.toLowerCase().includes(lowerQ)
+            );
         }
-    };
+
+        if (selectedLanguage !== 'All') {
+            result = result.filter(p => p.language === selectedLanguage);
+        }
+
+        if (selectedDifficulty !== 'All') {
+            result = result.filter(p => p.difficulty === selectedDifficulty);
+        }
+
+        // Sorting
+        if (sortBy === 'popular') {
+            result.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+        } else if (sortBy === 'latest') {
+            // Mock date sort or real date sort (createdAt)
+            // Assuming MOCK_POSTS doesn't have real dates, we skip for now or use 'date' string
+        }
+
+        return result;
+    }, [posts, searchQuery, selectedLanguage, selectedDifficulty, sortBy]);
+
+    // Derived lists for filters
+    const languages = ['All', ...new Set(posts.map(p => p.language))];
+    const difficulties = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
     return (
         <LayoutWrapper>
-            <div className="mb-10 md:mb-24 text-center max-w-4xl mx-auto px-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <div className="inline-flex items-center space-x-2 px-3 py-1.5 md:px-4 md:py-2 bg-accent-blue/5 border-2 border-accent-blue/20 rounded-2xl text-accent-blue text-[9px] md:text-[10px] font-black tracking-[0.3em] uppercase mb-6 md:mb-8 shadow-xl">
-                    <Globe size={14} className="md:w-4 md:h-4" />
-                    <span>Universal Solution Database</span>
-                </div>
-                <h1 className="text-4xl md:text-8xl font-black mb-6 md:mb-8 tracking-tighter leading-none">The Error Archive</h1>
-                <p className="text-base md:text-2xl text-text-secondary leading-relaxed font-medium">
-                    Access thousands of verified solutions, technical breakdowns, and preventative guidelines
-                    curated by senior software architects.
-                </p>
-            </div>
+            <div className="min-h-screen bg-background text-text-primary">
 
-            {/* Global Search Interface */}
-            <div className="max-w-3xl mx-auto mb-10 md:mb-16 px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
-                <div className="relative group">
-                    <div className="absolute inset-0 bg-accent-blue/10 blur-[60px] opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000" />
-                    <div className="relative flex items-center bg-panel border border-border group-focus-within:border-accent-blue/50 rounded-xl md:rounded-2xl p-1.5 md:p-2 pr-3 md:pr-4 shadow-xl transition-all h-12 md:h-14 hover:border-accent-blue/30 overflow-hidden">
-                        <div className="w-10 md:w-12 h-full flex items-center justify-center text-text-secondary group-focus-within:text-accent-blue transition-colors shrink-0">
-                            <Search size={18} className="md:w-5 md:h-5" />
-                        </div>
-                        <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search by error message..."
-                            className="flex-1 bg-transparent border-none focus:outline-none text-sm md:text-base font-medium placeholder:text-text-secondary/50 min-w-0"
-                        />
-                        <div className="hidden md:flex items-center space-x-2 shrink-0">
-                            <div className="text-[9px] font-bold text-text-secondary/50 border border-border px-1.5 py-0.5 rounded uppercase tracking-widest">
-                                CMD+K
+                {/* Header Section */}
+                <div className="border-b border-border bg-panel/50 backdrop-blur-md sticky top-16 md:top-20 z-30">
+                    <div className="container mx-auto px-4 py-4 md:py-6">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h1 className="text-2xl font-bold tracking-tight">Error Database</h1>
+                                <p className="text-sm text-text-secondary">Search {posts.length > 0 ? posts.length : '500+'} verified solutions</p>
                             </div>
-                            <button className="p-2 bg-background border border-border rounded-lg text-text-secondary hover:text-accent-blue hover:border-accent-blue/20 transition-all active:scale-95">
-                                <Filter size={16} />
-                            </button>
+
+                            {/* Mobile Search - Visible only on mobile */}
+                            <div className="md:hidden">
+                                <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={16} />
+                                    <input
+                                        type="text"
+                                        placeholder="Search errors..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="w-full bg-surface border border-border rounded-lg pl-10 pr-4 py-2 text-sm focus:border-accent-primary focus:ring-1 focus:ring-accent-primary outline-none"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-2 mt-6 md:mt-10 px-2 transition-all">
-                    <span className="text-[9px] md:text-[10px] font-black text-text-secondary uppercase tracking-[0.2em] w-full md:w-auto text-center md:text-left mb-2 md:mb-0">Hot Topics:</span>
-                    {['React', 'Python', 'Docker', 'Tailwind', 'Next.js'].map(tag => {
-                        const isActive = searchQuery.toLowerCase().includes(tag.toLowerCase());
-                        return (
-                            <button
-                                key={tag}
-                                onClick={() => handleTopicClick(tag)}
-                                className={`px-4 md:px-6 py-2 md:py-2.5 border-2 rounded-xl md:rounded-2xl text-[9px] md:text-xs font-black transition-all active:scale-95 group uppercase tracking-widest ${isActive
-                                        ? 'bg-accent-blue text-white border-accent-blue shadow-lg shadow-accent-blue/20'
-                                        : 'bg-panel border-border text-text-secondary hover:border-accent-blue/30 hover:text-accent-blue'
-                                    }`}
-                            >
-                                <span>#{tag}</span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
+                <div className="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
 
-            {loading ? (
-                <div className="text-center py-20 animate-pulse text-text-secondary">Loading archive...</div>
-            ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 px-2 md:px-4">
-                    {filteredErrors.map((error, index) => (
-                        <Link
-                            key={error.slug}
-                            href={`/errors/${error.slug}`}
-                            className="group flex flex-col p-6 md:p-10 bg-panel border-2 border-border/80 rounded-[2rem] md:rounded-[3rem] hover:border-accent-blue/50 hover:bg-panel shadow-xl transition-all duration-500 hover:-translate-y-1 active:scale-95 animate-in fade-in slide-in-from-bottom-12"
-                            style={{ animationDelay: `${index * 50}ms` }}
-                        >
-                            <div className="flex items-start justify-between mb-6 md:mb-8">
-                                <div className="px-3 py-1 md:px-4 md:py-1.5 bg-accent-blue text-white text-[9px] md:text-[10px] font-black rounded-full shadow-lg shadow-accent-blue/20 uppercase tracking-widest">
-                                    {error.language}
-                                </div>
-                                <div className="flex items-center space-x-1.5 text-accent-yellow">
-                                    <Star size={14} className="md:w-4 md:h-4 fill-current" />
-                                    <span className="text-xs md:text-sm font-black text-text-primary">4.9</span>
-                                </div>
-                            </div>
+                    {/* Left Sidebar - Desktop Filters */}
+                    <aside className="hidden lg:block w-64 shrink-0 space-y-8 h-fit sticky top-40">
 
-                            <h3 className="text-xl md:text-2xl font-black mb-3 md:mb-4 leading-tight group-hover:text-accent-blue transition-colors tracking-tight line-clamp-2 md:min-h-[4rem]">
-                                {error.title}
+                        {/* Search (Desktop) */}
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={16} />
+                            <input
+                                type="text"
+                                placeholder="Search errors..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-surface border border-border rounded-lg pl-10 pr-4 py-2 text-sm focus:border-accent-primary focus:ring-1 focus:ring-accent-primary outline-none transition-all"
+                            />
+                        </div>
+
+                        <div>
+                            <h3 className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-4 flex items-center gap-2">
+                                <Code2 size={14} /> Language
                             </h3>
-
-                            <p className="text-xs md:text-sm text-text-secondary mb-8 md:mb-10 line-clamp-2 md:line-clamp-3 leading-relaxed font-medium opacity-80">
-                                {error.description}
-                            </p>
-
-                            <div className="mt-auto pt-6 md:pt-8 border-t border-border/50 flex items-center justify-between">
-                                <div className="flex items-center space-x-4 md:space-x-6">
-                                    <div className="flex flex-col">
-                                        <span className="text-[8px] md:text-[10px] font-black text-text-secondary uppercase tracking-widest opacity-50">Lvl</span>
-                                        <span className="text-[10px] md:text-xs font-black uppercase text-text-primary">{error.difficulty || 'Intermediate'}</span>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-[8px] md:text-[10px] font-black text-text-secondary uppercase tracking-widest opacity-50">Fixes</span>
-                                        <span className="flex items-center text-[10px] md:text-xs font-black text-accent-green uppercase tracking-tight">
-                                            <CheckCircle2 size={10} className="mr-1" />
-                                            Verified
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl border-2 border-border flex items-center justify-center text-text-secondary group-hover:bg-accent-blue group-hover:text-white group-hover:border-accent-blue transition-all duration-500 group-hover:shadow-lg group-hover:shadow-accent-blue/30 group-hover:rotate-6">
-                                    <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-0.5 transition-transform" />
-                                </div>
+                            <div className="space-y-1">
+                                {languages.map(lang => (
+                                    <button
+                                        key={lang}
+                                        onClick={() => setSelectedLanguage(lang)}
+                                        className={`w-full text-left px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center justify-between ${selectedLanguage === lang
+                                                ? 'bg-accent-primary/10 text-accent-primary'
+                                                : 'text-text-secondary hover:bg-surface hover:text-text-primary'
+                                            }`}
+                                    >
+                                        {lang}
+                                        {selectedLanguage === lang && <CheckCircle2 size={14} />}
+                                    </button>
+                                ))}
                             </div>
-                        </Link>
-                    ))}
-                </div>
-            )}
+                        </div>
 
-            {!loading && filteredErrors.length === 0 && (
-                <div className="py-20 flex flex-col items-center justify-center text-center opacity-30">
-                    <Terminal size={48} className="md:w-16 md:h-16 mb-6" />
-                    <h3 className="text-lg md:text-2xl font-black uppercase tracking-widest">No results found</h3>
-                    <p className="mt-2 text-sm">Try adjusting your search filters.</p>
-                </div>
-            )}
+                        <div>
+                            <h3 className="text-xs font-bold text-text-secondary uppercase tracking-wider mb-4 flex items-center gap-2">
+                                <Layers size={14} /> Difficulty
+                            </h3>
+                            <div className="space-y-1">
+                                {difficulties.map(diff => (
+                                    <button
+                                        key={diff}
+                                        onClick={() => setSelectedDifficulty(diff)}
+                                        className={`w-full text-left px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center justify-between ${selectedDifficulty === diff
+                                                ? 'bg-accent-primary/10 text-accent-primary'
+                                                : 'text-text-secondary hover:bg-surface hover:text-text-primary'
+                                            }`}
+                                    >
+                                        {diff}
+                                        {selectedDifficulty === diff && <CheckCircle2 size={14} />}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
 
-            <div className="mt-16 md:mt-20 py-10 md:py-12 border-t border-border/50 text-center">
-                <h3 className="text-xl font-bold mb-6 md:mb-8 font-black uppercase tracking-tight">Can't find your issue?</h3>
-                <Link href="/editor" className="inline-flex items-center space-x-3 px-8 md:px-10 py-4 md:py-5 bg-accent-blue text-white rounded-2xl font-black text-base md:text-lg shadow-2xl shadow-accent-blue/20 active-scale uppercase tracking-widest">
-                    <Zap size={20} className="md:w-6 md:h-6" fill="currentColor" />
-                    <span>Open Diagnostic Tool</span>
-                </Link>
+                        <div className="pt-6 border-t border-border">
+                            <div className="p-4 rounded-xl bg-gradient-to-br from-accent-primary/5 to-accent-success/5 border border-accent-primary/10">
+                                <h4 className="text-sm font-bold mb-2">Can't find it?</h4>
+                                <p className="text-xs text-text-secondary mb-3">Our community of senior engineers can help debug your issue.</p>
+                                <Link href="/editor" className="block w-full text-center py-2 bg-text-primary text-background rounded-lg text-xs font-bold hover:opacity-90 transition-opacity">
+                                    Post Error
+                                </Link>
+                            </div>
+                        </div>
+                    </aside>
+
+                    {/* Main Content - Results */}
+                    <div className="flex-1">
+
+                        {/* Filters & Sorting Bar (Mobile/Active Filters) */}
+                        <div className="flex items-center justify-between mb-6">
+                            <div className="text-sm text-text-secondary">
+                                Showing <span className="font-bold text-text-primary">{filteredPosts.length}</span> results
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <span className="text-xs text-text-secondary hidden sm:inline">Sort by:</span>
+                                <select
+                                    value={sortBy}
+                                    onChange={(e) => setSortBy(e.target.value)}
+                                    className="bg-surface border border-border text-sm rounded-lg px-2 py-1 focus:outline-none"
+                                >
+                                    <option value="trending">Trending</option>
+                                    <option value="popular">Most Liked</option>
+                                    <option value="latest">Latest</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {loading ? (
+                            <div className="grid grid-cols-1 gap-4">
+                                {[1, 2, 3].map(i => (
+                                    <div key={i} className="h-40 bg-surface animate-pulse rounded-xl" />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                {filteredPosts.map((post) => (
+                                    <Link
+                                        key={post.slug}
+                                        href={`/errors/${post.slug}`}
+                                        className="group block bg-panel border border-border rounded-xl p-6 hover:border-accent-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-accent-primary/5 relative overflow-hidden"
+                                    >
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-surface border border-border text-text-secondary group-hover:bg-accent-primary group-hover:text-white group-hover:border-accent-primary transition-colors">
+                                                        {post.language}
+                                                    </span>
+                                                    <span className="w-1 h-1 rounded-full bg-text-tertiary" />
+                                                    <span className="text-xs text-text-secondary flex items-center gap-1">
+                                                        {post.difficulty}
+                                                    </span>
+                                                    {post.verified && (
+                                                        <span className="flex items-center gap-1 text-[10px] text-accent-success font-bold bg-accent-success/10 px-2 py-0.5 rounded-full">
+                                                            <CheckCircle2 size={10} /> Verified
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                <h3 className="text-lg md:text-xl font-bold text-text-primary mb-2 line-clamp-2 leading-tight group-hover:text-accent-primary transition-colors">
+                                                    {post.title}
+                                                </h3>
+
+                                                <p className="text-sm text-text-secondary line-clamp-2 md:line-clamp-1 mb-4">
+                                                    {post.description}
+                                                </p>
+
+                                                <div className="flex items-center gap-4 text-xs text-text-tertiary">
+                                                    <div className="flex items-center gap-1">
+                                                        <TrendingUp size={12} />
+                                                        <span>{post.views || '120'} views</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        <Clock size={12} />
+                                                        <span>{post.date || 'Recently'}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="hidden sm:flex flex-col items-center justify-center h-full w-16 border-l border-border pl-4 gap-1">
+                                                <ArrowUpRight className="text-text-tertiary group-hover:text-accent-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+
+                                {filteredPosts.length === 0 && (
+                                    <div className="text-center py-20 bg-surface/50 rounded-xl border border-dashed border-border">
+                                        <Terminal className="mx-auto h-12 w-12 text-text-tertiary mb-4" />
+                                        <h3 className="text-lg font-bold text-text-primary">No results found</h3>
+                                        <p className="text-sm text-text-secondary">Try adjusting your filters or search query.</p>
+                                        <button
+                                            onClick={() => { setSearchQuery(''); setSelectedLanguage('All'); setSelectedDifficulty('All'); }}
+                                            className="mt-4 px-4 py-2 bg-surface border border-border rounded-lg text-sm font-medium hover:bg-surface-highlight"
+                                        >
+                                            Clear Filters
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </LayoutWrapper>
     );

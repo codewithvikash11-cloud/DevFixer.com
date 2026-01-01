@@ -31,34 +31,33 @@ export default function Home() {
             />
 
             {/* HERO SECTION */}
-            <section className="relative w-full flex items-center justify-center overflow-hidden bg-background py-16 md:py-24">
+            <section className="relative w-full flex items-center justify-center overflow-hidden bg-background py-16 md:py-20 lg:py-24">
                 <AuroraBackground />
 
                 <div className="container mx-auto px-6 lg:px-12 relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
 
                         {/* Left Column: Typography */}
-                        <div className="flex-1 text-center lg:text-left space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+                        <div className="flex-1 text-center lg:text-left space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
 
-
-
-                            <div className="space-y-5">
-                                <h1 className="text-4xl sm:text-7xl lg:text-8xl font-bold tracking-tighter text-text-primary leading-[1.05]">
-                                    Master every <br className="hidden lg:block" />
-                                    <span className="text-gradient-cosmic">exception.</span>
+                            <div className="space-y-6">
+                                <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-text-primary leading-[1.05]">
+                                    The Ultimate <br className="hidden lg:block" />
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#008000] to-[#004d00] animate-gradient">
+                                        Developer Playground
+                                    </span>
                                 </h1>
 
-                                <p className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium tracking-wide">
+                                <p className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium tracking-tight">
                                     The intelligent knowledge base that turns cryptic error logs into instant solutions. Stop debugging, start shipping.
                                 </p>
                             </div>
 
-                            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                                 <Link
                                     href="/errors"
-                                    className="group w-full sm:w-auto h-12 px-8 bg-text-primary text-background rounded-full font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-lg hover:shadow-accent-primary/20 hover:-translate-y-1 flex items-center justify-center space-x-2 relative overflow-hidden"
+                                    className="group w-full sm:w-auto h-12 px-8 bg-text-primary text-background rounded-full font-bold text-sm tracking-wide transition-all duration-300 hover:opacity-90 hover:-translate-y-1 flex items-center justify-center space-x-2 shadow-lg shadow-accent-glow"
                                 >
-                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                                     <span>Start Fixing</span>
                                     <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                                 </Link>
@@ -70,8 +69,6 @@ export default function Home() {
                                     <span>Browse Library</span>
                                 </Link>
                             </div>
-
-
                         </div>
 
                         {/* Right Column: Visuals */}

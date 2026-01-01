@@ -8,7 +8,7 @@ const GlassEcosystem = () => {
         <div className="relative w-full h-[500px] flex items-center justify-center perspective-[2000px]">
 
             {/* MAIN INTERFACE - Holographic Terminal */}
-            <div className="relative z-20 w-[90%] md:w-[500px] bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden animate-float-slow transform-gpu ring-1 ring-white/5">
+            <div className="relative z-20 w-[90%] md:w-[500px] bg-panel/90 backdrop-blur-xl border border-border rounded-xl shadow-2xl overflow-hidden animate-float-slow transform-gpu">
 
                 {/* Header */}
                 <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/5">

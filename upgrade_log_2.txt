@@ -1,0 +1,7 @@
+Starting Schema Upgrade (Robust Mode)...
+Attribute userId exists.
+Attribute authorName exists.
+Attribute likedBy exists.
+Attribute dislikedBy exists.
+Index failed: Index length is longer than the maximum: 767
+Upgrade Complete.
