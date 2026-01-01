@@ -86,7 +86,7 @@ export default function SidebarToolbox() {
                                     : 'hover:bg-white/5 hover:border-white/5'
                                     }`}
                             >
-                                <div className={`p-2.5 rounded-xl transition-all duration-300 ${isActive ? 'bg-[#00E5FF] text-black shadow-[0_0_15px_rgba(0,229,255,0.4)]' : 'bg-transparent text-gray-400 group-hover:text-white group-hover:bg-white/10'}`}>
+                                <div className={`p-2.5 rounded-xl transition-all duration-300 ${isActive ? 'bg-[#008000] text-white shadow-[0_0_15px_rgba(0,128,0,0.4)]' : 'bg-transparent text-gray-400 group-hover:text-white group-hover:bg-white/10'}`}>
                                     <item.icon size={20} className={isActive ? 'animate-pulse-slow' : ''} />
                                 </div>
                                 <div className={`overflow-hidden transition-all duration-500 ${isOpen ? 'w-auto opacity-100 ml-3' : 'w-0 opacity-0'}`}>

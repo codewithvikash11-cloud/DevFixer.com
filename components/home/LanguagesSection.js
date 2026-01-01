@@ -53,29 +53,19 @@ const LanguagesSection = () => {
                 <p className="text-text-secondary">We track error patterns across the entire modern stack.</p>
             </div>
 
-            {/* Infinite Marquee Container */}
-            <div className="relative flex overflow-x-hidden group">
-                {/* Gradient Masks */}
-                <div className="absolute top-0 bottom-0 left-0 w-24 z-20 bg-gradient-to-r from-background to-transparent" />
-                <div className="absolute top-0 bottom-0 right-0 w-24 z-20 bg-gradient-to-l from-background to-transparent" />
-
-                {/* Marquee Content (Duplicated for seamless loop) */}
-                <div className="py-12 animate-marquee flex space-x-8 whitespace-nowrap hover:[animation-play-state:paused]">
-                    {[...languages, ...languages, ...languages].map((lang, index) => (
+            {/* Responsive Grid Container */}
+            <div className="relative z-10 px-4 md:px-0">
+                <div className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-5xl mx-auto">
+                    {languages.map((lang, index) => (
                         <LanguageChip key={`${lang.slug}-${index}`} lang={lang} />
                     ))}
                 </div>
             </div>
 
-            <style jsx>{`
-                @keyframes marquee {
-                    0% { transform: translateX(0); }
-                    100% { transform: translateX(-50%); }
-                }
-                .animate-marquee {
-                    animation: marquee 40s linear infinite;
-                }
-            `}</style>
+            {/* Background Decoration */}
+            <div className="absolute inset-0 bg-transparent pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-accent-primary/5 blur-[100px] rounded-full" />
+            </div>
         </section>
     );
 };

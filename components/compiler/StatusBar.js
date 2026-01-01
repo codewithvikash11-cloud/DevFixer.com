@@ -5,7 +5,7 @@ import { Check, XCircle, AlertCircle } from 'lucide-react';
 
 export default function StatusBar({ language, isRunning, cursorPosition = { line: 1, column: 1 } }) {
     return (
-        <div className="h-6 bg-[#0070F3] text-white flex items-center justify-between px-3 text-[10px] select-none font-mono tracking-wide z-20 border-t border-white/10 shadow-lg">
+        <div className="h-6 bg-[#008000] text-white flex items-center justify-between px-3 text-[10px] select-none font-mono tracking-wide z-20 border-t border-white/10 shadow-lg">
             {/* Left: GIT / Status */}
             <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 hover:bg-white/10 px-1 rounded cursor-pointer transition-colors">
