@@ -8,7 +8,7 @@ import CodeOrbitFooter from '@/components/compiler/CodeOrbitFooter';
 import MobileMenu from '@/components/MobileMenu';
 import { LANGUAGE_TEMPLATES } from '@/lib/templates';
 import { executeCode } from '@/lib/piston';
-import { FileCode, FileType, MoreHorizontal, Save, Share2, LayoutTemplate, Play, Square, ChevronDown, Terminal } from 'lucide-react';
+import { FileCode, FileType, MoreHorizontal, Save, Share2, LayoutTemplate, Play, Square, ChevronDown, Terminal } from 'lucide-react'; // Trigger HMR
 
 const FILES = {
     HTML: { name: 'index.html', language: 'html', content: LANGUAGE_TEMPLATES.html, icon: FileType, color: 'text-orange-500' },
@@ -33,11 +33,26 @@ export default function CompilerPage() {
     // WEB STATE
     const [activeTab, setActiveTab] = useState('HTML');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [activeTheme, setActiveTheme] = useState('vs-dark'); // Theme State
     const [fileContent, setFileContent] = useState({
         HTML: LANGUAGE_TEMPLATES.html,
         CSS: LANGUAGE_TEMPLATES.css,
         JS: LANGUAGE_TEMPLATES.javascript
     });
+
+    // SHARE HANDLER
+    const handleShare = async () => {
+        const textToShare = compilerMode === 'web'
+            ? `HTML:\n${fileContent.HTML}\n\nCSS:\n${fileContent.CSS}\n\nJS:\n${fileContent.JS}`
+            : backendCode;
+
+        try {
+            await navigator.clipboard.writeText(textToShare);
+            alert("Code copied to clipboard!");
+        } catch (err) {
+            console.error("Failed to copy:", err);
+        }
+    };
 
     // BACKEND STATE
     const [backendCode, setBackendCode] = useState(BACKEND_LANGUAGES.python.template);
@@ -159,6 +174,21 @@ export default function CompilerPage() {
 
     const CompilerActions = (
         <div className="flex items-center gap-3">
+            {/* Theme Selector */}
+            <div className="hidden md:flex items-center bg-[#1e293b] rounded-lg border border-[#334155] px-2">
+                <LayoutTemplate size={14} className="text-gray-400 mr-2" />
+                <select
+                    value={activeTheme}
+                    onChange={(e) => setActiveTheme(e.target.value)}
+                    className="bg-transparent text-xs text-white font-medium py-1.5 outline-none cursor-pointer"
+                >
+                    <option value="vs-dark">VS Dark</option>
+                    <option value="dracula">Dracula</option>
+                    <option value="monokai">Monokai</option>
+                    <option value="github-dark">GitHub Dark</option>
+                </select>
+            </div>
+
             {compilerMode === 'backend' && (
                 <button
                     onClick={runBackendCode}
@@ -170,9 +200,9 @@ export default function CompilerPage() {
                 </button>
             )}
 
-            <button className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[#1e293b] hover:bg-[#2e3e52] text-white text-xs font-bold rounded-lg border border-[#334155] transition-all">
-                <Save size={14} />
-                <span>Save</span>
+            <button onClick={handleShare} className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[#1e293b] hover:bg-[#2e3e52] text-white text-xs font-bold rounded-lg border border-[#334155] transition-all">
+                <Share2 size={14} />
+                <span>Share</span>
             </button>
         </div>
     );
@@ -193,28 +223,32 @@ export default function CompilerPage() {
             />
 
             {/* 2. Main Workspace */}
-            <div className="flex-1 flex overflow-hidden">
+            <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
 
                 {/* LEFT: Code Editor */}
-                <div className="flex-1 flex flex-col border-r border-[#1e293b]">
+                <div className="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-[#1e293b] min-h-[50vh] md:min-h-0">
                     {/* Editor Area */}
                     <div className="flex-1 relative bg-[#000000]">
                         <CodeEditor
                             language={compilerMode === 'web' ? activeFile.language : backendLanguage === 'cpp' ? 'cpp' : backendLanguage === 'javascript' ? 'javascript' : backendLanguage === 'java' ? 'java' : backendLanguage === 'go' ? 'go' : backendLanguage === 'sqlite3' ? 'sql' : 'python'}
                             value={compilerMode === 'web' ? fileContent[activeTab] : backendCode}
                             onChange={handleCodeChange}
+                            theme={activeTheme}
                         />
                     </div>
                 </div>
 
                 {/* RIGHT: Output / Preview */}
-                <div className="flex-1 flex flex-col bg-[#000000]">
+                <div className="flex-1 flex flex-col bg-[#000000] min-h-[50vh] md:min-h-0">
                     {compilerMode === 'web' ? (
                         <div className="flex-1 flex flex-col bg-white">
                             {/* Preview Header */}
                             <div className="h-11 bg-white border-b flex items-center justify-between px-4">
                                 <span className="text-xs font-bold text-gray-400 tracking-wider uppercase">Live Preview</span>
-                                <MoreHorizontal size={16} className="text-gray-400 cursor-pointer" />
+                                <div className="flex gap-2">
+                                    <Share2 size={16} className="text-gray-400 cursor-pointer hover:text-black" onClick={handleShare} />
+                                    <MoreHorizontal size={16} className="text-gray-400 cursor-pointer" />
+                                </div>
                             </div>
                             <div className="flex-1 relative">
                                 <iframe

@@ -34,7 +34,7 @@ const Logo = ({ className, iconOnly = false }) => {
 
             {!iconOnly && (
                 <div className="flex flex-col">
-                    <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white leading-none">
+                    <span className="text-xl font-bold tracking-tight text-text-primary leading-none">
                         Code<span className="text-[#008000]">Orbit</span>
                     </span>
                 </div>

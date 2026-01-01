@@ -12,23 +12,58 @@ export default function CodeEditor({ language, value, onChange, theme = 'vs-dark
     const handleEditorDidMount = (editor, monaco) => {
         editorRef.current = editor;
 
-        // Custom Theme Definition (One Hunter Theme - Example)
-        monaco.editor.defineTheme('one-hunter', {
+        // 1. Dracula Theme
+        monaco.editor.defineTheme('dracula', {
             base: 'vs-dark',
             inherit: true,
             rules: [
-                { token: 'comment', foreground: '5c6370', fontStyle: 'italic' },
-                { token: 'keyword', foreground: 'c678dd' },
-                { token: 'string', foreground: '98c379' }
+                { token: 'comment', foreground: '6272a4', fontStyle: 'italic' },
+                { token: 'keyword', foreground: 'ff79c6' },
+                { token: 'string', foreground: 'f1fa8c' },
+                { token: 'number', foreground: 'bd93f9' },
+                { token: 'type', foreground: '8be9fd' },
             ],
             colors: {
-                'editor.background': '#0f0f12', // Matches app bg
-                'editor.lineHighlightBackground': '#1e1e24',
-                'editorLineNumber.foreground': '#4b5263'
+                'editor.background': '#282a36',
+                'editor.foreground': '#f8f8f2',
+                'editor.lineHighlightBackground': '#44475a',
+                'editorCursor.foreground': '#f8f8f2',
+                'editor.selectionBackground': '#44475a',
             }
         });
 
-        // If 'dracula' or others needed, define here
+        // 2. Monokai Theme
+        monaco.editor.defineTheme('monokai', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: 'comment', foreground: '75715e' },
+                { token: 'keyword', foreground: 'f92672' },
+                { token: 'string', foreground: 'e6db74' },
+                { token: 'number', foreground: 'ae81ff' },
+            ],
+            colors: {
+                'editor.background': '#272822',
+                'editor.foreground': '#f8f8f2',
+                'editor.lineHighlightBackground': '#3e3d32',
+            }
+        });
+
+        // 3. GitHub Dark
+        monaco.editor.defineTheme('github-dark', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: 'comment', foreground: '8b949e' },
+                { token: 'keyword', foreground: 'ff7b72' },
+                { token: 'string', foreground: 'a5d6ff' },
+            ],
+            colors: {
+                'editor.background': '#0d1117',
+                'editor.foreground': '#c9d1d9',
+                'editor.lineHighlightBackground': '#161b22',
+            }
+        });
     };
 
     return (
@@ -37,7 +72,8 @@ export default function CodeEditor({ language, value, onChange, theme = 'vs-dark
                 height="100%"
                 language={language === 'javascript' || language === 'node' ? 'javascript' : language}
                 value={value}
-                theme={theme === 'vs-dark' ? 'vs-dark' : 'one-hunter'} // Use VS Dark default or Custom
+                value={value}
+                theme={theme} // Dynamic theme
                 onChange={onChange}
                 onMount={handleEditorDidMount}
                 options={{
