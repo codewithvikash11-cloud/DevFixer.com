@@ -13,6 +13,10 @@ import LanguagesSection from '@/components/home/LanguagesSection';
 
 import CTASection from '@/components/home/CTASection';
 
+
+import QuickAccessGrid from '@/components/home/QuickAccessGrid';
+import TrustSection from '@/components/home/TrustSection';
+
 export default function Home() {
     return (
         <LayoutWrapper>
@@ -25,49 +29,63 @@ export default function Home() {
                         "@type": "WebSite",
                         "name": "DevFixer",
                         "url": "https://devfixer.com",
-                        "description": "The elite knowledge base for developers.",
+                        "description": "The elite knowledge base and toolkit for developers.",
                     })
                 }}
             />
 
             {/* HERO SECTION */}
-            <section className="relative w-full flex items-center justify-center overflow-hidden bg-background py-16 md:py-20 lg:py-24">
+            <section className="relative w-full flex items-center justify-center overflow-hidden bg-background py-20 lg:py-32">
                 <AuroraBackground />
 
                 <div className="container mx-auto px-6 lg:px-12 relative z-10">
-                    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+                    <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
                         {/* Left Column: Typography */}
                         <div className="flex-1 text-center lg:text-left space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
 
                             <div className="space-y-6">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-primary/10 border border-accent-primary/20 text-accent-primary text-xs font-bold tracking-wide uppercase mb-2">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-primary"></span>
+                                    </span>
+                                    v2.0 Now Live
+                                </div>
+
                                 <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-text-primary leading-[1.05]">
                                     The Ultimate <br className="hidden lg:block" />
-                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#008000] to-[#004d00] animate-gradient">
-                                        Developer Playground
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080ff] animate-gradient">
+                                        Developer Ecosystem
                                     </span>
                                 </h1>
 
                                 <p className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium tracking-tight">
-                                    The intelligent knowledge base that turns cryptic error logs into instant solutions. Stop debugging, start shipping.
+                                    Fix errors, build projects, test APIs, and master new skills.
+                                    The all-in-one platform engineered for modern developers.
                                 </p>
                             </div>
 
                             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                                 <Link
                                     href="/errors"
-                                    className="group w-full sm:w-auto h-12 px-8 bg-text-primary text-background rounded-full font-bold text-sm tracking-wide transition-all duration-300 hover:opacity-90 hover:-translate-y-1 flex items-center justify-center space-x-2 shadow-lg shadow-accent-glow"
+                                    className="group w-full sm:w-auto h-14 px-8 bg-accent-primary text-white rounded-full font-bold text-base tracking-wide transition-all duration-300 hover:bg-accent-primary/90 hover:-translate-y-1 flex items-center justify-center space-x-2 shadow-lg shadow-accent-primary/25"
                                 >
-                                    <span>Start Fixing</span>
-                                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                    <span>Start Fixing Now</span>
+                                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                 </Link>
                                 <Link
-                                    href="/languages"
-                                    className="group w-full sm:w-auto h-12 px-8 bg-transparent border border-border text-text-primary rounded-full font-bold text-sm tracking-wide hover:bg-surface transition-all duration-300 flex items-center justify-center space-x-2"
+                                    href="/compiler"
+                                    className="group w-full sm:w-auto h-14 px-8 bg-surface border border-border text-text-primary rounded-full font-bold text-base tracking-wide hover:bg-white/5 transition-all duration-300 flex items-center justify-center space-x-2"
                                 >
-                                    <Search size={16} className="text-text-tertiary group-hover:text-text-primary transition-colors" />
-                                    <span>Browse Library</span>
+                                    <Terminal size={18} className="text-text-secondary group-hover:text-text-primary transition-colors" />
+                                    <span>Try Playground</span>
                                 </Link>
+                            </div>
+
+                            <div className="pt-2 text-sm text-text-tertiary flex items-center justify-center lg:justify-start gap-6 font-medium">
+                                <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-green-500" /> Free for everyone</span>
+                                <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 rounded-full bg-blue-500" /> No login required</span>
                             </div>
                         </div>
 
@@ -79,7 +97,11 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* SECTIONS */}
+            {/* NEW SECTIONS */}
+            <TrustSection />
+            <QuickAccessGrid />
+
+            {/* EXISTING SECTIONS */}
             <FeaturesSection />
             <LanguagesSection />
             <HowItWorksSection />
