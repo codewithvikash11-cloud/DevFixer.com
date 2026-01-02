@@ -233,7 +233,11 @@ export default function LearnPage() {
                     {/* BREADCRUMBS */}
                     <div className="flex items-center gap-2 text-sm font-medium">
                         <div className="hidden md:flex items-center gap-2 text-text-secondary">
-                            <activeCourse.icon size={16} className={cn(activeCourse.color)} />
+                            {typeof activeCourse.icon === 'string' ? (
+                                <img src={activeCourse.icon} alt="" className="w-4 h-4 object-contain" />
+                            ) : (
+                                <activeCourse.icon size={16} className={cn(activeCourse.color)} />
+                            )}
                             <span>{activeCourse.title}</span>
                             <ChevronRight size={14} />
                         </div>
@@ -327,7 +331,11 @@ export default function LearnPage() {
                                         className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-surface group transition-colors"
                                     >
                                         <div className="flex items-center gap-3 font-bold text-sm">
-                                            <course.icon size={16} className={cn(course.id === activeCourseId ? course.color : "text-text-secondary")} />
+                                            {typeof course.icon === 'string' ? (
+                                                <img src={course.icon} alt="" className={cn("w-4 h-4 object-contain transition-all", course.id !== activeCourseId && "grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100")} />
+                                            ) : (
+                                                <course.icon size={16} className={cn(course.id === activeCourseId ? course.color : "text-text-secondary")} />
+                                            )}
                                             <span className={cn(course.id === activeCourseId ? "text-text-primary" : "text-text-secondary group-hover:text-text-primary")}>
                                                 {course.title}
                                             </span>
@@ -392,7 +400,12 @@ export default function LearnPage() {
                             </h1>
                             <div className="flex items-center gap-4 text-xs font-medium text-text-tertiary">
                                 <span className="flex items-center gap-1">
-                                    <activeCourse.icon size={12} /> {activeCourse.title}
+                                    {typeof activeCourse.icon === 'string' ? (
+                                        <img src={activeCourse.icon} alt="" className="w-3 h-3 object-contain mr-1" />
+                                    ) : (
+                                        <activeCourse.icon size={12} />
+                                    )}
+                                    {activeCourse.title}
                                 </span>
                                 <span>•</span>
                                 <span>{activeCourse.chapters.findIndex(c => c.id === activeChapterId) + 1} / {activeCourse.chapters.length}</span>
