@@ -208,7 +208,7 @@ export default function CompilerPage() {
     );
 
     return (
-        <div className="flex flex-col h-screen bg-[#000000] text-white font-sans overflow-hidden lg:pl-20 pt-16 md:pt-20">
+        <div className="flex flex-col min-h-screen md:h-screen bg-[#000000] text-white font-sans overflow-y-auto md:overflow-hidden lg:pl-20 pt-16 md:pt-20">
             {/* Mobile Menu Overlay */}
             <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
 
@@ -219,11 +219,11 @@ export default function CompilerPage() {
                 centerContent={CompilerTabs}
                 customActions={CompilerActions}
                 hideSearch={true}
-                hideLinks={true}
+            // hideLinks={true} // Removed to restore standard navigation
             />
 
             {/* 2. Main Workspace */}
-            <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+            <div className="flex-1 flex flex-col md:flex-row md:overflow-hidden">
 
                 {/* LEFT: Code Editor */}
                 <div className="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-[#1e293b] min-h-[50vh] md:min-h-0">

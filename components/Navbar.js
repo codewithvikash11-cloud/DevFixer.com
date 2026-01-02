@@ -108,26 +108,28 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent, customActions, hide
                 </div>
 
                 {/* Center: Omni-Search (Desktop) OR Custom Content */}
-                <div className="hidden md:block flex-1 max-w-sm lg:max-w-md px-4 absolute left-1/2 -translate-x-1/2 w-full text-center">
-                    {centerContent ? (
-                        centerContent
-                    ) : !hideSearch && (
-                        <form onSubmit={handleSearch} className="relative group w-full text-left">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary transition-colors group-focus-within:text-accent-primary" size={16} />
-                            <input
-                                type="text"
-                                placeholder="Search 50k+ error solutions..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full h-10 pl-10 pr-12 bg-surface/50 border border-border/50 rounded-full text-sm transition-all focus:bg-background focus:border-accent-primary/50 focus:ring-4 focus:ring-accent-primary/10 outline-none text-text-primary placeholder:text-text-tertiary shadow-sm hover:border-border"
-                            />
-                            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-50">
-                                <kbd className="hidden lg:inline-flex h-5 items-center gap-1 rounded border border-border bg-panel px-1.5 font-mono text-[10px] font-medium text-text-secondary">
-                                    <span className="text-xs">⌘</span>K
-                                </kbd>
-                            </div>
-                        </form>
-                    )}
+                <div className="hidden md:block flex-1 max-w-sm lg:max-w-xl px-4 absolute left-1/2 -translate-x-1/2 w-full text-center pointer-events-none">
+                    <div className="pointer-events-auto inline-block w-full">
+                        {centerContent ? (
+                            centerContent
+                        ) : !hideSearch && (
+                            <form onSubmit={handleSearch} className="relative group w-full text-left">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary transition-colors group-focus-within:text-accent-primary" size={16} />
+                                <input
+                                    type="text"
+                                    placeholder="Search 50k+ error solutions..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-full h-10 pl-10 pr-12 bg-surface/50 border border-border/50 rounded-full text-sm transition-all focus:bg-background focus:border-accent-primary/50 focus:ring-4 focus:ring-accent-primary/10 outline-none text-text-primary placeholder:text-text-tertiary shadow-sm hover:border-border"
+                                />
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-50">
+                                    <kbd className="hidden lg:inline-flex h-5 items-center gap-1 rounded border border-border bg-panel px-1.5 font-mono text-[10px] font-medium text-text-secondary">
+                                        <span className="text-xs">⌘</span>K
+                                    </kbd>
+                                </div>
+                            </form>
+                        )}
+                    </div>
                 </div>
 
                 {/* Right: Actions */}

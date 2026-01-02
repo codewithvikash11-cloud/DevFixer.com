@@ -11,7 +11,9 @@ import {
     ChevronLeft,
     ChevronRight,
     Layout,
-    Globe
+
+    Globe,
+    Network
 } from 'lucide-react';
 
 export default function SidebarToolbox() {
@@ -19,6 +21,13 @@ export default function SidebarToolbox() {
     const pathname = usePathname();
 
     const menuItems = [
+        {
+            name: "API Tester",
+            href: "/api-tester",
+            icon: Network,
+            color: "text-[#F43F5E]", // Rose
+            desc: "REST Client"
+        },
         {
             name: "Compiler",
             href: "/compiler",
@@ -73,34 +82,69 @@ export default function SidebarToolbox() {
                     <div className="h-0.5 w-6 bg-[#00E5FF] rounded-full shadow-[0_0_8px_#00E5FF]"></div>
                 </div>
 
-                <nav className="space-y-2 px-3 flex-1">
+                <nav className="space-y-4 px-2 flex-1 flex flex-col items-center lg:items-stretch">
                     {menuItems.map((item) => {
                         const isActive = pathname === item.href;
                         return (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                onClick={() => setIsOpen(false)}
-                                className={`group flex items-center p-3 rounded-xl transition-all duration-300 border border-transparent ${isActive
-                                    ? 'bg-white/5 border-white/10 shadow-lg'
-                                    : 'hover:bg-white/5 hover:border-white/5'
-                                    }`}
-                            >
-                                <div className={`p-2.5 rounded-xl transition-all duration-300 ${isActive ? 'bg-[#008000] text-white shadow-[0_0_15px_rgba(0,128,0,0.4)]' : 'bg-transparent text-gray-400 group-hover:text-white group-hover:bg-white/10'}`}>
-                                    <item.icon size={20} className={isActive ? 'animate-pulse-slow' : ''} />
-                                </div>
-                                <div className={`overflow-hidden transition-all duration-500 ${isOpen ? 'w-auto opacity-100 ml-3' : 'w-0 opacity-0'}`}>
-                                    <p className={`text-sm font-bold whitespace-nowrap tracking-wide ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-white'}`}>
-                                        {item.name}
-                                    </p>
-                                    <p className="text-[10px] text-gray-600 font-medium whitespace-nowrap group-hover:text-gray-500 transition-colors">{item.desc}</p>
-                                </div>
+                            <div key={item.href} className="relative group/item w-full flex justify-center lg:justify-start">
+                                <Link
+                                    href={item.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className={`
+                                        relative flex items-center transition-all duration-300 group/link
+                                        ${isOpen
+                                            ? 'w-full p-3 rounded-xl gap-3 border border-transparent'
+                                            : 'w-10 h-10 justify-center rounded-xl'
+                                        }
+                                        ${isActive
+                                            ? isOpen
+                                                ? 'bg-white/5 border-white/10 shadow-lg'
+                                                : 'bg-gradient-to-br from-[#008000] to-[#005500] text-white shadow-[0_0_15px_rgba(0,128,0,0.5)] ring-1 ring-white/20'
+                                            : 'hover:bg-white/5 text-gray-400 hover:text-white'
+                                        }
+                                    `}
+                                >
+                                    {/* Icon Container */}
+                                    <div className={`
+                                        relative z-10 transition-transform duration-300 ease-out group-hover/link:scale-110
+                                        ${isActive && !isOpen ? 'text-white' : ''}
+                                        ${isActive && isOpen ? 'text-[#00E5FF]' : ''}
+                                    `}>
+                                        <item.icon size={20} className={isActive ? 'drop-shadow-md' : ''} />
+                                    </div>
 
-                                {/* Active Indicator (Glow Dot) */}
-                                {!isOpen && isActive && (
-                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#00E5FF] rounded-full shadow-[0_0_8px_#00E5FF]"></div>
+                                    {/* Expanded Text */}
+                                    <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'w-auto opacity-100 ml-0' : 'w-0 opacity-0'}`}>
+                                        <div className="flex flex-col items-start text-left">
+                                            <p className={`text-sm font-bold whitespace-nowrap tracking-wide ${isActive ? 'text-white' : 'text-gray-400 group-hover/link:text-white'}`}>
+                                                {item.name}
+                                            </p>
+                                            <p className="text-[10px] text-gray-600 font-medium whitespace-nowrap group-hover/link:text-gray-500 transition-colors">{item.desc}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Active Indicator Line (Expanded Only) */}
+                                    {isOpen && isActive && (
+                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[#008000] rounded-r-full shadow-[0_0_8px_#008000]"></div>
+                                    )}
+                                </Link>
+
+                                {/* Tooltip (Collapsed Only) */}
+                                {!isOpen && (
+                                    <div className="
+                                        absolute left-full top-1/2 -translate-y-1/2 ml-4 px-3 py-1.5 
+                                        bg-[#1e293b] border border-[#334155] rounded-lg shadow-xl 
+                                        opacity-0 invisible -translate-x-2 
+                                        group-hover/item:opacity-100 group-hover/item:visible group-hover/item:translate-x-0 
+                                        transition-all duration-200 z-50 whitespace-nowrap
+                                    ">
+                                        <p className="text-xs font-bold text-white mb-0.5">{item.name}</p>
+                                        <p className="text-[10px] text-gray-400">{item.desc}</p>
+                                        {/* Arrow */}
+                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 bg-[#1e293b] border-l border-b border-[#334155] rotate-45"></div>
+                                    </div>
                                 )}
-                            </Link>
+                            </div>
                         );
                     })}
                 </nav>
