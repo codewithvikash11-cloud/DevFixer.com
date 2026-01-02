@@ -56,7 +56,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
         <nav className={cn(
             "fixed top-0 left-0 right-0 z-50 h-16 md:h-20 transition-all duration-300",
             isScrolled || isSearchOpen || centerContent
-                ? "bg-background/80 backdrop-blur-xl border-b border-white/5 shadow-sm supports-[backdrop-filter]:bg-background/60"
+                ? "glass-strong border-b border-border shadow-sm"
                 : "bg-transparent border-b border-transparent"
         )}>
             {/* Mobile Search Overlay - Full Screen Mode */}

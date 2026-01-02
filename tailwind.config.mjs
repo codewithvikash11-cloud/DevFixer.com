@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,21 +9,33 @@ export default {
       colors: {
         background: "var(--background)",
         panel: "var(--panel)",
+        surface: {
+            DEFAULT: "var(--surface)",
+            highlight: "var(--surface-highlight)",
+        },
         text: {
           primary: "var(--text-primary)",
           secondary: "var(--text-secondary)",
+          tertiary: "var(--text-tertiary)",
         },
         accent: {
-          blue: "var(--accent-blue)",
-          yellow: "var(--accent-yellow)",
-          purple: "var(--accent-purple)",
-          green: "var(--accent-green)",
+          primary: "var(--accent-primary)",
+          hover: "var(--accent-hover)",
+          success: "var(--accent-success)",
+          warning: "var(--accent-warning)",
+          error: "var(--accent-error)",
+          info: "var(--accent-info)",
+          // Legacy mappings for safety
+          blue: "var(--accent-info)",
+          green: "var(--accent-primary)",
+          purple: "var(--accent-primary)", // Consolidate to primary
+          yellow: "var(--accent-warning)",
         },
         border: "var(--border)",
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: ["var(--font-inter)", "sans-serif"],
+        mono: ["var(--font-jetbrains-mono)", "monospace"],
       },
     },
   },

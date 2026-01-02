@@ -72,41 +72,42 @@ export default function ToolsPage() {
 
     return (
         <LayoutWrapper>
-            <div className="min-h-screen bg-black pb-20 pt-8 md:pt-12">
+
+            <div className="min-h-screen bg-background pb-20 pt-8 md:pt-12">
                 <div className="container mx-auto px-4 max-w-7xl">
 
                     {/* Header Section */}
                     <div className="text-center mb-10 md:mb-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-[10px] md:text-xs font-bold mb-4 md:mb-6">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-primary/10 border border-accent-primary/20 text-accent-primary text-[10px] md:text-xs font-bold mb-4 md:mb-6">
                             <Briefcase size={12} />
                             <span>Developer Utilities Hub</span>
                         </div>
                         <h1 className="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 tracking-tight leading-tight">
-                            The <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-500">Swiss Army Knife</span> <br className="hidden md:block" /> for Developers.
+                            The <span className="text-accent-primary">Swiss Army Knife</span> <br className="hidden md:block" /> for Developers.
                         </h1>
-                        <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-lg leading-relaxed px-4">
+                        <p className="text-text-secondary max-w-2xl mx-auto text-sm md:text-lg leading-relaxed px-4">
                             30+ powerful tools to format, convert, generate, and debug. <br className="hidden md:block" />
                             Everything you need, right in your browser.
                         </p>
                     </div>
 
                     {/* Search & Filter Bar */}
-                    <div className="sticky top-16 md:top-20 z-40 bg-black/80 backdrop-blur-xl py-3 md:py-4 mb-6 md:mb-8 border-b border-white/5 -mx-4 px-4 md:mx-0 md:px-0">
+                    <div className="sticky top-16 md:top-20 z-40 bg-background/80 backdrop-blur-xl py-3 md:py-4 mb-6 md:mb-8 border-b border-white/5 -mx-4 px-4 md:mx-0 md:px-0">
                         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                             {/* Search */}
                             <div className="relative w-full md:max-w-md group">
                                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                                    <Search size={18} className="text-gray-500 group-focus-within:text-violet-500 transition-colors" />
+                                    <Search size={18} className="text-text-tertiary group-focus-within:text-accent-primary transition-colors" />
                                 </div>
                                 <input
                                     type="text"
                                     placeholder="Search tools..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full bg-[#0f172a] border border-[#334155] text-gray-200 text-sm rounded-xl pl-12 pr-4 py-3 outline-none focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/50 transition-all placeholder:text-gray-600 shadow-sm"
+                                    className="w-full bg-surface border border-border text-text-primary text-sm rounded-xl pl-12 pr-4 py-3 outline-none focus:border-accent-primary/50 focus:ring-1 focus:ring-accent-primary/50 transition-all placeholder:text-text-tertiary shadow-sm"
                                 />
                                 <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none hidden md:flex">
-                                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded border border-[#334155] bg-[#1e293b] text-[10px] text-gray-400 font-mono">
+                                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded border border-border bg-panel text-[10px] text-text-secondary font-mono">
                                         <Command size={10} /> K
                                     </div>
                                 </div>
@@ -116,7 +117,7 @@ export default function ToolsPage() {
                             <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-hide mask-fade-right">
                                 <button
                                     onClick={() => setActiveCategory('All')}
-                                    className={`px-3 py-2 md:px-4 rounded-full text-xs font-bold whitespace-nowrap transition-all flex-shrink-0 ${activeCategory === 'All' ? 'bg-white text-black shadow-lg shadow-white/10' : 'bg-[#1e293b] text-gray-400 hover:bg-[#334155] hover:text-white border border-[#334155]'}`}
+                                    className={`px-3 py-2 md:px-4 rounded-full text-xs font-bold whitespace-nowrap transition-all flex-shrink-0 ${activeCategory === 'All' ? 'bg-accent-primary text-white shadow-lg shadow-accent-primary/20' : 'bg-surface text-text-secondary hover:bg-surface-highlight hover:text-text-primary border border-border'}`}
                                 >
                                     All Tools
                                 </button>
@@ -124,7 +125,7 @@ export default function ToolsPage() {
                                     <button
                                         key={cat}
                                         onClick={() => setActiveCategory(cat)}
-                                        className={`px-3 py-2 md:px-4 rounded-full text-xs font-bold whitespace-nowrap transition-all flex-shrink-0 ${activeCategory === cat ? 'bg-white text-black shadow-lg shadow-white/10' : 'bg-[#1e293b] text-gray-400 hover:bg-[#334155] hover:text-white border border-[#334155]'}`}
+                                        className={`px-3 py-2 md:px-4 rounded-full text-xs font-bold whitespace-nowrap transition-all flex-shrink-0 ${activeCategory === cat ? 'bg-white text-black shadow-lg shadow-white/10' : 'bg-surface text-text-secondary hover:bg-surface-highlight hover:text-text-primary border border-border'}`}
                                     >
                                         {cat}
                                     </button>
@@ -137,23 +138,23 @@ export default function ToolsPage() {
                     <div className="space-y-12 md:space-y-16 pb-20">
                         {Object.entries(groupedTools).map(([category, tools], groupIndex) => (
                             <div key={category} className="animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: `${groupIndex * 100}ms` }}>
-                                <div className="flex items-center gap-4 mb-4 md:mb-6 sticky top-[135px] md:static z-30 py-2 bg-black/95 md:bg-transparent backdrop-blur md:backdrop-filter-none">
-                                    <h2 className="text-lg md:text-xl font-bold text-white tracking-tight flex-shrink-0">{category}</h2>
-                                    <div className="h-px bg-gradient-to-r from-[#334155] to-transparent flex-1"></div>
+                                <div className="flex items-center gap-4 mb-4 md:mb-6 sticky top-[135px] md:static z-30 py-2 bg-background/95 md:bg-transparent backdrop-blur md:backdrop-filter-none">
+                                    <h2 className="text-lg md:text-xl font-bold text-text-primary tracking-tight flex-shrink-0">{category}</h2>
+                                    <div className="h-px bg-gradient-to-r from-border to-transparent flex-1"></div>
                                 </div>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
                                     {tools.map((tool) => (
                                         <button
                                             key={tool.id}
                                             onClick={() => setSelectedTool(tool)}
-                                            className="group relative flex flex-row sm:flex-col items-center sm:items-start text-left bg-[#0f172a] hover:bg-[#1e293b] border border-[#334155] hover:border-violet-500/30 rounded-xl md:rounded-2xl p-4 md:p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-violet-500/10"
+                                            className="group relative flex flex-row sm:flex-col items-center sm:items-start text-left bg-surface hover:bg-surface-highlight border border-border hover:border-accent-primary/30 rounded-xl md:rounded-2xl p-4 md:p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent-primary/10"
                                         >
                                             <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl ${tool.bg} ${tool.color} flex items-center justify-center mr-4 sm:mr-0 sm:mb-4 transition-transform group-hover:scale-110 duration-300 flex-shrink-0`}>
                                                 <tool.icon size={20} className="md:w-6 md:h-6" />
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <h3 className="text-sm md:text-base font-bold text-gray-200 group-hover:text-white mb-0.5 md:mb-1 transition-colors truncate">{tool.title}</h3>
-                                                <p className="text-[10px] md:text-xs text-gray-500 group-hover:text-gray-400 line-clamp-2 leading-relaxed">
+                                                <h3 className="text-sm md:text-base font-bold text-text-primary group-hover:text-accent-primary mb-0.5 md:mb-1 transition-colors truncate">{tool.title}</h3>
+                                                <p className="text-[10px] md:text-xs text-text-secondary group-hover:text-text-secondary line-clamp-2 leading-relaxed">
                                                     {tool.description}
                                                 </p>
                                             </div>
@@ -165,8 +166,8 @@ export default function ToolsPage() {
 
                         {Object.keys(groupedTools).length === 0 && (
                             <div className="py-20 text-center">
-                                <p className="text-gray-500 text-lg">No tools found matching your search.</p>
-                                <button onClick={() => { setSearchTerm(''); setActiveCategory('All'); }} className="mt-4 text-violet-400 hover:text-violet-300 underline font-medium">
+                                <p className="text-text-secondary text-lg">No tools found matching your search.</p>
+                                <button onClick={() => { setSearchTerm(''); setActiveCategory('All'); }} className="mt-4 text-accent-primary hover:text-accent-hover underline font-medium">
                                     Clear filters
                                 </button>
                             </div>

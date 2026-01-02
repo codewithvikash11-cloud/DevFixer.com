@@ -116,8 +116,8 @@ export default function SidebarToolbox() {
                 onMouseEnter={() => setIsOpen(true)}
                 onMouseLeave={() => setIsOpen(false)}
                 className={`fixed top-0 left-0 h-full z-40 transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] 
-                    ${isOpen ? 'w-64 bg-[#0a0a0a]/95' : 'w-20 bg-[#0a0a0a]/60'} 
-                    backdrop-blur-xl border-r border-white/5 shadow-2xl hidden lg:flex flex-col pt-20 pb-4
+                    ${isOpen ? 'w-64' : 'w-20'} 
+                    glass-strong shadow-2xl hidden lg:flex flex-col pt-20 pb-4
                 `}
             >
                 {/* Scrollable Content Container */}
@@ -130,7 +130,7 @@ export default function SidebarToolbox() {
                                 name: "Home",
                                 href: "/",
                                 icon: Home,
-                                color: "text-green-500",
+                                color: "text-accent-success", // Use semantic color
                                 desc: "Start Here"
                             }}
                             isOpen={isOpen}
@@ -142,8 +142,8 @@ export default function SidebarToolbox() {
                     {/* Explore Section */}
                     <div>
                         <div className={`px-6 mb-2 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-500 mb-1 whitespace-nowrap">Explore</h2>
-                            <div className="h-0.5 w-6 bg-[#00E5FF] rounded-full shadow-[0_0_8px_#00E5FF]"></div>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.15em] text-text-tertiary mb-1 whitespace-nowrap">Explore</h2>
+                            <div className="h-0.5 w-6 bg-accent-info rounded-full shadow-[0_0_8px_var(--accent-info)]"></div>
                         </div>
 
                         <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
@@ -156,8 +156,8 @@ export default function SidebarToolbox() {
                     {/* Productivity Section */}
                     <div>
                         <div className={`px-6 mb-2 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-500 mb-1 whitespace-nowrap">Productivity</h2>
-                            <div className="h-0.5 w-6 bg-violet-500 rounded-full shadow-[0_0_8px_#8B5CF6]"></div>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.15em] text-text-tertiary mb-1 whitespace-nowrap">Productivity</h2>
+                            <div className="h-0.5 w-6 bg-accent-primary rounded-full shadow-[0_0_8px_var(--accent-primary)]"></div>
                         </div>
 
                         <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
@@ -200,9 +200,9 @@ function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
                     }
                     ${isActive
                         ? isOpen
-                            ? 'bg-white/5 border-white/10 shadow-lg'
-                            : 'bg-gradient-to-br from-[#008000] to-[#005500] text-white shadow-[0_0_15px_rgba(0,128,0,0.5)] ring-1 ring-white/20'
-                        : 'hover:bg-white/5 text-gray-400 hover:text-white'
+                            ? 'bg-accent-primary/10 border-accent-primary/20 shadow-lg'
+                            : 'bg-accent-primary text-white shadow-[0_0_15px_var(--accent-glow)]'
+                        : 'hover:bg-surface-highlight text-text-secondary hover:text-text-primary'
                     }
                 `}
             >
@@ -210,7 +210,7 @@ function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
                 <div className={`
                     relative z-10 transition-transform duration-300 ease-out group-hover/link:scale-110
                     ${isActive && !isOpen ? 'text-white' : ''}
-                    ${isActive && isOpen ? item.color || 'text-[#00E5FF]' : ''}
+                    ${isActive && isOpen ? 'text-accent-primary' : ''}
                 `}>
                     <item.icon size={20} className={isActive ? 'drop-shadow-md' : ''} />
                 </div>
@@ -218,16 +218,16 @@ function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
                 {/* Expanded Text */}
                 <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'w-auto opacity-100 ml-0' : 'w-0 opacity-0'}`}>
                     <div className="flex flex-col items-start text-left">
-                        <p className={`text-sm font-bold whitespace-nowrap tracking-wide ${isActive ? 'text-white' : 'text-gray-400 group-hover/link:text-white'}`}>
+                        <p className={`text-sm font-bold whitespace-nowrap tracking-wide ${isActive ? 'text-accent-primary' : 'text-text-secondary group-hover/link:text-text-primary'}`}>
                             {item.name}
                         </p>
-                        <p className="text-[10px] text-gray-600 font-medium whitespace-nowrap group-hover/link:text-gray-500 transition-colors">{item.desc}</p>
+                        <p className="text-[10px] text-text-tertiary font-medium whitespace-nowrap group-hover/link:text-text-secondary transition-colors">{item.desc}</p>
                     </div>
                 </div>
 
                 {/* Active Indicator Line (Expanded Only) */}
                 {isOpen && isActive && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-[#008000] rounded-r-full shadow-[0_0_8px_#008000]"></div>
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-accent-primary rounded-r-full shadow-[0_0_8px_var(--accent-primary)]"></div>
                 )}
             </Link>
 
@@ -235,15 +235,15 @@ function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
             {!isOpen && (
                 <div className="
                     absolute left-full top-1/2 -translate-y-1/2 ml-4 px-3 py-1.5 
-                    bg-[#1e293b] border border-[#334155] rounded-lg shadow-xl 
+                    glass-strong rounded-lg shadow-xl 
                     opacity-0 invisible -translate-x-2 
                     group-hover/item:opacity-100 group-hover/item:visible group-hover/item:translate-x-0 
                     transition-all duration-200 z-50 whitespace-nowrap pointer-events-none
                 ">
-                    <p className="text-xs font-bold text-white mb-0.5">{item.name}</p>
-                    <p className="text-[10px] text-gray-400">{item.desc}</p>
+                    <p className="text-xs font-bold text-text-primary mb-0.5">{item.name}</p>
+                    <p className="text-[10px] text-text-tertiary">{item.desc}</p>
                     {/* Arrow */}
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 bg-[#1e293b] border-l border-b border-[#334155] rotate-45"></div>
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 bg-panel border-l border-b border-border rotate-45"></div>
                 </div>
             )}
         </div>

@@ -509,7 +509,7 @@ export default function LearnPage() {
                         <div className="flex items-center gap-2">
                             <button
                                 onClick={() => runCode(code)}
-                                className="flex items-center gap-2 px-4 py-1.5 bg-[#008000] hover:bg-[#006600] text-white text-xs font-bold rounded shadow-[0_0_15px_rgba(0,128,0,0.4)] transition-all"
+                                className="flex items-center gap-2 px-4 py-1.5 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded shadow-[0_0_15px_var(--accent-glow)] transition-all"
                             >
                                 <Play size={12} fill="currentColor" /> Run
                             </button>
