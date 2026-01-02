@@ -313,10 +313,19 @@ export default function LearnPage() {
             <div className="flex-1 flex overflow-hidden relative">
 
                 {/* 1. LEFT SIDEBAR (Curriculum) */}
+                {/* Mobile Backdrop */}
+                {showSidebar && (
+                    <div
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-20 md:hidden"
+                        onClick={() => setShowSidebar(false)}
+                    />
+                )}
+
                 <aside className={cn(
-                    "w-72 border-r border-border bg-panel flex flex-col transition-all duration-300 absolute md:relative z-30 h-full",
+                    "w-72 border-r border-border bg-panel flex flex-col transition-transform duration-300 absolute md:relative z-30 h-full shadow-2xl md:shadow-none",
                     showSidebar ? "translate-x-0" : "-translate-x-full md:w-0 md:translate-x-0 md:border-none md:overflow-hidden",
-                    "md:relative md:translate-x-0" // Reset for desktop
+                    // Desktop override: Always show unless explicitly collapsed (logic handled by width above, but here we enforce relative placement)
+                    "md:translate-x-0"
                 )}>
                     <div className={cn("flex flex-col h-full bg-panel", !showSidebar && "md:hidden")}>
 
@@ -368,7 +377,11 @@ export default function LearnPage() {
                                                             ? "bg-accent-primary/10 text-accent-primary"
                                                             : "text-text-secondary hover:bg-surface hover:text-text-primary"
                                                     )}
-                                                    onClick={() => handleChapterSelect(course.id, chapter.id)}
+                                                    onClick={() => {
+                                                        handleChapterSelect(course.id, chapter.id);
+                                                        // Close sidebar on mobile after selection
+                                                        if (window.innerWidth < 768) setShowSidebar(false);
+                                                    }}
                                                 >
                                                     <div className="flex items-center gap-2 truncate">
                                                         {bookmarkedChapters.includes(chapter.id) && <Star size={10} className="text-yellow-400 fill-yellow-400 shrink-0" />}
