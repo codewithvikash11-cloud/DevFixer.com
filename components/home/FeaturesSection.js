@@ -241,8 +241,8 @@ const FeaturesSection = () => {
                     <BentoCard
                         title="Instant Solutions"
                         description="Stop wasting hours on StackOverflow. Get direct, verified fixes for your specific error logs instantly using our AI-driven engine."
-                        icon={<Zap size={24} className="text-accent-warning" />}
-                        className="md:col-span-2 md:row-span-2 bg-gradient-to-br from-surface to-surface-highlight border-accent-primary/20 shadow-xl"
+                        icon={<Zap size={24} className="text-[#008000]" />}
+                        className="md:col-span-2 md:row-span-2 bg-gradient-to-br from-surface to-surface-highlight border-[#008000]/20 shadow-xl"
                         href="/solutions"
                         ctaText="Explore Solutions"
                     >
@@ -253,7 +253,7 @@ const FeaturesSection = () => {
                     <BentoCard
                         title="Verified by Experts"
                         description="Every solution is peer-reviewed by senior architects for security and best practices."
-                        icon={<Shield size={24} className="text-accent-success" />}
+                        icon={<Shield size={24} className="text-[#008000]" />}
                         className="bg-surface"
                     />
 
@@ -261,14 +261,14 @@ const FeaturesSection = () => {
                     <BentoCard
                         title="Universal Knowledge"
                         description="From React hydration errors to Rust borrow checker issues—we cover the stack."
-                        icon={<Database size={24} className="text-accent-primary" />}
+                        icon={<Database size={24} className="text-[#008000]" />}
                         className="bg-surface"
                     />
 
                     <BentoCard
                         title="Copy-Paste Ready"
                         description="Clean, formatted code snippets."
-                        icon={<Code2 size={24} className="text-accent-secondary" />}
+                        icon={<Code2 size={24} className="text-[#008000]" />}
                         className="bg-surface relative"
                         href="/errors"
                         ctaText="Learn more"
@@ -279,7 +279,7 @@ const FeaturesSection = () => {
                     <BentoCard
                         title="Global CDN"
                         description="Access solutions from any edge location within milliseconds."
-                        icon={<Globe size={24} className="text-blue-400" />}
+                        icon={<Globe size={24} className="text-[#008000]" />}
                         className="md:col-span-2 bg-gradient-to-l from-surface to-surface-highlight relative"
                         href="/global-cdn"
                         ctaText="View Network"

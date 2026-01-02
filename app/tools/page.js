@@ -72,7 +72,7 @@ export default function ToolsPage() {
 
     return (
         <LayoutWrapper>
-            <div className="min-h-screen bg-black pb-20 pt-20 md:pt-24">
+            <div className="min-h-screen bg-black pb-20 pt-8 md:pt-12">
                 <div className="container mx-auto px-4 max-w-7xl">
 
                     {/* Header Section */}

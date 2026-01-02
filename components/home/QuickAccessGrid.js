@@ -11,36 +11,36 @@ const cards = [
         description: 'Run code instantly in 40+ languages.',
         image: '/Compiler.png',
         href: '/compiler',
-        color: 'text-green-500',
-        bg: 'bg-green-500/10',
-        border: 'group-hover:border-green-500/50'
+        color: 'text-[#008000]',
+        bg: 'bg-[#008000]/10',
+        border: 'group-hover:border-[#008000]/50'
     },
     {
         title: 'Dev Tools',
         description: 'Formatters, converters, and generators.',
         image: '/Dev Tools.png',
         href: '/tools',
-        color: 'text-purple-500',
-        bg: 'bg-purple-500/10',
-        border: 'group-hover:border-purple-500/50'
+        color: 'text-[#008000]',
+        bg: 'bg-[#008000]/10',
+        border: 'group-hover:border-[#008000]/50'
     },
     {
         title: 'API Tester',
         description: 'Debug REST endpoints directly.',
         image: '/API Tester.png',
         href: '/api-tester',
-        color: 'text-blue-500',
-        bg: 'bg-blue-500/10',
-        border: 'group-hover:border-blue-500/50'
+        color: 'text-[#008000]',
+        bg: 'bg-[#008000]/10',
+        border: 'group-hover:border-[#008000]/50'
     },
     {
         title: 'Learn',
         description: 'Master new skills with interactive lessons.',
         image: '/Learn.png',
         href: '/learn',
-        color: 'text-cyan-500',
-        bg: 'bg-cyan-500/10',
-        border: 'group-hover:border-cyan-500/50'
+        color: 'text-[#008000]',
+        bg: 'bg-[#008000]/10',
+        border: 'group-hover:border-[#008000]/50'
     }
 ];
 

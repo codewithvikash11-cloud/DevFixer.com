@@ -8,22 +8,22 @@ const steps = [
         icon: <Search size={24} />,
         title: "Search Error",
         description: "Paste your stack trace.",
-        accent: "text-blue-400",
-        border: "group-hover:border-blue-500/50"
+        accent: "text-[#008000]",
+        border: "group-hover:border-[#008000]/50"
     },
     {
         icon: <BookOpen size={24} />,
         title: "Get Solution",
         description: "Receive a verified patch.",
-        accent: "text-purple-400",
-        border: "group-hover:border-purple-500/50"
+        accent: "text-[#008000]",
+        border: "group-hover:border-[#008000]/50"
     },
     {
         icon: <CheckCircle size={24} />,
         title: "Deploy Fix",
         description: "Ship confidently.",
-        accent: "text-green-400",
-        border: "group-hover:border-green-500/50"
+        accent: "text-[#008000]",
+        border: "group-hover:border-[#008000]/50"
     }
 ];
 

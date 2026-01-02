@@ -19,7 +19,8 @@ import {
     ShieldCheck,
     Hammer,
     ScrollText,
-    GraduationCap
+    GraduationCap,
+    Home
 } from 'lucide-react';
 
 export default function SidebarToolbox() {
@@ -114,35 +115,58 @@ export default function SidebarToolbox() {
             <aside
                 onMouseEnter={() => setIsOpen(true)}
                 onMouseLeave={() => setIsOpen(false)}
-                className={`fixed top-0 left-0 h-full z-50 transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] 
-                    ${isOpen ? 'w-64 bg-black/80' : 'w-20 bg-black/60'} 
-                    backdrop-blur-xl border-r border-white/5 shadow-2xl hidden lg:flex flex-col pt-24 pb-6
+                className={`fixed top-0 left-0 h-full z-40 transition-all duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)] 
+                    ${isOpen ? 'w-64 bg-[#0a0a0a]/95' : 'w-20 bg-[#0a0a0a]/60'} 
+                    backdrop-blur-xl border-r border-white/5 shadow-2xl hidden lg:flex flex-col pt-20 pb-4
                 `}
             >
-                {/* Rail Header */}
-                <div className={`px-6 mb-4 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
-                    <h2 className="text-[10px] font-black uppercase tracking-[0.25em] text-gray-500 mb-1 whitespace-nowrap">Explore</h2>
-                    <div className="h-0.5 w-6 bg-[#00E5FF] rounded-full shadow-[0_0_8px_#00E5FF]"></div>
+                {/* Scrollable Content Container */}
+                <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-none py-4 space-y-6">
+
+                    {/* Explicit Home Link */}
+                    <div className="px-2 w-full flex flex-col items-center lg:items-stretch">
+                        <SidebarItem
+                            item={{
+                                name: "Home",
+                                href: "/",
+                                icon: Home,
+                                color: "text-green-500",
+                                desc: "Start Here"
+                            }}
+                            isOpen={isOpen}
+                            pathname={pathname}
+                            setIsOpen={setIsOpen}
+                        />
+                    </div>
+
+                    {/* Explore Section */}
+                    <div>
+                        <div className={`px-6 mb-2 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-500 mb-1 whitespace-nowrap">Explore</h2>
+                            <div className="h-0.5 w-6 bg-[#00E5FF] rounded-full shadow-[0_0_8px_#00E5FF]"></div>
+                        </div>
+
+                        <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
+                            {menuItems.filter(i => !['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities'].includes(i.name)).map((item) => (
+                                <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
+                            ))}
+                        </nav>
+                    </div>
+
+                    {/* Productivity Section */}
+                    <div>
+                        <div className={`px-6 mb-2 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.15em] text-gray-500 mb-1 whitespace-nowrap">Productivity</h2>
+                            <div className="h-0.5 w-6 bg-violet-500 rounded-full shadow-[0_0_8px_#8B5CF6]"></div>
+                        </div>
+
+                        <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
+                            {menuItems.filter(i => ['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities'].includes(i.name)).map((item) => (
+                                <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
+                            ))}
+                        </nav>
+                    </div>
                 </div>
-
-                <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch mb-6">
-                    {menuItems.filter(i => !['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities'].includes(i.name)).map((item) => (
-                        <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
-                    ))}
-                </nav>
-
-                <div className={`px-6 mb-4 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
-                    <h2 className="text-[10px] font-black uppercase tracking-[0.25em] text-gray-500 mb-1 whitespace-nowrap">Productivity</h2>
-                    <div className="h-0.5 w-6 bg-violet-500 rounded-full shadow-[0_0_8px_#8B5CF6]"></div>
-                </div>
-
-                <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
-                    {menuItems.filter(i => ['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities'].includes(i.name)).map((item) => (
-                        <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
-                    ))}
-                </nav>
-
-                {/* Pro Banner / Footer */}
 
             </aside>
 
@@ -158,14 +182,18 @@ export default function SidebarToolbox() {
 }
 
 function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
-    const isActive = pathname === item.href;
+    // Improved Active Logic: Exact match for root, startsWith for sub-pages
+    const isActive = item.href === '/'
+        ? pathname === '/'
+        : pathname.startsWith(item.href);
+
     return (
         <div className="relative group/item w-full flex justify-center lg:justify-start">
             <Link
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                    relative flex items-center transition-all duration-300 group/link
+                    relative flex items-center transition-all duration-200 group/link
                     ${isOpen
                         ? 'w-full p-3 rounded-xl gap-3 border border-transparent'
                         : 'w-10 h-10 justify-center rounded-xl'
@@ -182,7 +210,7 @@ function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
                 <div className={`
                     relative z-10 transition-transform duration-300 ease-out group-hover/link:scale-110
                     ${isActive && !isOpen ? 'text-white' : ''}
-                    ${isActive && isOpen ? 'text-[#00E5FF]' : ''}
+                    ${isActive && isOpen ? item.color || 'text-[#00E5FF]' : ''}
                 `}>
                     <item.icon size={20} className={isActive ? 'drop-shadow-md' : ''} />
                 </div>
@@ -210,7 +238,7 @@ function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
                     bg-[#1e293b] border border-[#334155] rounded-lg shadow-xl 
                     opacity-0 invisible -translate-x-2 
                     group-hover/item:opacity-100 group-hover/item:visible group-hover/item:translate-x-0 
-                    transition-all duration-200 z-50 whitespace-nowrap
+                    transition-all duration-200 z-50 whitespace-nowrap pointer-events-none
                 ">
                     <p className="text-xs font-bold text-white mb-0.5">{item.name}</p>
                     <p className="text-[10px] text-gray-400">{item.desc}</p>

@@ -61,7 +61,7 @@ export const metadata = {
     },
 };
 
-import SidebarToolbox from '@/components/SidebarToolbox';
+import GlobalShell from '@/components/GlobalShell';
 
 export default function RootLayout({ children }) {
     return (
@@ -69,8 +69,9 @@ export default function RootLayout({ children }) {
             <body suppressHydrationWarning>
                 <ThemeProvider>
                     <AuthProvider>
-                        <SidebarToolbox />
-                        {children}
+                        <GlobalShell>
+                            {children}
+                        </GlobalShell>
                     </AuthProvider>
                 </ThemeProvider>
             </body>

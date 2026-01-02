@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import MobileMenu from '@/components/MobileMenu';
+import { useNavbar } from '@/context/NavbarContext';
 import RequestPanel from '@/components/api-tester/RequestPanel';
 import ResponsePanel from '@/components/api-tester/ResponsePanel';
 import CodeOrbitFooter from '@/components/compiler/CodeOrbitFooter';
 
 export default function ApiTesterPage() {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const [request, setRequest] = useState({
         url: 'https://jsonplaceholder.typicode.com/posts/1',
@@ -66,16 +64,17 @@ export default function ApiTesterPage() {
         }
     };
 
+    // NAVBAR SYNC
+    const { setHideSearch } = useNavbar();
+
+    React.useEffect(() => {
+        setHideSearch(true);
+        return () => setHideSearch(false);
+    }, []);
+
     return (
         <div className="flex flex-col min-h-screen bg-background font-sans text-text-primary">
-            <Navbar
-                onMenuClick={() => setIsMobileMenuOpen(true)}
-                isSidebarOpen={isMobileMenuOpen}
-                hideSearch={true}
-            />
-            <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-
-            <main className="flex-1 container mx-auto px-4 py-24 md:py-28 max-w-7xl animate-in fade-in duration-500">
+            <main className="flex-1 container mx-auto px-4 py-8 md:py-10 max-w-7xl animate-in fade-in duration-500">
                 <div className="flex items-center justify-between mb-8">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-bold tracking-tight">API Tester</h1>

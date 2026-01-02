@@ -3,9 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import CodeEditor from '@/components/compiler/CodeEditor';
 import OutputPanel from '@/components/compiler/OutputPanel';
-import Navbar from '@/components/Navbar';
 import CodeOrbitFooter from '@/components/compiler/CodeOrbitFooter';
-import MobileMenu from '@/components/MobileMenu';
+import { useNavbar } from '@/context/NavbarContext';
 import { LANGUAGE_TEMPLATES } from '@/lib/templates';
 import { executeCode } from '@/lib/piston';
 import { FileCode, FileType, MoreHorizontal, Save, Share2, LayoutTemplate, Play, Square, ChevronDown, Terminal } from 'lucide-react'; // Trigger HMR
@@ -32,7 +31,6 @@ export default function CompilerPage() {
 
     // WEB STATE
     const [activeTab, setActiveTab] = useState('HTML');
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeTheme, setActiveTheme] = useState('vs-dark'); // Theme State
     const [fileContent, setFileContent] = useState({
         HTML: LANGUAGE_TEMPLATES.html,
@@ -207,20 +205,24 @@ export default function CompilerPage() {
         </div>
     );
 
-    return (
-        <div className="flex flex-col min-h-screen md:h-screen bg-[#000000] text-white font-sans overflow-y-auto md:overflow-hidden lg:pl-20 pt-16 md:pt-20">
-            {/* Mobile Menu Overlay */}
-            <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+    // NAVBAR SYNC
+    const { setCenterContent, setCustomActions, setHideSearch } = useNavbar();
 
-            {/* Global Navbar with Custom Compiler Controls */}
-            <Navbar
-                onMenuClick={() => setIsMobileMenuOpen(true)}
-                isSidebarOpen={isMobileMenuOpen}
-                centerContent={CompilerTabs}
-                customActions={CompilerActions}
-                hideSearch={true}
-            // hideLinks={true} // Removed to restore standard navigation
-            />
+    // Sync Navbar Content
+    useEffect(() => {
+        setCenterContent(CompilerTabs);
+        setCustomActions(CompilerActions);
+        setHideSearch(true);
+
+        return () => {
+            setCenterContent(null);
+            setCustomActions(null);
+            setHideSearch(false);
+        };
+    }, [compilerMode, activeTab, backendLanguage, activeTheme, isRunning]);
+
+    return (
+        <div className="flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] bg-[#000000] text-white font-sans overflow-hidden">
 
             {/* 2. Main Workspace */}
             <div className="flex-1 flex flex-col md:flex-row md:overflow-hidden">

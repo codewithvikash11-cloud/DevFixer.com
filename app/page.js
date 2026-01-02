@@ -55,7 +55,7 @@ export default function Home() {
 
                                 <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-text-primary leading-[1.05]">
                                     The Ultimate <br className="hidden lg:block" />
-                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#0080ff] animate-gradient">
+                                    <span className="text-[#008000] animate-none">
                                         Developer Ecosystem
                                     </span>
                                 </h1>

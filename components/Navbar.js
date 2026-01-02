@@ -8,10 +8,24 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
 import ThemeToggle from './ThemeToggle';
 import Logo from './Logo';
+import { useNavbar } from '@/context/NavbarContext';
 
-const Navbar = ({ onMenuClick, isSidebarOpen, centerContent, customActions, hideSearch = false, hideLinks = false }) => {
+const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customActions: propActions, hideSearch: propHideSearch, hideLinks = false }) => {
     const router = useRouter();
     const { user, logout } = useAuth();
+
+    // Context connection
+    const {
+        centerContent: contextCenter,
+        customActions: contextActions,
+        hideSearch: contextHideSearch
+    } = useNavbar();
+
+    // Prioritize props if passed (legacy/override), else use context
+    const centerContent = propCenter || contextCenter;
+    const customActions = propActions || contextActions;
+    const hideSearch = propHideSearch || contextHideSearch;
+
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [isScrolled, setIsScrolled] = useState(false);

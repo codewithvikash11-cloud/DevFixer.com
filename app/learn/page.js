@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import MobileMenu from '@/components/MobileMenu';
 import { CURRICULUM } from '@/lib/data/learn-curriculum';
 import {
     BookOpen,
@@ -32,7 +31,6 @@ export default function LearnPage() {
     const [activeChapterId, setActiveChapterId] = useState('html-intro');
 
     // STATE: UI
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [showSidebar, setShowSidebar] = useState(true);
     const [mobileView, setMobileView] = useState(VIEW_MODES.LESSON);
     const [searchQuery, setSearchQuery] = useState('');
@@ -96,6 +94,13 @@ export default function LearnPage() {
         };
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
+    }, []);
+
+    // 4. Handle Mobile Initial State
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+            setShowSidebar(false);
+        }
     }, []);
 
     // --- HANDLERS ---
@@ -220,14 +225,21 @@ export default function LearnPage() {
     const isBookmarked = bookmarkedChapters.includes(activeChapterId);
 
     return (
-        <div className="flex flex-col h-screen bg-background text-text-primary overflow-hidden lg:pl-20 pt-16 md:pt-20">
-            <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+        <div className="flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] bg-background text-text-primary overflow-hidden">
 
             {/* TOP HEADER */}
             <header className="h-14 border-b border-border bg-panel flex items-center justify-between px-4 md:px-6 shrink-0 z-20">
                 <div className="flex items-center gap-4">
-                    <button onClick={() => setShowSidebar(!showSidebar)} className="md:hidden text-text-secondary hover:text-text-primary">
-                        <Menu size={20} />
+                    {/* Curriculum Sidebar Toggle */}
+                    <button
+                        onClick={() => setShowSidebar(!showSidebar)}
+                        className={cn(
+                            "text-text-secondary hover:text-text-primary transition-colors",
+                            showSidebar ? "text-accent-primary" : ""
+                        )}
+                        title="Toggle Course Content"
+                    >
+                        <BookOpen size={20} />
                     </button>
 
                     {/* BREADCRUMBS */}
@@ -457,9 +469,11 @@ export default function LearnPage() {
 
                 {/* 3. RIGHT PANEL (Editor) */}
                 <aside className={cn(
-                    "flex flex-col border-l border-border bg-[#1e1e1e] transition-all relative",
-                    "lg:w-[45%] lg:flex",
-                    mobileView === VIEW_MODES.EDITOR ? "absolute inset-0 z-20 w-full flex" : "hidden"
+                    "flex flex-col border-l border-border bg-[#1e1e1e] transition-all",
+                    // Desktop: Always visible, relative, split width
+                    "lg:flex lg:relative lg:inset-auto lg:w-[45%] lg:z-0 lg:h-auto",
+                    // Mobile: Toggled via state, absolute overlay when active
+                    mobileView === VIEW_MODES.EDITOR ? "absolute inset-0 z-20 w-full h-full flex" : "hidden"
                 )}>
                     {/* Editor Tabs */}
                     <div className="h-10 bg-[#252526] flex items-center justify-between px-4 border-b border-[#333] shrink-0">
