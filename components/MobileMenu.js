@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X, Home, Terminal, Code, BookOpen, Layout, Globe, Network } from 'lucide-react';
+import { X, Home, Terminal, Code, BookOpen, Layout, Globe, Network, Briefcase } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
 
@@ -12,6 +12,7 @@ export default function MobileMenu({ isOpen, onClose }) {
 
     const items = [
         { label: 'Home', href: '/', icon: Home },
+        { label: 'Tools Hub', href: '/tools', icon: Briefcase },
         { label: 'API Tester', href: '/api-tester', icon: Network },
         { label: 'Errors', href: '/errors', icon: Terminal },
         { label: 'Languages', href: '/languages', icon: Globe },

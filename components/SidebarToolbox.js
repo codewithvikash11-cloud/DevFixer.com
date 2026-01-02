@@ -13,7 +13,8 @@ import {
     Layout,
 
     Globe,
-    Network
+    Network,
+    Briefcase
 } from 'lucide-react';
 
 export default function SidebarToolbox() {
@@ -21,6 +22,13 @@ export default function SidebarToolbox() {
     const pathname = usePathname();
 
     const menuItems = [
+        {
+            name: "Tools Hub",
+            href: "/tools",
+            icon: Briefcase,
+            color: "text-[#8B5CF6]", // Violet
+            desc: "Utilities"
+        },
         {
             name: "API Tester",
             href: "/api-tester",
