@@ -27,11 +27,12 @@ export default function MobileMenu({ isOpen, onClose }) {
     return (
         <>
             {/* Backdrop */}
-            className={cn(
-                "fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] transition-opacity duration-300 lg:hidden",
-                isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-            )}
-            onClick={onClose}
+            <div
+                className={cn(
+                    "fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] transition-opacity duration-300 lg:hidden",
+                    isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+                )}
+                onClick={onClose}
             />
 
             {/* Side Drawer */}
