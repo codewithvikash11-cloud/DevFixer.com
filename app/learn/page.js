@@ -225,7 +225,7 @@ export default function LearnPage() {
     const isBookmarked = bookmarkedChapters.includes(activeChapterId);
 
     return (
-        <div className="flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] bg-background text-text-primary overflow-hidden">
+        <div className="flex flex-col h-[calc(100vh-4rem)] bg-background text-text-primary overflow-hidden">
 
             {/* TOP HEADER */}
             <header className="h-14 border-b border-border bg-panel flex items-center justify-between px-4 md:px-6 shrink-0 z-20">

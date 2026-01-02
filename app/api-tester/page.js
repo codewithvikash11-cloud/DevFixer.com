@@ -82,7 +82,7 @@ export default function ApiTesterPage() {
                     </div>
                 </div>
 
-                <div className="grid lg:grid-cols-2 gap-6 h-[800px] lg:h-[600px]">
+                <div className="grid lg:grid-cols-2 gap-6 min-h-[600px] lg:h-[600px]">
                     {/* Left: Request Configuration */}
                     <div className="flex flex-col h-full bg-surface border border-border rounded-xl overflow-hidden shadow-sm">
                         <RequestPanel

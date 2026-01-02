@@ -20,6 +20,16 @@ const CurlConverter = dynamic(() => import('@/components/tools/impl/CurlConverte
 const Minifier = dynamic(() => import('@/components/tools/impl/Minifier'), { loading: () => <p>Loading...</p> });
 const MarkdownPreview = dynamic(() => import('@/components/tools/impl/MarkdownPreview'), { loading: () => <p>Loading...</p> });
 
+// Newly Implemented Tools
+const WordCounter = dynamic(() => import('@/components/tools/impl/WordCounter'), { loading: () => <p>Loading...</p> });
+const CaseConverter = dynamic(() => import('@/components/tools/impl/CaseConverter'), { loading: () => <p>Loading...</p> });
+const RemoveDuplicates = dynamic(() => import('@/components/tools/impl/RemoveDuplicates'), { loading: () => <p>Loading...</p> });
+const PasswordGenerator = dynamic(() => import('@/components/tools/impl/PasswordGenerator'), { loading: () => <p>Loading...</p> });
+const LoremIpsum = dynamic(() => import('@/components/tools/impl/LoremIpsum'), { loading: () => <p>Loading...</p> });
+const UrlEncoder = dynamic(() => import('@/components/tools/impl/UrlEncoder'), { loading: () => <p>Loading...</p> });
+const HtmlEntity = dynamic(() => import('@/components/tools/impl/HtmlEntity'), { loading: () => <p>Loading...</p> });
+
+
 const COMPONENT_MAP = {
     'json-formatter': JsonFormatter,
     'base64': Base64Converter,
@@ -29,8 +39,17 @@ const COMPONENT_MAP = {
     'color-converter': ColorConverter,
     'regex-tester': RegexTester,
     'curl-converter': CurlConverter,
-    'code-beautifier': Minifier, // Check if ID matches registry
-    'markdown-preview': MarkdownPreview
+    'code-beautifier': Minifier,
+    'markdown-preview': MarkdownPreview,
+
+    // New mappings
+    'word-counter': WordCounter,
+    'case-converter': CaseConverter,
+    'remove-duplicates': RemoveDuplicates,
+    'password-generator': PasswordGenerator,
+    'lorem-ipsum': LoremIpsum,
+    'url-encoder': UrlEncoder,
+    'html-entity': HtmlEntity,
 };
 
 export default function ToolsPage() {
@@ -73,7 +92,7 @@ export default function ToolsPage() {
     return (
         <LayoutWrapper>
 
-            <div className="min-h-screen bg-background pb-20 pt-8 md:pt-12">
+            <div className="min-h-screen bg-background pb-20">
                 <div className="container mx-auto px-4 max-w-7xl">
 
                     {/* Header Section */}

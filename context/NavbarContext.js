@@ -10,17 +10,21 @@ const NavbarContext = createContext({
     resetNavbar: () => { },
     hideSearch: false,
     setHideSearch: () => { },
+    hideLinks: false,
+    setHideLinks: () => { }
 });
 
 export const NavbarProvider = ({ children }) => {
     const [centerContent, setCenterContent] = useState(null);
     const [customActions, setCustomActions] = useState(null);
     const [hideSearch, setHideSearch] = useState(false);
+    const [hideLinks, setHideLinks] = useState(false);
 
     const resetNavbar = () => {
         setCenterContent(null);
         setCustomActions(null);
         setHideSearch(false);
+        setHideLinks(false);
     };
 
     return (
@@ -31,7 +35,9 @@ export const NavbarProvider = ({ children }) => {
             setCustomActions,
             resetNavbar,
             hideSearch,
-            setHideSearch
+            setHideSearch,
+            hideLinks,
+            setHideLinks
         }}>
             {children}
         </NavbarContext.Provider>

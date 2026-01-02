@@ -17,7 +17,6 @@ import {
     Briefcase,
     FileJson,
     ShieldCheck,
-    Hammer,
     ScrollText,
     GraduationCap,
     Home
@@ -33,49 +32,49 @@ export default function SidebarToolbox() {
             name: "Learn",
             href: "/learn",
             icon: GraduationCap,
-            color: "text-[#00E5FF]", // Cyan/Neon Blue
+            color: "text-accent-primary",
             desc: "Academy"
         },
         {
             name: "Tools Hub",
             href: "/tools",
             icon: Briefcase,
-            color: "text-[#8B5CF6]",
+            color: "text-accent-primary",
             desc: "Utilities"
         },
         {
             name: "API Tester",
             href: "/api-tester",
             icon: Network,
-            color: "text-[#F43F5E]",
+            color: "text-accent-primary",
             desc: "REST Client"
         },
         {
             name: "Compiler",
             href: "/compiler",
             icon: Code,
-            color: "text-[#3B82F6]",
+            color: "text-accent-primary",
             desc: "Online IDE"
         },
         {
             name: "Errors",
             href: "/errors",
             icon: Terminal,
-            color: "text-[#EF4444]",
+            color: "text-accent-primary",
             desc: "Fix Database"
         },
         {
             name: "Languages",
             href: "/languages",
             icon: Globe,
-            color: "text-[#A855F7]",
+            color: "text-accent-primary",
             desc: "Docs & Syntax"
         },
         {
             name: "Dashboard",
             href: "/dashboard",
             icon: Layout,
-            color: "text-[#F59E0B]",
+            color: "text-accent-warning", // Keep warning for dashboard/personal
             desc: "Contributor"
         },
         // Productivity Section
@@ -83,29 +82,22 @@ export default function SidebarToolbox() {
             name: "Log Analyzer",
             href: "/log-analyzer",
             icon: ScrollText,
-            color: "text-amber-400",
+            color: "text-accent-primary",
             desc: "AI Debugger"
         },
         {
             name: "Code Reviewer",
             href: "/code-reviewer",
             icon: ShieldCheck,
-            color: "text-green-400",
+            color: "text-accent-primary",
             desc: "Quality Audit"
         },
         {
             name: "Snippets",
             href: "/snippets",
             icon: BookOpen,
-            color: "text-[#10B981]",
+            color: "text-accent-primary",
             desc: "Code Library"
-        },
-        {
-            name: "Dev Utilities",
-            href: "/developer-tools",
-            icon: Hammer,
-            color: "text-blue-400",
-            desc: "GitHub & Resume"
         }
     ];
 

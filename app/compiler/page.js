@@ -206,29 +206,32 @@ export default function CompilerPage() {
     );
 
     // NAVBAR SYNC
-    const { setCenterContent, setCustomActions, setHideSearch } = useNavbar();
+    const { setCenterContent, setCustomActions, setHideSearch, setHideLinks } = useNavbar();
 
     // Sync Navbar Content
     useEffect(() => {
         setCenterContent(CompilerTabs);
         setCustomActions(CompilerActions);
         setHideSearch(true);
+        setHideLinks(true);
 
         return () => {
             setCenterContent(null);
             setCustomActions(null);
             setHideSearch(false);
+            setHideLinks(false);
         };
+
     }, [compilerMode, activeTab, backendLanguage, activeTheme, isRunning]);
 
     return (
-        <div className="flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] bg-[#000000] text-white font-sans overflow-hidden">
+        <div className="flex flex-col min-h-[calc(100vh-4rem)] md:h-[calc(100vh-4rem)] bg-[#000000] text-white font-sans overflow-y-auto md:overflow-hidden">
 
             {/* 2. Main Workspace */}
             <div className="flex-1 flex flex-col md:flex-row md:overflow-hidden">
 
                 {/* LEFT: Code Editor */}
-                <div className="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-[#1e293b] min-h-[50vh] md:min-h-0">
+                <div className="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-[#1e293b] min-h-[500px] md:min-h-0">
                     {/* Editor Area */}
                     <div className="flex-1 relative bg-[#000000]">
                         <CodeEditor

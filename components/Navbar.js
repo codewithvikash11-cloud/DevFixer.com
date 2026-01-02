@@ -10,7 +10,7 @@ import ThemeToggle from './ThemeToggle';
 import Logo from './Logo';
 import { useNavbar } from '@/context/NavbarContext';
 
-const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customActions: propActions, hideSearch: propHideSearch, hideLinks = false }) => {
+const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customActions: propActions, hideSearch: propHideSearch, hideLinks: propHideLinks = false }) => {
     const router = useRouter();
     const { user, logout } = useAuth();
 
@@ -18,13 +18,15 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
     const {
         centerContent: contextCenter,
         customActions: contextActions,
-        hideSearch: contextHideSearch
+        hideSearch: contextHideSearch,
+        hideLinks: contextHideLinks
     } = useNavbar();
 
     // Prioritize props if passed (legacy/override), else use context
     const centerContent = propCenter || contextCenter;
     const customActions = propActions || contextActions;
     const hideSearch = propHideSearch || contextHideSearch;
+    const hideLinks = propHideLinks || contextHideLinks;
 
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -54,7 +56,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
 
     return (
         <nav className={cn(
-            "fixed top-0 left-0 right-0 z-50 h-16 md:h-20 transition-all duration-300",
+            "fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-300",
             isScrolled || isSearchOpen || centerContent
                 ? "glass-strong border-b border-border shadow-sm"
                 : "bg-transparent border-b border-transparent"
@@ -112,7 +114,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
 
                     {/* Desktop Nav Links */}
                     {!hideLinks && (
-                        <div className="hidden lg:flex items-center gap-1 ml-4">
+                        <div className="hidden lg:flex items-center gap-0.5 ml-2">
                             <NavLink href="/compiler">Compiler</NavLink>
                             <NavLink href="/snippets">Snippets</NavLink>
                             <NavLink href="/errors">Errors</NavLink>
@@ -190,7 +192,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
 const NavLink = ({ href, children }) => (
     <Link
         href={href}
-        className="px-4 py-2 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors rounded-lg hover:bg-surface"
+        className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors rounded-md hover:bg-surface"
     >
         {children}
     </Link>

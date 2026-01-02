@@ -30,8 +30,8 @@ export default function GlobalShell({ children }) {
                 />
 
                 {/* Main Content Area */}
-                {/* Added pt-16/md:pt-20 for Navbar height, pl-0/lg:pl-20 for Desktop Sidebar width */}
-                <main className="pt-16 md:pt-20 lg:pl-20 min-h-screen transition-all duration-300">
+                {/* Added pt-16 for Navbar height, pl-0/lg:pl-20 for Desktop Sidebar width */}
+                <main className="pt-16 lg:pl-20 min-h-screen transition-all duration-300">
                     {children}
                 </main>
             </div>

@@ -61,19 +61,19 @@ export default function LogAnalyzerPage() {
 
     return (
         <LayoutWrapper>
-            <div className="min-h-screen bg-black pb-20 pt-24">
+            <div className="min-h-screen bg-background pb-20">
                 <div className="container mx-auto px-4 max-w-5xl">
 
                     {/* Header */}
                     <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold mb-6">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-primary/10 border border-accent-primary/20 text-accent-primary text-xs font-bold mb-6">
                             <Sparkles size={12} />
                             <span>AI Powered Debugging</span>
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-                            Smart <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Log Analyzer</span>
+                        <h1 className="text-4xl md:text-5xl font-black text-text-primary mb-4 tracking-tight">
+                            Smart <span className="text-[#008000]">Log Analyzer</span>
                         </h1>
-                        <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                        <p className="text-text-secondary max-w-2xl mx-auto text-lg leading-relaxed">
                             Paste your error stack traces below. Our AI measures the severity, detects the root cause, and suggests a fix instantly.
                         </p>
                     </div>
@@ -82,25 +82,25 @@ export default function LogAnalyzerPage() {
                     <div className="grid lg:grid-cols-2 gap-8 items-start">
                         <div className="space-y-4">
                             <div className="relative group">
-                                <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                                <div className="absolute -inset-0.5 bg-gradient-to-r from-accent-primary to-accent-hover rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
                                 <div className="relative">
                                     <textarea
                                         value={logs}
                                         onChange={(e) => setLogs(e.target.value)}
                                         placeholder="Paste stack trace or error logs here..."
-                                        className="w-full h-96 bg-[#0f172a] border border-[#334155] rounded-xl p-6 font-mono text-sm text-gray-300 outline-none focus:border-amber-500/50 resize-none transition-all placeholder:text-gray-600"
+                                        className="w-full h-64 md:h-96 bg-surface border border-border rounded-xl p-6 font-mono text-sm text-text-primary outline-none focus:border-accent-primary/50 resize-none transition-all placeholder:text-text-tertiary"
                                     ></textarea>
                                     <button
                                         onClick={analyzeLogs}
                                         disabled={isAnalyzing || !logs.trim()}
-                                        className="absolute bottom-4 right-4 bg-amber-500 hover:bg-amber-600 text-black font-bold py-2 px-6 rounded-lg transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="absolute bottom-4 right-4 bg-accent-primary hover:bg-accent-hover text-white font-bold py-2 px-6 rounded-lg transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-accent-primary/20"
                                     >
                                         {isAnalyzing ? <Loader2 size={18} className="animate-spin" /> : <ScrollText size={18} />}
                                         {isAnalyzing ? 'Scanning...' : 'Analyze Logs'}
                                     </button>
                                 </div>
                             </div>
-                            <div className="flex gap-4 text-xs text-gray-500 font-mono pl-2">
+                            <div className="flex gap-4 text-xs text-text-tertiary font-mono pl-2">
                                 <span>Supported: Java</span>
                                 <span>•</span>
                                 <span>Node.js</span>
@@ -114,38 +114,38 @@ export default function LogAnalyzerPage() {
                         {/* Result Section */}
                         <div className="relative min-h-[400px]">
                             {!result && !isAnalyzing && (
-                                <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-600 border-2 border-dashed border-[#334155] rounded-2xl bg-[#0f172a]/50">
+                                <div className="absolute inset-0 flex flex-col items-center justify-center text-text-tertiary border-2 border-dashed border-border rounded-2xl bg-surface/50">
                                     <ScrollText size={48} className="mb-4 opacity-20" />
                                     <p className="text-sm">Waiting for logs...</p>
                                 </div>
                             )}
 
                             {isAnalyzing && (
-                                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0f172a] border border-[#334155] rounded-2xl z-10">
+                                <div className="absolute inset-0 flex flex-col items-center justify-center bg-surface border border-border rounded-2xl z-10">
                                     <div className="relative w-24 h-24 mb-6">
-                                        <div className="absolute inset-0 border-4 border-amber-500/20 rounded-full animate-ping"></div>
-                                        <div className="absolute inset-0 border-4 border-t-amber-500 rounded-full animate-spin"></div>
+                                        <div className="absolute inset-0 border-4 border-accent-primary/20 rounded-full animate-ping"></div>
+                                        <div className="absolute inset-0 border-4 border-t-accent-primary rounded-full animate-spin"></div>
                                     </div>
-                                    <h3 className="text-xl font-bold text-white mb-2">Analyzing Patterns...</h3>
-                                    <p className="text-sm text-gray-400 animate-pulse">Checking StackOverflow database...</p>
+                                    <h3 className="text-xl font-bold text-text-primary mb-2">Analyzing Patterns...</h3>
+                                    <p className="text-sm text-text-secondary animate-pulse">Checking StackOverflow database...</p>
                                 </div>
                             )}
 
                             {result && (
-                                <div className="bg-[#0f172a] border border-[#334155] rounded-2xl overflow-hidden animate-in fade-in slide-in-from-right-8 duration-500">
+                                <div className="bg-surface border border-border rounded-2xl overflow-hidden animate-in fade-in slide-in-from-right-8 duration-500">
                                     {/* Result Header */}
-                                    <div className="bg-[#1e293b] p-6 border-b border-[#334155]">
+                                    <div className="bg-panel p-6 border-b border-border">
                                         <div className="flex items-center justify-between mb-2">
-                                            <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Detected Issue</span>
+                                            <span className="text-xs font-bold text-text-secondary uppercase tracking-widest">Detected Issue</span>
                                             <span className={`px-2 py-1 rounded text-[10px] font-black uppercase ${result.severity === 'Critical' ? 'bg-red-500/20 text-red-400' :
-                                                    result.severity === 'High' ? 'bg-orange-500/20 text-orange-400' :
-                                                        'bg-blue-500/20 text-blue-400'
+                                                result.severity === 'High' ? 'bg-orange-500/20 text-orange-400' :
+                                                    'bg-blue-500/20 text-blue-400'
                                                 }`}>
                                                 {result.severity} Severity
                                             </span>
                                         </div>
-                                        <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                                            <AlertTriangle size={20} className="text-amber-500" />
+                                        <h2 className="text-xl font-bold text-text-primary flex items-center gap-2">
+                                            <AlertTriangle size={20} className="text-accent-primary" />
                                             {result.error}
                                         </h2>
                                     </div>
@@ -153,31 +153,31 @@ export default function LogAnalyzerPage() {
                                     {/* Analysis Body */}
                                     <div className="p-6 space-y-6">
                                         <div>
-                                            <h4 className="text-sm font-bold text-gray-400 mb-2 flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Root Cause
+                                            <h4 className="text-sm font-bold text-text-secondary mb-2 flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-accent-primary"></div> Root Cause
                                             </h4>
-                                            <p className="text-gray-300 text-sm leading-relaxed bg-[#1e293b]/50 p-3 rounded-lg border border-[#334155]/50">
+                                            <p className="text-text-primary text-sm leading-relaxed bg-panel p-3 rounded-lg border border-border">
                                                 {result.rootCause}
                                             </p>
                                         </div>
 
                                         <div>
-                                            <h4 className="text-sm font-bold text-gray-400 mb-2 flex items-center gap-2">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div> Recommended Fix
+                                            <h4 className="text-sm font-bold text-text-secondary mb-2 flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-accent-success"></div> Recommended Fix
                                             </h4>
-                                            <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4">
-                                                <p className="text-green-300 text-sm font-medium">
+                                            <div className="bg-accent-success/10 border border-accent-success/20 rounded-xl p-4">
+                                                <p className="text-accent-success text-sm font-medium">
                                                     {result.fix}
                                                 </p>
                                             </div>
                                         </div>
 
                                         <div>
-                                            <h4 className="text-sm font-bold text-gray-400 mb-2">Best Practices</h4>
+                                            <h4 className="text-sm font-bold text-text-secondary mb-2">Best Practices</h4>
                                             <ul className="space-y-2">
                                                 {result.bestPractices.map((bp, i) => (
-                                                    <li key={i} className="flex items-center gap-2 text-sm text-gray-400">
-                                                        <CheckCircle size={14} className="text-blue-500" />
+                                                    <li key={i} className="flex items-center gap-2 text-sm text-text-secondary">
+                                                        <CheckCircle size={14} className="text-accent-info" />
                                                         {bp}
                                                     </li>
                                                 ))}

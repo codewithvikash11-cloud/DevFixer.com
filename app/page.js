@@ -35,7 +35,7 @@ export default function Home() {
             />
 
             {/* HERO SECTION */}
-            <section className="relative w-full flex items-center justify-center overflow-hidden bg-background py-20 lg:py-32">
+            <section className="relative w-full flex items-center justify-center overflow-hidden bg-background py-12 lg:py-24">
                 <AuroraBackground />
 
                 <div className="container mx-auto px-6 lg:px-12 relative z-10">
@@ -46,17 +46,11 @@ export default function Home() {
 
                             <div className="space-y-6">
 
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-primary/10 border border-accent-primary/20 text-accent-primary text-xs font-bold tracking-wide uppercase mb-2">
-                                    <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-primary"></span>
-                                    </span>
-                                    v2.0 Now Live
-                                </div>
+
 
                                 <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-text-primary leading-[1.05]">
                                     The Ultimate <br className="hidden lg:block" />
-                                    <span className="text-accent-primary animate-none">
+                                    <span className="text-[#008000]">
                                         Developer Ecosystem
                                     </span>
                                 </h1>
