@@ -18,7 +18,8 @@ import {
     FileJson,
     ShieldCheck,
     Hammer,
-    ScrollText
+    ScrollText,
+    GraduationCap
 } from 'lucide-react';
 
 export default function SidebarToolbox() {
@@ -27,6 +28,13 @@ export default function SidebarToolbox() {
 
     const menuItems = [
         // Explore Section
+        {
+            name: "Learn",
+            href: "/learn",
+            icon: GraduationCap,
+            color: "text-[#00E5FF]", // Cyan/Neon Blue
+            desc: "Academy"
+        },
         {
             name: "Tools Hub",
             href: "/tools",
