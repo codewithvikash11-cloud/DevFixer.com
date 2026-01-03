@@ -44,6 +44,8 @@ export default function DashboardPage() {
     const [formData, setFormData] = useState({
         title: '',
         slug: '',
+        postType: 'blog', // 'blog' or 'error'
+        errorCode: '',    // For error solutions
         language: 'javascript',
         description: '',
         content: '',
@@ -224,6 +226,15 @@ export default function DashboardPage() {
                                 <span>Overview</span>
                             </button>
                         )}
+                        {view !== 'settings' && (
+                            <button
+                                onClick={() => setView('settings')}
+                                className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-panel border border-border hover:bg-white/5 transition-all text-xs font-bold uppercase tracking-widest text-text-secondary"
+                            >
+                                <Settings size={16} />
+                                <span>Settings</span>
+                            </button>
+                        )}
                         <button
                             onClick={logout}
                             className="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500/20 transition-all text-xs font-bold uppercase tracking-widest"
@@ -280,11 +291,18 @@ export default function DashboardPage() {
                                 Manage My Posts
                             </button>
                             <button
-                                onClick={handleCreateNew}
+                                onClick={() => { handleCreateNew(); setFormData(p => ({ ...p, postType: 'blog' })); }}
                                 className="flex-1 py-4 bg-accent-blue text-white rounded-2xl font-black text-sm shadow-xl shadow-accent-blue/20 hover:scale-[1.01] transition-all uppercase tracking-widest flex items-center justify-center gap-2"
                             >
-                                <Plus size={18} />
-                                Create New Post
+                                <PenLine size={18} />
+                                Write Blog
+                            </button>
+                            <button
+                                onClick={() => { handleCreateNew(); setFormData(p => ({ ...p, postType: 'error' })); }}
+                                className="flex-1 py-4 bg-accent-error text-white rounded-2xl font-black text-sm shadow-xl shadow-accent-error/20 hover:scale-[1.01] transition-all uppercase tracking-widest flex items-center justify-center gap-2"
+                            >
+                                <Hash size={18} />
+                                Submit Error
                             </button>
                         </div>
                     </div>
@@ -392,8 +410,22 @@ export default function DashboardPage() {
                             <div className={cn("lg:col-span-12 transition-all", isPreview ? "hidden" : "block")}>
                                 <form onSubmit={handleSubmit} className="bg-panel border border-border rounded-[2rem] p-8 shadow-2xl space-y-8">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        {formData.postType === 'error' && (
+                                            <div className="space-y-2 md:col-span-2">
+                                                <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">Error Code / Message</label>
+                                                <input
+                                                    name="errorCode"
+                                                    placeholder="e.g. NHT_404 or ReferenceError: x is not defined"
+                                                    value={formData.errorCode}
+                                                    onChange={handleChange}
+                                                    className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-error focus:outline-none transition-colors border-l-4 border-l-accent-error"
+                                                />
+                                            </div>
+                                        )}
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">Title</label>
+                                            <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">
+                                                {formData.postType === 'error' ? 'Solution Title' : 'Blog Title'}
+                                            </label>
                                             <input name="title" value={formData.title} onChange={handleChange} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors" required />
                                         </div>
                                         <div className="space-y-2">
@@ -450,7 +482,121 @@ export default function DashboardPage() {
                         </div>
                     </div>
                 )}
+                {/* VIEW: SETTINGS */}
+                {view === 'settings' && (
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-2xl mx-auto">
+                        <div className="flex items-center justify-between mb-6">
+                            <button
+                                onClick={() => setView('dashboard')}
+                                className="flex items-center space-x-2 text-text-secondary hover:text-white transition-colors text-xs font-bold uppercase tracking-widest"
+                            >
+                                <ArrowLeft size={16} />
+                                <span>Back to Dashboard</span>
+                            </button>
+                        </div>
+
+                        <div className="bg-panel border border-border rounded-[2rem] p-8 shadow-2xl space-y-8">
+                            <div>
+                                <h2 className="text-2xl font-black uppercase tracking-tight mb-2">Security Settings</h2>
+                                <p className="text-sm text-text-secondary">Manage your password and account security.</p>
+                            </div>
+
+                            <PasswordChangeForm />
+                        </div>
+                    </div>
+                )}
             </div>
         </LayoutWrapper>
+    );
+}
+
+function PasswordChangeForm() {
+    const { updatePassword } = useAuth();
+    const [passwords, setPasswords] = useState({ old: '', new: '', confirm: '' });
+    const [status, setStatus] = useState(null); // idle, loading, success, error
+    const [msg, setMsg] = useState('');
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        if (passwords.new !== passwords.confirm) {
+            setStatus('error');
+            setMsg('New passwords do not match');
+            return;
+        }
+        if (passwords.new.length < 8) {
+            setStatus('error');
+            setMsg('Password must be at least 8 characters');
+            return;
+        }
+
+        setStatus('loading');
+        const res = await updatePassword(passwords.new, passwords.old);
+
+        if (res.success) {
+            setStatus('success');
+            setMsg('Password updated successfully!');
+            setPasswords({ old: '', new: '', confirm: '' });
+        } else {
+            setStatus('error');
+            setMsg(res.error || 'Failed to update password');
+        }
+    };
+
+    return (
+        <form onSubmit={handleUpdate} className="space-y-6">
+            <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">Current Password</label>
+                <input
+                    type="password"
+                    value={passwords.old}
+                    onChange={e => setPasswords({ ...passwords, old: e.target.value })}
+                    className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors"
+                    required
+                />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">New Password</label>
+                    <input
+                        type="password"
+                        value={passwords.new}
+                        onChange={e => setPasswords({ ...passwords, new: e.target.value })}
+                        className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors"
+                        required
+                    />
+                </div>
+                <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">Confirm New</label>
+                    <input
+                        type="password"
+                        value={passwords.confirm}
+                        onChange={e => setPasswords({ ...passwords, confirm: e.target.value })}
+                        className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors"
+                        required
+                    />
+                </div>
+            </div>
+
+            {status === 'error' && (
+                <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-bold rounded-lg flex items-center gap-2">
+                    <span>⚠️</span> {msg}
+                </div>
+            )}
+
+            {status === 'success' && (
+                <div className="p-3 bg-green-500/10 border border-green-500/20 text-green-500 text-xs font-bold rounded-lg flex items-center gap-2">
+                    <span>✅</span> {msg}
+                </div>
+            )}
+
+            <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="w-full bg-accent-blue text-white py-4 rounded-xl font-black uppercase tracking-widest hover:scale-[1.01] active:scale-95 transition-all shadow-xl shadow-accent-blue/20"
+            >
+                {status === 'loading' ? 'Updating...' : 'Update Password'}
+            </button>
+        </form>
     );
 }

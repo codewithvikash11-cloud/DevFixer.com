@@ -70,15 +70,25 @@ export function AuthProvider({ children }) {
         try {
             await account.deleteSession('current');
             setUser(null);
-            router.push('/');
+            router.push('/login');
         } catch (error) {
-            console.error("Logout failed", error);
+            console.error('Logout failed', error);
+        }
+    };
+
+    const updatePassword = async (newPassword, oldPassword) => {
+        try {
+            await account.updatePassword(newPassword, oldPassword);
+            return { success: true };
+        } catch (error) {
+            console.error('Update password failed', error);
+            return { success: false, error: error.message };
         }
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, signup, logout, checkUser }}>
-            {!loading && children}
+        <AuthContext.Provider value={{ user, login, signup, logout, updatePassword, loading, checkUser }}>
+            {children}
         </AuthContext.Provider>
     );
 }
