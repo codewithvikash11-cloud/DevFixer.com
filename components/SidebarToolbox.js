@@ -92,35 +92,40 @@ export default function SidebarToolbox() {
             href: "/grammar",
             icon: GrammarIcon,
             color: "text-accent-primary",
-            desc: "AI Correction"
+            desc: "AI Correction",
+            hasCustomIcon: true
         },
         {
             name: "Rewrite",
             href: "/rewrite",
             icon: RewriteIcon,
             color: "text-accent-primary",
-            desc: "Paraphraser"
+            desc: "Paraphraser",
+            hasCustomIcon: true
         },
         {
             name: "Plagiarism",
             href: "/plagiarism",
             icon: PlagiarismIcon,
             color: "text-accent-primary",
-            desc: "Originality Check"
+            desc: "Originality Check",
+            hasCustomIcon: true
         },
         {
             name: "Saved Docs",
             href: "/documents",
             icon: DocumentsIcon,
             color: "text-accent-primary",
-            desc: "My Library"
+            desc: "My Library",
+            hasCustomIcon: true
         },
         {
             name: "History",
             href: "/history",
             icon: HistoryIcon,
             color: "text-accent-primary",
-            desc: "Activity Log"
+            desc: "Activity Log",
+            hasCustomIcon: true
         },
 
         // Productivity Section
@@ -264,7 +269,11 @@ function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
                     ${isActive && !isOpen ? 'text-white' : ''}
                     ${isActive && isOpen ? 'text-accent-primary' : ''}
                 `}>
-                    <item.icon size={20} isActive={isActive} className={isActive ? 'drop-shadow-md' : ''} />
+                    {item.hasCustomIcon ? (
+                        <item.icon size={20} isActive={isActive} className={isActive ? 'drop-shadow-md' : ''} />
+                    ) : (
+                        <item.icon size={20} className={isActive ? 'drop-shadow-md' : ''} />
+                    )}
                 </div>
 
                 {/* Expanded Text */}
