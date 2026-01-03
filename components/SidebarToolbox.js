@@ -27,7 +27,9 @@ import {
     RewriteIcon,
     PlagiarismIcon,
     DocumentsIcon,
-    HistoryIcon
+    HistoryIcon,
+    DocsIcon,
+    SheetsIcon
 } from '@/components/ui/PremiumIcons';
 
 export default function SidebarToolbox() {
@@ -87,6 +89,22 @@ export default function SidebarToolbox() {
         },
 
         // Writing Section
+        {
+            name: "Docs Editor",
+            href: "/docs",
+            icon: DocsIcon,
+            color: "text-accent-primary",
+            desc: "Rich Text",
+            hasCustomIcon: true
+        },
+        {
+            name: "Sheets Editor",
+            href: "/sheets",
+            icon: SheetsIcon,
+            color: "text-accent-primary",
+            desc: "Spreadsheet",
+            hasCustomIcon: true
+        },
         {
             name: "Grammar",
             href: "/grammar",
@@ -190,7 +208,7 @@ export default function SidebarToolbox() {
                         </div>
 
                         <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
-                            {menuItems.filter(i => !['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities', 'Grammar', 'Rewrite', 'Plagiarism', 'Saved Docs', 'History'].includes(i.name)).map((item) => (
+                            {menuItems.filter(i => !['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities', 'Grammar', 'Rewrite', 'Plagiarism', 'Saved Docs', 'History', 'Docs Editor', 'Sheets Editor'].includes(i.name)).map((item) => (
                                 <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
                             ))}
                         </nav>
@@ -204,7 +222,7 @@ export default function SidebarToolbox() {
                         </div>
 
                         <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
-                            {menuItems.filter(i => ['Grammar', 'Rewrite', 'Plagiarism', 'Saved Docs', 'History'].includes(i.name)).map((item) => (
+                            {menuItems.filter(i => ['Docs Editor', 'Sheets Editor', 'Grammar', 'Rewrite', 'Plagiarism', 'Saved Docs', 'History'].includes(i.name)).map((item) => (
                                 <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
                             ))}
                         </nav>

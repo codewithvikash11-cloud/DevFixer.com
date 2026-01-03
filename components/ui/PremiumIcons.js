@@ -149,3 +149,22 @@ export const HistoryIcon = ({ isActive }) => (
         <path d="M12 6v6l4 2" stroke={isActive ? "url(#grad-orange)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </BaseIcon>
 );
+
+export const DocsIcon = ({ isActive }) => (
+    <BaseIcon isActive={isActive}>
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke={isActive ? "url(#grad-doc)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M14 2v6h6" stroke={isActive ? "url(#grad-doc)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 12h8" stroke={isActive ? "url(#grad-doc)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 16h8" stroke={isActive ? "url(#grad-doc)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 8h4" stroke={isActive ? "url(#grad-doc)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </BaseIcon>
+);
+
+export const SheetsIcon = ({ isActive }) => (
+    <BaseIcon isActive={isActive}>
+        <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke={isActive ? "url(#grad-sheet)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 4v16" stroke={isActive ? "url(#grad-sheet)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16 4v16" stroke={isActive ? "url(#grad-sheet)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M2 12h20" stroke={isActive ? "url(#grad-sheet)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </BaseIcon>
+);

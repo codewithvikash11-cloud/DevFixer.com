@@ -28,6 +28,15 @@ const PasswordGenerator = dynamic(() => import('@/components/tools/impl/Password
 const LoremIpsum = dynamic(() => import('@/components/tools/impl/LoremIpsum'), { loading: () => <p>Loading...</p> });
 const UrlEncoder = dynamic(() => import('@/components/tools/impl/UrlEncoder'), { loading: () => <p>Loading...</p> });
 const HtmlEntity = dynamic(() => import('@/components/tools/impl/HtmlEntity'), { loading: () => <p>Loading...</p> });
+const XmlFormatter = dynamic(() => import('@/components/tools/impl/XmlFormatter'), { loading: () => <p>Loading...</p> });
+const SqlFormatter = dynamic(() => import('@/components/tools/impl/SqlFormatter'), { loading: () => <p>Loading...</p> });
+const CsvToJson = dynamic(() => import('@/components/tools/impl/CsvToJson'), { loading: () => <p>Loading...</p> });
+const RandomString = dynamic(() => import('@/components/tools/impl/RandomString'), { loading: () => <p>Loading...</p> });
+const JsonToTs = dynamic(() => import('@/components/tools/impl/JsonToTs'), { loading: () => <p>Loading...</p> });
+const FakeData = dynamic(() => import('@/components/tools/impl/FakeData'), { loading: () => <p>Loading...</p> });
+const DiffChecker = dynamic(() => import('@/components/tools/impl/DiffChecker'), { loading: () => <p>Loading...</p> });
+const IpLookup = dynamic(() => import('@/components/tools/impl/IpLookup'), { loading: () => <p>Loading...</p> });
+const HttpStatus = dynamic(() => import('@/components/tools/impl/HttpStatus'), { loading: () => <p>Loading...</p> });
 
 
 const COMPONENT_MAP = {
@@ -50,6 +59,15 @@ const COMPONENT_MAP = {
     'lorem-ipsum': LoremIpsum,
     'url-encoder': UrlEncoder,
     'html-entity': HtmlEntity,
+    'xml-formatter': XmlFormatter,
+    'sql-formatter': SqlFormatter,
+    'csv-to-json': CsvToJson,
+    'random-string-generator': RandomString,
+    'json-to-ts': JsonToTs,
+    'fake-data-generator': FakeData,
+    'diff-checker': DiffChecker,
+    'ip-lookup': IpLookup,
+    'http-status-codes': HttpStatus,
 };
 
 export default function ToolsPage() {

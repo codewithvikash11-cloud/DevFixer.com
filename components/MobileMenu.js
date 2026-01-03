@@ -9,7 +9,9 @@ import {
     RewriteIcon,
     PlagiarismIcon,
     DocumentsIcon,
-    HistoryIcon
+    HistoryIcon,
+    DocsIcon,
+    SheetsIcon
 } from '@/components/ui/PremiumIcons';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
@@ -18,24 +20,26 @@ export default function MobileMenu({ isOpen, onClose }) {
     const pathname = usePathname();
 
     const items = [
-        { label: 'Home', href: '/', icon: Home, color: 'text-accent-success', activeColor: 'text-accent-success', activeBg: 'bg-accent-success/10' },
-        { label: 'Learn', href: '/learn', icon: GraduationCap, color: 'text-accent-info', activeColor: 'text-accent-info', activeBg: 'bg-accent-info/10' },
+        { label: 'Home', href: '/', icon: Home, color: 'text-accent-success', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Learn', href: '/learn', icon: GraduationCap, color: 'text-accent-info', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
         { label: 'Tools Hub', href: '/tools', icon: Briefcase, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'API Tester', href: '/api-tester', icon: Network, color: 'text-accent-error', activeColor: 'text-accent-error', activeBg: 'bg-accent-error/10' },
-        { label: 'Compiler', href: '/compiler', icon: Code, color: 'text-accent-info', activeColor: 'text-accent-info', activeBg: 'bg-accent-info/10' },
-        { label: 'Errors', href: '/errors', icon: Terminal, color: 'text-accent-error', activeColor: 'text-accent-error', activeBg: 'bg-accent-error/10' },
+        { label: 'API Tester', href: '/api-tester', icon: Network, color: 'text-accent-error', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Compiler', href: '/compiler', icon: Code, color: 'text-accent-info', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Errors', href: '/errors', icon: Terminal, color: 'text-accent-error', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
         { label: 'Languages', href: '/languages', icon: Globe, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'Log Analyzer', href: '/log-analyzer', icon: ScrollText, color: 'text-accent-warning', activeColor: 'text-accent-warning', activeBg: 'bg-accent-warning/10' },
-        { label: 'Code Reviewer', href: '/code-reviewer', icon: ShieldCheck, color: 'text-accent-success', activeColor: 'text-accent-success', activeBg: 'bg-accent-success/10' },
-        { label: 'Snippets', href: '/snippets', icon: BookOpen, color: 'text-accent-success', activeColor: 'text-accent-success', activeBg: 'bg-accent-success/10' },
+        { label: 'Log Analyzer', href: '/log-analyzer', icon: ScrollText, color: 'text-accent-warning', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Code Reviewer', href: '/code-reviewer', icon: ShieldCheck, color: 'text-accent-success', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Snippets', href: '/snippets', icon: BookOpen, color: 'text-accent-success', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Dashboard', href: '/dashboard', icon: Layout, color: 'text-accent-warning', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
 
         // Writing Section
-        { label: 'Grammar', href: '/grammar', icon: GrammarIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'Rewrite', href: '/rewrite', icon: RewriteIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'Plagiarism', href: '/plagiarism', icon: PlagiarismIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'Saved Docs', href: '/documents', icon: DocumentsIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'History', href: '/history', icon: HistoryIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'Back to Home', href: '/', icon: Layout, color: 'text-text-secondary', activeColor: 'text-text-primary', activeBg: 'bg-surface' },
+        { label: 'Docs Editor', href: '/docs', icon: DocsIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10', hasCustomIcon: true },
+        { label: 'Sheets Editor', href: '/sheets', icon: SheetsIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10', hasCustomIcon: true },
+        { label: 'Grammar', href: '/grammar', icon: GrammarIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10', hasCustomIcon: true },
+        { label: 'Rewrite', href: '/rewrite', icon: RewriteIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10', hasCustomIcon: true },
+        { label: 'Plagiarism', href: '/plagiarism', icon: PlagiarismIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10', hasCustomIcon: true },
+        { label: 'Saved Docs', href: '/documents', icon: DocumentsIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10', hasCustomIcon: true },
+        { label: 'History', href: '/history', icon: HistoryIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10', hasCustomIcon: true },
     ];
 
     return (
@@ -78,7 +82,11 @@ export default function MobileMenu({ isOpen, onClose }) {
                                         : "text-text-secondary hover:bg-surface hover:text-text-primary"
                                 )}
                             >
-                                <Icon size={22} isActive={isActive} className={cn(isActive ? "text-current" : item.color)} />
+                                {item.hasCustomIcon ? (
+                                    <Icon size={22} isActive={isActive} className={cn(isActive ? "text-current" : item.color)} />
+                                ) : (
+                                    <Icon size={22} className={cn(isActive ? "text-current" : item.color)} />
+                                )}
                                 <span className="text-sm font-semibold">{item.label}</span>
                             </Link>
                         );
