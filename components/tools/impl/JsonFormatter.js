@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { Copy, AlertCircle, Check } from 'lucide-react';
+import { Copy, AlertCircle, Check, Minimize, Maximize } from 'lucide-react';
 
 export default function JsonFormatter() {
     const [input, setInput] = useState('');
@@ -40,11 +40,19 @@ export default function JsonFormatter() {
     };
 
     return (
-        <div className="grid lg:grid-cols-2 gap-6 h-[600px]">
+        <div className="grid lg:grid-cols-2 gap-6 h-[calc(100vh-250px)] min-h-[500px]">
             <div className="flex flex-col">
-                <label className="text-sm font-bold text-gray-400 mb-2">Input JSON</label>
+                <div className="flex items-center justify-between mb-3">
+                    <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">Input JSON</label>
+                    <button
+                        onClick={() => setInput('')}
+                        className="text-xs text-text-tertiary hover:text-accent-primary transition-colors"
+                    >
+                        Clear
+                    </button>
+                </div>
                 <textarea
-                    className="flex-1 bg-[#1e293b] border border-[#334155] rounded-xl p-4 font-mono text-sm outline-none focus:border-violet-500 resize-none"
+                    className="flex-1 bg-surface border border-border rounded-xl p-4 font-mono text-sm leading-relaxed outline-none focus:border-accent-primary focus:ring-1 focus:ring-accent-primary/20 resize-none transition-all placeholder:text-text-tertiary text-text-primary"
                     placeholder="Paste messy JSON here..."
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -52,32 +60,54 @@ export default function JsonFormatter() {
             </div>
 
             <div className="flex flex-col">
-                <div className="flex items-center justify-between mb-2">
-                    <label className="text-sm font-bold text-gray-400">Output</label>
+                <div className="flex items-center justify-between mb-3">
+                    <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">Output</label>
                     <div className="flex gap-2">
-                        <button onClick={handleMinify} className="px-3 py-1 text-xs font-bold bg-[#334155] hover:bg-[#475569] rounded-lg transition-colors">Minify</button>
-                        <button onClick={handleFormat} className="px-3 py-1 text-xs font-bold bg-violet-600 hover:bg-violet-700 rounded-lg transition-colors">Format</button>
-                        {output && (
-                            <button onClick={copyToClipboard} className="p-1 hover:text-white text-gray-400 transition-colors">
-                                {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
-                            </button>
-                        )}
+                        <button
+                            onClick={handleMinify}
+                            disabled={!input}
+                            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold bg-surface border border-border hover:bg-surface-highlight text-text-secondary hover:text-text-primary rounded-lg transition-colors disabled:opacity-50"
+                        >
+                            <Minimize size={14} /> Minify
+                        </button>
+                        <button
+                            onClick={handleFormat}
+                            disabled={!input}
+                            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold bg-accent-primary hover:bg-accent-hover text-white rounded-lg transition-colors shadow-lg shadow-accent-primary/20 disabled:opacity-50"
+                        >
+                            <Maximize size={14} /> Format
+                        </button>
                     </div>
                 </div>
 
-                <div className={`flex-1 relative bg-[#1e293b] border ${error ? 'border-red-500/50' : 'border-[#334155]'} rounded-xl overflow-hidden`}>
+                <div className={`flex-1 relative bg-surface border rounded-xl overflow-hidden transition-colors ${error ? 'border-red-500/50' : 'border-border'}`}>
                     {error ? (
-                        <div className="absolute inset-0 p-4 bg-red-500/10 text-red-500 font-mono text-sm overflow-auto">
-                            <div className="flex items-center gap-2 font-bold mb-2"><AlertCircle size={16} /> Invalid JSON</div>
-                            {error}
+                        <div className="absolute inset-0 p-4 bg-red-500/5 backdrop-blur-sm text-red-500 font-mono text-sm overflow-auto">
+                            <div className="flex items-center gap-2 font-bold mb-2 p-2 bg-red-500/10 rounded-lg w-fit">
+                                <AlertCircle size={16} /> Invalid JSON
+                            </div>
+                            <pre className="whitespace-pre-wrap">{error}</pre>
                         </div>
                     ) : (
-                        <textarea
-                            readOnly
-                            className="w-full h-full bg-transparent p-4 font-mono text-sm outline-none resize-none text-green-400"
-                            value={output}
-                            placeholder="Result will appear here..."
-                        />
+                        <>
+                            <textarea
+                                readOnly
+                                className="w-full h-full bg-transparent p-4 font-mono text-sm outline-none resize-none text-text-primary"
+                                value={output}
+                                placeholder="Result will appear here..."
+                            />
+                            {output && (
+                                <div className="absolute top-4 right-4">
+                                    <button
+                                        onClick={copyToClipboard}
+                                        className="p-2 bg-surface hover:bg-surface-highlight border border-border rounded-lg text-text-secondary hover:text-accent-primary transition-colors shadow-sm"
+                                        title="Copy to clipboard"
+                                    >
+                                        {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </div>

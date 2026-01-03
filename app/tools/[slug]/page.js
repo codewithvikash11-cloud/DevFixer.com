@@ -26,8 +26,6 @@ const PasswordGenerator = dynamic(() => import('@/components/tools/impl/Password
 const LoremIpsum = dynamic(() => import('@/components/tools/impl/LoremIpsum'), { loading: () => <ToolLoader /> });
 const UrlEncoder = dynamic(() => import('@/components/tools/impl/UrlEncoder'), { loading: () => <ToolLoader /> });
 const HtmlEntity = dynamic(() => import('@/components/tools/impl/HtmlEntity'), { loading: () => <ToolLoader /> });
-const XmlFormatter = dynamic(() => import('@/components/tools/impl/XmlFormatter'), { loading: () => <ToolLoader /> });
-const SqlFormatter = dynamic(() => import('@/components/tools/impl/SqlFormatter'), { loading: () => <ToolLoader /> });
 const CsvToJson = dynamic(() => import('@/components/tools/impl/CsvToJson'), { loading: () => <ToolLoader /> });
 const RandomString = dynamic(() => import('@/components/tools/impl/RandomString'), { loading: () => <ToolLoader /> });
 const JsonToTs = dynamic(() => import('@/components/tools/impl/JsonToTs'), { loading: () => <ToolLoader /> });
@@ -46,6 +44,9 @@ const RsaGenerator = dynamic(() => import('@/components/tools/impl/RsaGenerator'
 const QrCodeGenerator = dynamic(() => import('@/components/tools/impl/QrCodeGenerator'), { loading: () => <ToolLoader /> });
 const WifiQrGenerator = dynamic(() => import('@/components/tools/impl/WifiQrCodeGenerator'), { loading: () => <ToolLoader /> });
 const EncryptDecrypt = dynamic(() => import('@/components/tools/impl/EncryptDecrypt'), { loading: () => <ToolLoader /> });
+const XmlFormatter = dynamic(() => import('@/components/tools/impl/XmlFormatter'), { loading: () => <ToolLoader /> });
+const SqlFormatter = dynamic(() => import('@/components/tools/impl/SqlFormatter'), { loading: () => <ToolLoader /> });
+const DateConverter = dynamic(() => import('@/components/tools/impl/DateConverter'), { loading: () => <ToolLoader /> });
 
 const COMPONENT_MAP = {
     'json-formatter': JsonFormatter,
@@ -61,6 +62,9 @@ const COMPONENT_MAP = {
     'qr-code': QrCodeGenerator,
     'wifi-qr': WifiQrGenerator,
     'encrypt-decrypt': EncryptDecrypt,
+    'xml-formatter': XmlFormatter,
+    'sql-formatter': SqlFormatter,
+    'date-converter': DateConverter,
     'color-converter': ColorConverter,
     'regex-tester': RegexTester,
     'curl-converter': CurlConverter,
