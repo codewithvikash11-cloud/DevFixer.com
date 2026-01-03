@@ -21,13 +21,14 @@ import {
     GraduationCap,
     Home,
 
-    // New Icons for Writing Suite
-    PenTool,
-    RefreshCw,
-    FileSearch,
-    Files,
-    History as HistoryIcon
 } from 'lucide-react';
+import {
+    GrammarIcon,
+    RewriteIcon,
+    PlagiarismIcon,
+    DocumentsIcon,
+    HistoryIcon
+} from '@/components/ui/PremiumIcons';
 
 export default function SidebarToolbox() {
     const [isOpen, setIsOpen] = useState(false);
@@ -89,28 +90,28 @@ export default function SidebarToolbox() {
         {
             name: "Grammar",
             href: "/grammar",
-            icon: PenTool,
+            icon: GrammarIcon,
             color: "text-accent-primary",
             desc: "AI Correction"
         },
         {
             name: "Rewrite",
             href: "/rewrite",
-            icon: RefreshCw,
+            icon: RewriteIcon,
             color: "text-accent-primary",
             desc: "Paraphraser"
         },
         {
             name: "Plagiarism",
             href: "/plagiarism",
-            icon: FileSearch,
+            icon: PlagiarismIcon,
             color: "text-accent-primary",
             desc: "Originality Check"
         },
         {
             name: "Saved Docs",
             href: "/documents",
-            icon: Files,
+            icon: DocumentsIcon,
             color: "text-accent-primary",
             desc: "My Library"
         },
@@ -263,7 +264,7 @@ function SidebarItem({ item, isOpen, pathname, setIsOpen }) {
                     ${isActive && !isOpen ? 'text-white' : ''}
                     ${isActive && isOpen ? 'text-accent-primary' : ''}
                 `}>
-                    <item.icon size={20} className={isActive ? 'drop-shadow-md' : ''} />
+                    <item.icon size={20} isActive={isActive} className={isActive ? 'drop-shadow-md' : ''} />
                 </div>
 
                 {/* Expanded Text */}

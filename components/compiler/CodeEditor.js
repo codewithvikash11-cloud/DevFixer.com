@@ -72,7 +72,6 @@ export default function CodeEditor({ language, value, onChange, theme = 'vs-dark
                 height="100%"
                 language={language === 'javascript' || language === 'node' ? 'javascript' : language}
                 value={value}
-                value={value}
                 theme={theme} // Dynamic theme
                 onChange={onChange}
                 onMount={handleEditorDidMount}

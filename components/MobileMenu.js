@@ -3,7 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X, Home, Terminal, Code, BookOpen, Layout, Globe, Network, Briefcase, GraduationCap, ScrollText, ShieldCheck, PenTool, RefreshCw, FileSearch, Files, History as HistoryIcon } from 'lucide-react';
+import { X, Home, Terminal, Code, BookOpen, Layout, Globe, Network, Briefcase, GraduationCap, ScrollText, ShieldCheck } from 'lucide-react';
+import {
+    GrammarIcon,
+    RewriteIcon,
+    PlagiarismIcon,
+    DocumentsIcon,
+    HistoryIcon
+} from '@/components/ui/PremiumIcons';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
 
@@ -23,10 +30,10 @@ export default function MobileMenu({ isOpen, onClose }) {
         { label: 'Snippets', href: '/snippets', icon: BookOpen, color: 'text-accent-success', activeColor: 'text-accent-success', activeBg: 'bg-accent-success/10' },
 
         // Writing Section
-        { label: 'Grammar', href: '/grammar', icon: PenTool, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'Rewrite', href: '/rewrite', icon: RefreshCw, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'Plagiarism', href: '/plagiarism', icon: FileSearch, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
-        { label: 'Saved Docs', href: '/documents', icon: Files, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Grammar', href: '/grammar', icon: GrammarIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Rewrite', href: '/rewrite', icon: RewriteIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Plagiarism', href: '/plagiarism', icon: PlagiarismIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Saved Docs', href: '/documents', icon: DocumentsIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
         { label: 'History', href: '/history', icon: HistoryIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
         { label: 'Back to Home', href: '/', icon: Layout, color: 'text-text-secondary', activeColor: 'text-text-primary', activeBg: 'bg-surface' },
     ];
@@ -44,7 +51,7 @@ export default function MobileMenu({ isOpen, onClose }) {
 
             {/* Side Drawer */}
             <div className={cn(
-                "fixed top-0 left-0 bottom-0 w-72 bg-panel border-r border-border z-[100] transform transition-transform duration-300 ease-out lg:hidden",
+                "fixed top-0 left-0 bottom-0 w-72 bg-panel border-r border-border z-[100] transform transition-transform duration-300 ease-out lg:hidden flex flex-col",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex items-center justify-between p-6 border-b border-border">
@@ -54,7 +61,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                     </button>
                 </div>
 
-                <nav className="p-4 space-y-1">
+                <nav className="flex-1 overflow-y-auto p-4 space-y-1 scrollbar-hide">
                     {items.map((item) => {
                         const Icon = item.icon;
                         const isActive = pathname === item.href;
@@ -71,14 +78,14 @@ export default function MobileMenu({ isOpen, onClose }) {
                                         : "text-text-secondary hover:bg-surface hover:text-text-primary"
                                 )}
                             >
-                                <Icon size={18} className={cn(isActive ? "text-current" : item.color)} />
-                                <span>{item.label}</span>
+                                <Icon size={22} isActive={isActive} className={cn(isActive ? "text-current" : item.color)} />
+                                <span className="text-sm font-semibold">{item.label}</span>
                             </Link>
                         );
                     })}
                 </nav>
 
-                <div className="absolute bottom-6 left-6 right-6">
+                <div className="p-6 mt-auto border-t border-border">
                     <div className="p-4 rounded-xl bg-gradient-to-br from-accent-blue/10 to-accent-purple/10 border border-border">
                         <h4 className="text-xs font-bold text-text-primary mb-1">CodeOrbit Mobile</h4>
                         <p className="text-[10px] text-text-secondary">Code on the go.</p>
