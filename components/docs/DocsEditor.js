@@ -16,7 +16,7 @@ import {
 import { cn } from '@/lib/utils';
 import { documentService } from '@/lib/documents-local';
 
-const MenuBar = ({ editor, onSave }) => {
+const MenuBar = ({ editor, onSave, isChecking }) => {
     if (!editor) {
         return null;
     }
@@ -153,10 +153,11 @@ const MenuBar = ({ editor, onSave }) => {
             <div className="flex items-center gap-2 ml-auto">
                 <button
                     onClick={onSave}
-                    className="flex items-center gap-2 px-3 py-1.5 bg-accent-primary text-white rounded-lg text-xs font-bold hover:bg-accent-primary/90 transition-all shadow-lg shadow-accent-primary/20"
+                    disabled={isChecking}
+                    className="flex items-center gap-2 px-3 py-1.5 bg-accent-primary text-white rounded-lg text-xs font-bold hover:bg-accent-primary/90 transition-all shadow-lg shadow-accent-primary/20 disabled:opacity-50 disabled:cursor-wait"
                 >
                     <Save size={14} />
-                    <span className="hidden sm:inline">Save</span>
+                    <span className="hidden sm:inline">{isChecking ? 'Scanning...' : 'Save'}</span>
                 </button>
             </div>
         </div>
@@ -199,30 +200,84 @@ export default function DocsEditor() {
             attributes: {
                 class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto focus:outline-none min-h-[500px] px-8 py-8 bg-white dark:bg-[#0d1117] rounded-xl shadow-sm border border-border/50 text-slate-900 dark:text-gray-200',
             },
+            handlePaste: (view, event, slice) => {
+                const text = slice.content.textBetween(0, slice.content.size);
+                if (text && text.length > 0) {
+                    behaviorLog.current.push({
+                        type: 'paste',
+                        timestamp: Date.now(),
+                        charCount: text.length
+                    });
+                }
+                return false; // Default behavior
+            },
+            handleKeyDown: (view, event) => {
+                behaviorLog.current.push({
+                    type: 'type',
+                    timestamp: Date.now()
+                });
+                return false;
+            }
         },
         immediatelyRender: false,
     });
 
-    const handleSave = () => {
-        if (!editor) return;
+    const behaviorLog = React.useRef([]);
 
-        const content = editor.getJSON();
-        documentService.saveDocument({
-            id: Date.now().toString(), // Simple ID generation for now
-            title,
-            type: 'doc',
-            content: JSON.stringify(content)
-        });
+    const [isChecking, setIsChecking] = useState(false);
 
-        // Also save to history
-        documentService.addToHistory({
-            action: `Edited Document: ${title}`,
-            preview: editor.getText().substring(0, 50) + '...',
-            tool: 'docs'
-        });
+    // Security Import (Dynamic to avoid server/client issues if needed, but standard import works here)
+    const validateContent = require('@/lib/security/content-analyzer').validateContent;
+    const adminService = require('@/lib/admin-service').adminService;
 
-        setLastSaved(new Date());
-        alert('Document saved successfully!');
+    const handleSave = async () => {
+        if (!editor || isChecking) return;
+        setIsChecking(true);
+
+        try {
+            const contentJson = editor.getJSON();
+            const textContent = editor.getText(); // For analysis
+
+            // 1. RUN SECURITY CHECKS
+            const report = await validateContent(textContent, behaviorLog.current);
+
+            // 2. LOG EVENT TO ADMIN SYSTEM
+            adminService.logSecurityEvent({
+                ...report,
+                contentId: title,
+                snippet: textContent.substring(0, 100)
+            });
+
+            // 3. ENFORCE RESULTS
+            if (report.status === 'REJECTED') {
+                alert(`Security Violation: Content Rejected.\n\nReasons:\n${report.violations.join('\n')}\n\nThis incident has been logged.`);
+                setIsChecking(false);
+                return; // BLOCK SAVE
+            }
+
+            // 4. PROCEED IF CLEAN
+            documentService.saveDocument({
+                id: Date.now().toString(),
+                title,
+                type: 'doc',
+                content: JSON.stringify(contentJson)
+            });
+
+            documentService.addToHistory({
+                action: `Edited Document: ${title}`,
+                preview: textContent.substring(0, 50) + '...',
+                tool: 'docs'
+            });
+
+            setLastSaved(new Date());
+            // alert('Document saved successfully!'); // Silent save is better UX usually, but prompt asked for production ready. I'll keep a toast style or standard alert for now to confirm.
+
+        } catch (error) {
+            console.error("Security check failed:", error);
+            alert("Error running security validation. Please try again.");
+        } finally {
+            setIsChecking(false);
+        }
     };
 
     return (
@@ -250,7 +305,7 @@ export default function DocsEditor() {
 
             {/* Editor Container */}
             <div className="flex-1 flex flex-col overflow-hidden">
-                <MenuBar editor={editor} onSave={handleSave} />
+                <MenuBar editor={editor} onSave={handleSave} isChecking={isChecking} />
                 <div className="flex-1 overflow-y-auto bg-panel/50 p-4 md:p-8">
                     <div className="max-w-4xl mx-auto min-h-full">
                         <EditorContent editor={editor} />

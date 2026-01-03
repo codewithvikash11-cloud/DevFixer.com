@@ -89,28 +89,68 @@ export default function SheetsEditor() {
         setData(newData);
     };
 
-    const handleSave = () => {
-        const sheetData = {
-            grid: data,
-            rows: data.length,
-            cols: data[0].length
-        };
+    const [isChecking, setIsChecking] = useState(false);
 
-        documentService.saveDocument({
-            id: Date.now().toString(),
-            title,
-            type: 'sheet',
-            content: JSON.stringify(sheetData)
-        });
+    // Security Import
+    const validateContent = require('@/lib/security/content-analyzer').validateContent;
+    const adminService = require('@/lib/admin-service').adminService;
 
-        documentService.addToHistory({
-            action: `Edited Sheet: ${title}`,
-            preview: 'Grid Data updated',
-            tool: 'sheets'
-        });
+    const handleSave = async () => {
+        if (isChecking) return;
+        setIsChecking(true);
 
-        setLastSaved(new Date());
-        alert('Sheet saved successfullly!');
+        try {
+            // Synthesize Text for Analysis (Join all non-empty cells)
+            const textContent = data.flat()
+                .map(cell => cell.value)
+                .filter(val => val && val.trim().length > 0)
+                .join(". ");
+
+            // 1. RUN SECURITY CHECKS
+            const report = await validateContent(textContent);
+
+            // 2. LOG EVENT
+            adminService.logSecurityEvent({
+                ...report,
+                contentId: title,
+                snippet: textContent.substring(0, 100)
+            });
+
+            // 3. ENFORCE RESULTS
+            if (report.status === 'REJECTED') {
+                alert(`Security Violation: Sheet Rejected.\n\nReasons:\n${report.violations.join('\n')}`);
+                setIsChecking(false);
+                return; // BLOCK SAVE
+            }
+
+            // 4. PROCEED IF CLEAN
+            const sheetData = {
+                grid: data,
+                rows: data.length,
+                cols: data[0].length
+            };
+
+            documentService.saveDocument({
+                id: Date.now().toString(),
+                title,
+                type: 'sheet',
+                content: JSON.stringify(sheetData)
+            });
+
+            documentService.addToHistory({
+                action: `Edited Sheet: ${title}`,
+                preview: 'Grid Data updated',
+                tool: 'sheets'
+            });
+
+            setLastSaved(new Date());
+            // alert('Sheet saved successfullly!');
+        } catch (error) {
+            console.error("Security check failed:", error);
+            alert("Error running security validation.");
+        } finally {
+            setIsChecking(false);
+        }
     };
 
     return (
@@ -136,10 +176,11 @@ export default function SheetsEditor() {
                 </div>
                 <button
                     onClick={handleSave}
-                    className="flex items-center gap-2 px-3 py-1.5 bg-accent-primary text-white rounded-lg text-xs font-bold hover:bg-accent-primary/90 transition-all shadow-lg shadow-accent-primary/20 hover:scale-105"
+                    disabled={isChecking}
+                    className="flex items-center gap-2 px-3 py-1.5 bg-accent-primary text-white rounded-lg text-xs font-bold hover:bg-accent-primary/90 transition-all shadow-lg shadow-accent-primary/20 hover:scale-105 disabled:opacity-50 disabled:cursor-wait disabled:hover:scale-100"
                 >
                     <Save size={14} />
-                    Save Sheet
+                    {isChecking ? 'Scanning...' : 'Save Sheet'}
                 </button>
             </div>
 
