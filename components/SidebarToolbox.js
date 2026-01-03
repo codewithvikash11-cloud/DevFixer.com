@@ -39,6 +39,13 @@ export default function SidebarToolbox() {
     const menuItems = [
         // Explore Section
         {
+            name: "Admin Panel",
+            href: "/admin",
+            icon: Layout,
+            color: "text-red-500",
+            desc: "Control Center"
+        },
+        {
             name: "Learn",
             href: "/learn",
             icon: GraduationCap,

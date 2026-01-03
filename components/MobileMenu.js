@@ -20,6 +20,7 @@ export default function MobileMenu({ isOpen, onClose }) {
     const pathname = usePathname();
 
     const items = [
+        { label: 'Admin Panel', href: '/admin', icon: Layout, color: 'text-accent-error', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
         { label: 'Home', href: '/', icon: Home, color: 'text-accent-success', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
         { label: 'Learn', href: '/learn', icon: GraduationCap, color: 'text-accent-info', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
         { label: 'Tools Hub', href: '/tools', icon: Briefcase, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
