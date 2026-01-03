@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X, Home, Terminal, Code, BookOpen, Layout, Globe, Network, Briefcase, GraduationCap, ScrollText, ShieldCheck } from 'lucide-react';
+import { X, Home, Terminal, Code, BookOpen, Layout, Globe, Network, Briefcase, GraduationCap, ScrollText, ShieldCheck, PenTool, RefreshCw, FileSearch, Files, History as HistoryIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Logo from './Logo';
 
@@ -21,6 +21,13 @@ export default function MobileMenu({ isOpen, onClose }) {
         { label: 'Log Analyzer', href: '/log-analyzer', icon: ScrollText, color: 'text-accent-warning', activeColor: 'text-accent-warning', activeBg: 'bg-accent-warning/10' },
         { label: 'Code Reviewer', href: '/code-reviewer', icon: ShieldCheck, color: 'text-accent-success', activeColor: 'text-accent-success', activeBg: 'bg-accent-success/10' },
         { label: 'Snippets', href: '/snippets', icon: BookOpen, color: 'text-accent-success', activeColor: 'text-accent-success', activeBg: 'bg-accent-success/10' },
+
+        // Writing Section
+        { label: 'Grammar', href: '/grammar', icon: PenTool, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Rewrite', href: '/rewrite', icon: RefreshCw, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Plagiarism', href: '/plagiarism', icon: FileSearch, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'Saved Docs', href: '/documents', icon: Files, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
+        { label: 'History', href: '/history', icon: HistoryIcon, color: 'text-accent-primary', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
         { label: 'Back to Home', href: '/', icon: Layout, color: 'text-text-secondary', activeColor: 'text-text-primary', activeBg: 'bg-surface' },
     ];
 

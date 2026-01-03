@@ -19,7 +19,14 @@ import {
     ShieldCheck,
     ScrollText,
     GraduationCap,
-    Home
+    Home,
+
+    // New Icons for Writing Suite
+    PenTool,
+    RefreshCw,
+    FileSearch,
+    Files,
+    History as HistoryIcon
 } from 'lucide-react';
 
 export default function SidebarToolbox() {
@@ -77,6 +84,44 @@ export default function SidebarToolbox() {
             color: "text-accent-warning", // Keep warning for dashboard/personal
             desc: "Contributor"
         },
+
+        // Writing Section
+        {
+            name: "Grammar",
+            href: "/grammar",
+            icon: PenTool,
+            color: "text-accent-primary",
+            desc: "AI Correction"
+        },
+        {
+            name: "Rewrite",
+            href: "/rewrite",
+            icon: RefreshCw,
+            color: "text-accent-primary",
+            desc: "Paraphraser"
+        },
+        {
+            name: "Plagiarism",
+            href: "/plagiarism",
+            icon: FileSearch,
+            color: "text-accent-primary",
+            desc: "Originality Check"
+        },
+        {
+            name: "Saved Docs",
+            href: "/documents",
+            icon: Files,
+            color: "text-accent-primary",
+            desc: "My Library"
+        },
+        {
+            name: "History",
+            href: "/history",
+            icon: HistoryIcon,
+            color: "text-accent-primary",
+            desc: "Activity Log"
+        },
+
         // Productivity Section
         {
             name: "Log Analyzer",
@@ -139,7 +184,21 @@ export default function SidebarToolbox() {
                         </div>
 
                         <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
-                            {menuItems.filter(i => !['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities'].includes(i.name)).map((item) => (
+                            {menuItems.filter(i => !['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities', 'Grammar', 'Rewrite', 'Plagiarism', 'Saved Docs', 'History'].includes(i.name)).map((item) => (
+                                <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
+                            ))}
+                        </nav>
+                    </div>
+
+                    {/* Writing Section */}
+                    <div>
+                        <div className={`px-6 mb-2 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+                            <h2 className="text-[10px] font-black uppercase tracking-[0.15em] text-text-tertiary mb-1 whitespace-nowrap">Writing AI</h2>
+                            <div className="h-0.5 w-6 bg-accent-primary rounded-full shadow-[0_0_8px_var(--accent-primary)]"></div>
+                        </div>
+
+                        <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
+                            {menuItems.filter(i => ['Grammar', 'Rewrite', 'Plagiarism', 'Saved Docs', 'History'].includes(i.name)).map((item) => (
                                 <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
                             ))}
                         </nav>
@@ -153,7 +212,7 @@ export default function SidebarToolbox() {
                         </div>
 
                         <nav className="space-y-1 px-2 flex flex-col items-center lg:items-stretch">
-                            {menuItems.filter(i => ['Log Analyzer', 'Code Reviewer', 'Snippets', 'Dev Utilities'].includes(i.name)).map((item) => (
+                            {menuItems.filter(i => ['Log Analyzer', 'Code Reviewer', 'Snippets'].includes(i.name)).map((item) => (
                                 <SidebarItem key={item.href} item={item} isOpen={isOpen} pathname={pathname} setIsOpen={setIsOpen} />
                             ))}
                         </nav>

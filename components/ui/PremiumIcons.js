@@ -22,6 +22,14 @@ const GradientDefs = () => (
             <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
             <stop offset="100%" stopColor="#ffffff" stopOpacity="0.1" />
         </linearGradient>
+        <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#22c55e" />
+            <stop offset="100%" stopColor="#16a34a" />
+        </linearGradient>
+        <linearGradient id="grad-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#f97316" />
+            <stop offset="100%" stopColor="#ea580c" />
+        </linearGradient>
         <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="2" result="coloredBlur" />
             <feMerge>
@@ -98,5 +106,46 @@ export const TerminalIcon = ({ isActive }) => (
     <BaseIcon isActive={isActive}>
         <path d="M4 17L10 11L4 5" stroke={isActive ? "url(#grad-cyan)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M12 19H20" stroke={isActive ? "url(#grad-pink)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </BaseIcon>
+);
+
+export const GrammarIcon = ({ isActive }) => (
+    <BaseIcon isActive={isActive}>
+        <path d="M12 19l7-7 2 2-9 9-5-5 2-2 3 3z" stroke={isActive ? "url(#grad-green)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16 4l4 4-2 2-4-4 2-2z" stroke={isActive ? "url(#grad-blue)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M12 8l-6 6-1 5 5-1 6-6" stroke={isActive ? "url(#grad-blue)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </BaseIcon>
+);
+
+export const RewriteIcon = ({ isActive }) => (
+    <BaseIcon isActive={isActive}>
+        <path d="M12 20c4.4 0 8-3.6 8-8s-3.6-8-8-8c-2 0-3.9.8-5.3 2.1l-1.4 1.4" stroke={isActive ? "url(#grad-cyan)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5.3 7.5V3.8M5.3 7.5h3.7" stroke={isActive ? "url(#grad-cyan)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M14 10l-4 4" stroke={isActive ? "url(#grad-purple)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M10 10l4 4" stroke={isActive ? "url(#grad-purple)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </BaseIcon>
+);
+
+export const PlagiarismIcon = ({ isActive }) => (
+    <BaseIcon isActive={isActive}>
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke={isActive ? "url(#grad-pink)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke={isActive ? "url(#grad-pink)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </BaseIcon>
+);
+
+export const DocumentsIcon = ({ isActive }) => (
+    <BaseIcon isActive={isActive}>
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke={isActive ? "url(#grad-purple)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M14 2v6h6" stroke={isActive ? "url(#grad-purple)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16 13H8" stroke={isActive ? "url(#grad-blue)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16 17H8" stroke={isActive ? "url(#grad-blue)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M10 9H8" stroke={isActive ? "url(#grad-blue)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </BaseIcon>
+);
+
+export const HistoryIcon = ({ isActive }) => (
+    <BaseIcon isActive={isActive}>
+        <circle cx="12" cy="12" r="10" stroke={isActive ? "url(#grad-orange)" : "currentColor"} strokeWidth="2" />
+        <path d="M12 6v6l4 2" stroke={isActive ? "url(#grad-orange)" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </BaseIcon>
 );

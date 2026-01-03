@@ -13,7 +13,12 @@ import {
     EditorIcon,
     BlogsIcon,
 
-    TerminalIcon
+    TerminalIcon,
+    GrammarIcon,
+    RewriteIcon,
+    PlagiarismIcon,
+    DocumentsIcon,
+    HistoryIcon
 } from '@/components/ui/PremiumIcons';
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -21,9 +26,14 @@ const Sidebar = ({ isOpen, onClose }) => {
 
     const navItems = [
         { icon: HomeIcon, label: 'Home', href: '/' },
+        { icon: GrammarIcon, label: 'Grammar', href: '/grammar' },
+        { icon: RewriteIcon, label: 'Rewrite', href: '/rewrite' },
+        { icon: PlagiarismIcon, label: 'Plagiarism Checker', href: '/plagiarism' },
+        { icon: DocumentsIcon, label: 'Saved Docs', href: '/documents' },
+        { icon: HistoryIcon, label: 'History', href: '/history' },
+        { icon: EditorIcon, label: 'Editor', href: '/editor' },
         { icon: ErrorsIcon, label: 'Errors', href: '/errors' },
         { icon: LanguagesIcon, label: 'Languages', href: '/languages' },
-        { icon: EditorIcon, label: 'Editor', href: '/editor' },
         { icon: BlogsIcon, label: 'Blogs', href: '/blogs' },
     ];
 
