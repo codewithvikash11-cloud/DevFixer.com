@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from 'react';
 import { Copy, RefreshCw, Check, Clock, Fingerprint } from 'lucide-react';
 
@@ -107,8 +106,8 @@ export default function UlidGenerator() {
                 ))}
             </div>
 
-            <div className="bg-blue-500/5 border border-blue-500/10 rounded-xl p-6 text-sm text-text-secondary space-y-2">
-                <h3 className="text-blue-400 font-bold flex items-center gap-2">
+            <div className="bg-accent-primary/5 border border-accent-primary/10 rounded-xl p-6 text-sm text-text-secondary space-y-2">
+                <h3 className="text-accent-primary font-bold flex items-center gap-2">
                     <Fingerprint size={16} /> What is ULID?
                 </h3>
                 <p>

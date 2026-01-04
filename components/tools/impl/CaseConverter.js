@@ -1,110 +1,84 @@
 "use client";
-
 import React, { useState } from 'react';
-import { Copy, Check, ArrowRight, RefreshCw } from 'lucide-react';
+import { Copy, Check, Type, ArrowRight, RefreshCcw } from 'lucide-react';
 
 export default function CaseConverter() {
     const [text, setText] = useState('');
-    const [lastCopied, setLastCopied] = useState(null);
+    const [copied, setCopied] = useState(false);
+
+    const toSentenceCase = (str) => {
+        return str.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g, c => c.toUpperCase());
+    };
 
     const toTitleCase = (str) => {
-        return str.replace(
-            /\w\S*/g,
-            (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-        );
+        return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
     };
 
-    const toCamelCase = (str) => {
-        return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-            return index === 0 ? word.toLowerCase() : word.toUpperCase();
-        }).replace(/\s+/g, '');
-    };
-
-    const toPascalCase = (str) => {
-        return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word) => {
-            return word.toUpperCase();
-        }).replace(/\s+/g, '');
-    };
-
-    const toSnakeCase = (str) => {
-        return str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-            ?.map(x => x.toLowerCase())
-            .join('_');
-    };
-
-    const toKebabCase = (str) => {
-        return str.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-            ?.map(x => x.toLowerCase())
-            .join('-');
-    };
-
-    const TRANSFORMATIONS = [
-        { label: 'UPPER CASE', fn: (s) => s.toUpperCase() },
-        { label: 'lower case', fn: (s) => s.toLowerCase() },
-        { label: 'Title Case', fn: toTitleCase },
-        { label: 'camelCase', fn: toCamelCase },
-        { label: 'PascalCase', fn: toPascalCase },
-        { label: 'snake_case', fn: toSnakeCase },
-        { label: 'kebab-case', fn: toKebabCase },
-        { label: 'InVeRsE cAsE', fn: (s) => s.split('').map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join('') },
+    const transformers = [
+        { id: 'upper', label: 'UPPERCASE', fn: s => s.toUpperCase() },
+        { id: 'lower', label: 'lowercase', fn: s => s.toLowerCase() },
+        { id: 'sentence', label: 'Sentence case', fn: toSentenceCase },
+        { id: 'title', label: 'Title Case', fn: toTitleCase },
+        { id: 'alternating', label: 'aLtErNaTiNg cAsE', fn: s => s.split('').map((c, i) => i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()).join('') },
+        { id: 'inverse', label: 'InVeRsE CaSe', fn: s => s.split('').map(c => c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join('') },
     ];
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(text);
-        setLastCopied('input');
-        setTimeout(() => setLastCopied(null), 2000);
+    const handleTransform = (fn) => {
+        setText(fn(text));
     };
 
-    const applyTransform = (transformFn) => {
-        const newText = transformFn(text);
-        setText(newText);
+    const copyToClipboard = () => {
+        if (!text) return;
+        navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
     };
 
     return (
-        <div className="flex flex-col gap-6">
-
-            {/* Input Area */}
-            <div className="relative group">
-                <textarea
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    placeholder="Type or paste your text here..."
-                    className="w-full h-64 bg-surface border border-border rounded-xl p-6 font-mono text-sm text-text-primary outline-none focus:border-accent-primary/50 resize-none transition-all placeholder:text-text-tertiary"
-                ></textarea>
-                <button
-                    onClick={() => setText('')}
-                    className="absolute top-4 right-4 p-2 text-text-tertiary hover:text-red-400 bg-background/50 border border-border rounded-lg transition-colors"
-                >
-                    <RefreshCw size={16} />
-                </button>
-            </div>
-
-            {/* Transform Buttons */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {TRANSFORMATIONS.map((t, i) => (
+        <div className="max-w-4xl mx-auto space-y-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                {transformers.map((t) => (
                     <button
-                        key={i}
-                        onClick={() => applyTransform(t.fn)}
+                        key={t.id}
+                        onClick={() => handleTransform(t.fn)}
                         disabled={!text}
-                        className="p-3 bg-surface hover:bg-surface-highlight border border-border hover:border-accent-primary/50 rounded-lg text-sm font-bold text-text-secondary hover:text-text-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+                        className="flex flex-col items-center justify-center p-3 rounded-xl bg-surface border border-border hover:border-accent-primary hover:bg-surface-highlight transition-all disabled:opacity-50 disabled:hover:border-border disabled:hover:bg-surface"
                     >
-                        <span className="flex items-center justify-between">
-                            {t.label}
-                            <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-accent-primary" />
-                        </span>
+                        <span className="text-xs font-bold text-text-secondary mb-1">{t.label}</span>
+                        <Type size={16} className="text-accent-primary" />
                     </button>
                 ))}
             </div>
 
-            <div className="flex justify-end mt-2">
-                <button
-                    onClick={handleCopy}
-                    disabled={!text}
-                    className="flex items-center gap-2 px-6 py-3 bg-accent-primary hover:bg-accent-hover text-white rounded-lg transition-colors shadow-lg shadow-accent-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    {lastCopied === 'input' ? <Check size={18} /> : <Copy size={18} />}
-                    <span className="font-bold text-sm">Copy Result</span>
-                </button>
+            <div className="bg-surface border border-border rounded-2xl p-1 relative flex flex-col h-[400px]">
+                <textarea
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder="Type or paste your text here..."
+                    className="flex-1 w-full bg-transparent p-6 text-base md:text-lg outline-none resize-none text-text-primary placeholder:text-text-tertiary"
+                />
+
+                <div className="absolute bottom-4 right-4 flex gap-2">
+                    <button
+                        onClick={() => setText('')}
+                        className="p-2 text-text-tertiary hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+                        title="Clear"
+                    >
+                        <RefreshCcw size={18} />
+                    </button>
+                    <button
+                        onClick={copyToClipboard}
+                        className="flex items-center gap-2 px-4 py-2 bg-accent-primary hover:bg-accent-hover text-white rounded-lg transition-all shadow-lg shadow-accent-primary/20"
+                    >
+                        {copied ? <Check size={18} /> : <Copy size={18} />}
+                        <span className="font-bold text-sm">{copied ? 'Copied' : 'Copy'}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div className="flex items-center justify-between text-sm text-text-secondary px-2">
+                <div>Character Count: <span className="font-bold text-text-primary">{text.length}</span></div>
+                <div>Word Count: <span className="font-bold text-text-primary">{text.trim() ? text.trim().split(/\s+/).length : 0}</span></div>
             </div>
         </div>
     );

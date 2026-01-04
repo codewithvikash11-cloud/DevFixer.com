@@ -48,6 +48,21 @@ const XmlFormatter = dynamic(() => import('@/components/tools/impl/XmlFormatter'
 const SqlFormatter = dynamic(() => import('@/components/tools/impl/SqlFormatter'), { loading: () => <ToolLoader /> });
 const DateConverter = dynamic(() => import('@/components/tools/impl/DateConverter'), { loading: () => <ToolLoader /> });
 
+const Slugify = dynamic(() => import('@/components/tools/impl/Slugify'), { loading: () => <ToolLoader /> });
+const DeviceInfo = dynamic(() => import('@/components/tools/impl/DeviceInfo'), { loading: () => <ToolLoader /> });
+const AsciiArt = dynamic(() => import('@/components/tools/impl/AsciiArt'), { loading: () => <ToolLoader /> });
+const Obfuscator = dynamic(() => import('@/components/tools/impl/Obfuscator'), { loading: () => <ToolLoader /> });
+const MetaGenerator = dynamic(() => import('@/components/tools/impl/MetaGenerator'), { loading: () => <ToolLoader /> });
+const UserAgentParser = dynamic(() => import('@/components/tools/impl/UserAgentParser'), { loading: () => <ToolLoader /> });
+const NumberBaseConverter = dynamic(() => import('@/components/tools/impl/NumberBaseConverter'), { loading: () => <ToolLoader /> });
+const RomanNumeralConverter = dynamic(() => import('@/components/tools/impl/RomanNumeralConverter'), { loading: () => <ToolLoader /> });
+const MarkdownToHtml = dynamic(() => import('@/components/tools/impl/MarkdownToHtml'), { loading: () => <ToolLoader /> });
+const YamlJsonConverter = dynamic(() => import('@/components/tools/impl/YamlJsonConverter'), { loading: () => <ToolLoader /> });
+const JsonToXml = dynamic(() => import('@/components/tools/impl/JsonToXml'), { loading: () => <ToolLoader /> });
+const TextTools = dynamic(() => import('@/components/tools/impl/TextTools'), { loading: () => <ToolLoader /> });
+const UrlParser = dynamic(() => import('@/components/tools/impl/UrlParser'), { loading: () => <ToolLoader /> });
+const NetworkCalculators = dynamic(() => import('@/components/tools/impl/NetworkCalculators'), { loading: () => <ToolLoader /> });
+
 const COMPONENT_MAP = {
     'json-formatter': JsonFormatter,
     'base64': Base64Converter,
@@ -77,18 +92,40 @@ const COMPONENT_MAP = {
     'lorem-ipsum': LoremIpsum,
     'url-encoder': UrlEncoder,
     'html-entity': HtmlEntity,
-    'xml-formatter': XmlFormatter,
-    'sql-formatter': SqlFormatter,
     'csv-to-json': CsvToJson,
     'random-string': RandomString,
     'json-to-ts': JsonToTs,
     'fake-data': FakeData,
-    'diff-checker': DiffChecker,
     'ip-lookup': IpLookup,
     'http-status': HttpStatus,
     'password-strength': PasswordStrength,
     'token-generator': TokenGenerator,
     'ulid-generator': UlidGenerator,
+    'slugify': Slugify,
+    'text-nato': () => <TextTools type="text-nato" />,
+    'text-binary': () => <TextTools type="text-binary" />,
+    'text-unicode': () => <TextTools type="text-unicode" />,
+    'numeronym': () => <TextTools type="numeronym" />,
+    'ascii-art': AsciiArt, // Already existed? Check if I need to map it or if it was there. It was there.
+    'emoji-picker': ComingSoon, // Placeholder for now, or implement separate picker.
+    'user-agent': UserAgentParser,
+    'meta-generator': MetaGenerator,
+    'og-generator': MetaGenerator,
+    'number-base': NumberBaseConverter,
+    'roman-numeral': RomanNumeralConverter,
+    'markdown-html': MarkdownToHtml,
+    'text-diff': DiffChecker,
+    'diff-checker': DiffChecker,
+    'base64-file': Base64Converter, // Assuming Base64Converter will be enhanced or supports it
+    'xml-json': JsonToXml,
+    'json-xml': JsonToXml,
+    'html-entity': HtmlEntity,
+    'yaml-formatter': YamlJsonConverter, // Temporary map until specific formatter or check if YamlJsonConverter handles it
+    'yaml-json': YamlJsonConverter,
+    'json-yaml': YamlJsonConverter,
+    'ipv4-subnet': () => <NetworkCalculators type="ipv4-subnet" />,
+    'ipv6-ula': () => <NetworkCalculators type="ipv6-ula" />,
+    'url-parser': UrlParser,
 };
 
 function ToolLoader() {

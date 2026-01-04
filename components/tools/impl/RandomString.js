@@ -1,124 +1,121 @@
 "use client";
-
 import React, { useState } from 'react';
-import { Copy, Shuffle, Check, RefreshCw } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Copy, Check, RefreshCw, Dice5 } from 'lucide-react';
 
 export default function RandomString() {
     const [length, setLength] = useState(16);
-    const [useUppercase, setUseUppercase] = useState(true);
-    const [useLowercase, setUseLowercase] = useState(true);
-    const [useNumbers, setUseNumbers] = useState(true);
-    const [useSymbols, setUseSymbols] = useState(false);
-    const [output, setOutput] = useState('');
+    const [result, setResult] = useState('');
     const [copied, setCopied] = useState(false);
+    const [options, setOptions] = useState({
+        upper: true,
+        lower: true,
+        numbers: true,
+        symbols: false
+    });
 
     const generate = () => {
-        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const lowercase = "abcdefghijklmnopqrstuvwxyz";
-        const numbers = "0123456789";
-        const symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+        const charset = {
+            upper: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            lower: "abcdefghijklmnopqrstuvwxyz",
+            numbers: "0123456789",
+            symbols: "!@#$%^&*()_+-=[]{}|;:,.<>?"
+        };
 
-        let chars = "";
-        if (useUppercase) chars += uppercase;
-        if (useLowercase) chars += lowercase;
-        if (useNumbers) chars += numbers;
-        if (useSymbols) chars += symbols;
+        let chars = '';
+        if (options.upper) chars += charset.upper;
+        if (options.lower) chars += charset.lower;
+        if (options.numbers) chars += charset.numbers;
+        if (options.symbols) chars += charset.symbols;
 
-        if (!chars) {
-            setOutput('Please select at least one character type.');
-            return;
-        }
+        if (!chars) return;
 
-        let result = "";
+        let str = '';
         for (let i = 0; i < length; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
+            str += chars.charAt(Math.floor(Math.random() * chars.length));
         }
-
-        setOutput(result);
+        setResult(str);
+        setCopied(false);
     };
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(output);
+    // Initial generate
+    React.useEffect(() => {
+        generate();
+    }, []);
+
+    const copyToClipboard = () => {
+        if (!result) return;
+        navigator.clipboard.writeText(result);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
 
     return (
-        <div className="h-full flex flex-col gap-4">
-            <h3 className="text-xl font-bold flex items-center gap-2">
-                <Shuffle className="text-accent-primary" />
-                Random String Generator
-            </h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Controls */}
-                <div className="space-y-6">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-text-secondary">Length: {length}</label>
-                        <input
-                            type="range"
-                            min="4"
-                            max="128"
-                            value={length}
-                            onChange={(e) => setLength(parseInt(e.target.value))}
-                            className="w-full accent-accent-primary h-2 bg-surface-highlight rounded-lg appearance-none cursor-pointer"
-                        />
+        <div className="max-w-2xl mx-auto flex flex-col gap-8">
+            {/* Result Box */}
+            <div className="bg-surface border border-border rounded-2xl p-8 flex flex-col items-center gap-6 text-center">
+                <div className="space-y-2">
+                    <label className="text-xs font-bold text-text-tertiary uppercase tracking-wider">Generated String</label>
+                    <div className="text-3xl sm:text-4xl font-mono font-bold text-accent-primary break-all">
+                        {result}
                     </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <Toggle label="Uppercase (A-Z)" checked={useUppercase} onChange={setUseUppercase} />
-                        <Toggle label="Lowercase (a-z)" checked={useLowercase} onChange={setUseLowercase} />
-                        <Toggle label="Numbers (0-9)" checked={useNumbers} onChange={setUseNumbers} />
-                        <Toggle label="Symbols (!@#)" checked={useSymbols} onChange={setUseSymbols} />
-                    </div>
-
-                    <button
-                        onClick={generate}
-                        className="w-full py-3 bg-accent-primary text-white font-bold rounded-xl hover:bg-accent-primary/90 transition-all shadow-lg shadow-accent-primary/20 flex items-center justify-center gap-2"
-                    >
-                        <RefreshCw size={18} />
-                        Generate String
-                    </button>
                 </div>
 
-                {/* Output */}
-                <div className="space-y-2">
-                    <label className="text-sm font-medium text-text-secondary">Result</label>
-                    <div className="relative">
-                        <textarea
-                            className="w-full h-48 p-4 rounded-xl bg-surface-highlight border border-border outline-none font-mono text-lg resize-none text-text-primary break-all"
-                            readOnly
-                            value={output}
-                            placeholder="Generated string..."
-                        />
-                        {output && (
-                            <button
-                                onClick={handleCopy}
-                                className="absolute top-4 right-4 p-2 bg-surface border border-border rounded-lg hover:border-accent-primary text-text-secondary hover:text-accent-primary transition-all"
-                            >
-                                {copied ? <Check size={16} /> : <Copy size={16} />}
-                            </button>
-                        )}
+                <div className="flex gap-3">
+                    <button
+                        onClick={generate}
+                        className="p-3 bg-surface-highlight hover:bg-surface-active rounded-xl text-text-secondary hover:text-text-primary transition-colors"
+                        title="Regenerate"
+                    >
+                        <RefreshCw size={20} />
+                    </button>
+                    <button
+                        onClick={copyToClipboard}
+                        className="flex items-center gap-2 px-6 py-3 bg-accent-primary hover:bg-accent-hover text-white rounded-xl font-bold shadow-lg shadow-accent-primary/20 transition-all"
+                    >
+                        {copied ? <Check size={20} /> : <Copy size={20} />}
+                        <span>{copied ? 'Copied' : 'Copy'}</span>
+                    </button>
+                </div>
+            </div>
+
+            {/* Controls */}
+            <div className="bg-surface border border-border rounded-2xl p-6 space-y-6">
+                <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                        <label className="font-bold text-text-primary">Length: <span className="text-accent-primary">{length}</span></label>
                     </div>
+                    <input
+                        type="range"
+                        min="4"
+                        max="64"
+                        value={length}
+                        onChange={(e) => setLength(parseInt(e.target.value))}
+                        className="w-full h-2 bg-surface-active rounded-lg appearance-none cursor-pointer accent-accent-primary"
+                    />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    {[
+                        { id: 'upper', label: 'Uppercase (A-Z)' },
+                        { id: 'lower', label: 'Lowercase (a-z)' },
+                        { id: 'numbers', label: 'Numbers (0-9)' },
+                        { id: 'symbols', label: 'Symbols (!@#)' },
+                    ].map((opt) => (
+                        <label key={opt.id} className="flex items-center gap-3 p-3 bg-background border border-border rounded-xl cursor-pointer hover:border-text-secondary/30 transition-colors">
+                            <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all ${options[opt.id] ? 'bg-accent-primary border-accent-primary' : 'bg-transparent border-text-tertiary'}`}>
+                                {options[opt.id] && <Check size={14} className="text-white" strokeWidth={3} />}
+                            </div>
+                            <input
+                                type="checkbox"
+                                checked={options[opt.id]}
+                                onChange={() => setOptions(prev => ({ ...prev, [opt.id]: !prev[opt.id] }))}
+                                className="hidden"
+                            />
+                            <span className="text-sm font-medium text-text-secondary">{opt.label}</span>
+                        </label>
+                    ))}
                 </div>
             </div>
         </div>
     );
 }
-
-const Toggle = ({ label, checked, onChange }) => (
-    <label className="flex items-center gap-3 cursor-pointer group">
-        <div className={cn(
-            "w-10 h-6 rounded-full transition-colors relative flex-shrink-0",
-            checked ? "bg-accent-primary" : "bg-surface-highlight border border-border"
-        )}>
-            <input type="checkbox" className="hidden" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-            <div className={cn(
-                "absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform shadow-sm",
-                checked ? "translate-x-4" : "translate-x-0"
-            )} />
-        </div>
-        <span className="text-sm font-medium text-text-secondary group-hover:text-text-primary transition-colors select-none">{label}</span>
-    </label>
-);

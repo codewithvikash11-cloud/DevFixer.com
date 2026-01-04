@@ -75,13 +75,13 @@ export default function RequestPanel({ request, setRequest, onSend, isLoading })
                                     placeholder="Key"
                                     value={h.key}
                                     onChange={(e) => updateHeader(i, 'key', e.target.value)}
-                                    className="flex-1 h-9 px-3 bg-white dark:bg-black border border-border rounded-md text-sm outline-none focus:border-accent-primary"
+                                    className="flex-1 h-9 px-3 bg-surface border border-border rounded-md text-sm outline-none focus:border-accent-primary"
                                 />
                                 <input
                                     placeholder="Value"
                                     value={h.value}
                                     onChange={(e) => updateHeader(i, 'value', e.target.value)}
-                                    className="flex-1 h-9 px-3 bg-white dark:bg-black border border-border rounded-md text-sm outline-none focus:border-accent-primary"
+                                    className="flex-1 h-9 px-3 bg-surface border border-border rounded-md text-sm outline-none focus:border-accent-primary"
                                 />
                                 <button onClick={() => removeHeader(i)} className="p-2 text-text-tertiary hover:text-red-500 transition-colors">
                                     <Trash2 size={16} />
@@ -103,7 +103,7 @@ export default function RequestPanel({ request, setRequest, onSend, isLoading })
                         <textarea
                             value={request.body}
                             onChange={(e) => setRequest({ ...request, body: e.target.value })}
-                            className="flex-1 w-full bg-white dark:bg-black border border-border rounded-lg p-3 font-mono text-sm outline-none focus:border-accent-primary resize-none"
+                            className="flex-1 w-full bg-surface border border-border rounded-lg p-3 font-mono text-sm outline-none focus:border-accent-primary resize-none"
                             placeholder="{}"
                         />
                     </div>

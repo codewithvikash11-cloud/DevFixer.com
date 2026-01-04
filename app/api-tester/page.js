@@ -77,7 +77,7 @@ export default function ApiTesterPage() {
             <main className="flex-1 container mx-auto px-4 py-8 md:py-10 max-w-7xl animate-in fade-in duration-500">
                 <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl md:text-4xl font-bold tracking-tight">API Tester</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-accent-primary">API Tester</h1>
                         <p className="text-text-secondary mt-2">Test APIs securely with our production-ready proxy.</p>
                     </div>
                 </div>

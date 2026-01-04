@@ -1,112 +1,80 @@
 "use client";
-
-import React, { useState, useEffect } from 'react';
-import { Copy, Check, ArrowRightLeft, RefreshCw, Code2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Code, ArrowLeftRight, Copy, Check, Type } from 'lucide-react';
 
 export default function HtmlEntity() {
-    const [input, setInput] = useState('');
-    const [output, setOutput] = useState('');
-    const [mode, setMode] = useState('escape'); // 'escape' | 'unescape'
+    const [raw, setRaw] = useState('');
+    const [encoded, setEncoded] = useState('');
     const [copied, setCopied] = useState(false);
 
-    useEffect(() => {
-        if (mode === 'escape') {
-            setOutput(input.replace(/[\u00A0-\u9999<>\&]/g, function (i) {
-                return '&#' + i.charCodeAt(0) + ';';
-            }));
-        } else {
-            const doc = new DOMParser().parseFromString(input, "text/html");
-            setOutput(doc.documentElement.textContent);
-        }
-    }, [input, mode]);
+    const handleRawChange = (val) => {
+        setRaw(val);
+        // Encode
+        const textarea = document.createElement('textarea');
+        textarea.textContent = val;
+        setEncoded(textarea.innerHTML);
+    };
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(output);
+    const handleEncodedChange = (val) => {
+        setEncoded(val);
+        // Decode
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = val;
+        setRaw(textarea.value);
+    };
+
+    const copyToClipboard = (text) => {
+        if (!text) return;
+        navigator.clipboard.writeText(text);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
 
-    const toggleMode = () => {
-        setMode(prev => prev === 'escape' ? 'unescape' : 'escape');
-        setInput(output);
-    };
-
     return (
-        <div className="flex flex-col gap-8">
-            {/* Controls */}
-            <div className="flex justify-center">
-                <div className="bg-surface border border-border p-1 rounded-xl flex items-center">
-                    <button
-                        onClick={() => setMode('escape')}
-                        className={`px-6 py-2 rounded-lg font-bold text-sm transition-all ${mode === 'escape' ? 'bg-accent-primary text-white shadow-lg' : 'text-text-secondary hover:text-text-primary'}`}
-                    >
-                        Escape
-                    </button>
-                    <button
-                        onClick={toggleMode}
-                        className="p-2 text-text-tertiary hover:text-accent-primary transition-colors"
-                        title="Swap Mode"
-                    >
-                        <ArrowRightLeft size={18} />
-                    </button>
-                    <button
-                        onClick={() => setMode('unescape')}
-                        className={`px-6 py-2 rounded-lg font-bold text-sm transition-all ${mode === 'unescape' ? 'bg-accent-primary text-white shadow-lg' : 'text-text-secondary hover:text-text-primary'}`}
-                    >
-                        Unescape
-                    </button>
-                </div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-8">
-                {/* Input */}
-                <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between">
-                        <label className="text-xs font-bold text-text-secondary uppercase">
-                            {mode === 'escape' ? 'Raw Text' : 'Escaped HTML'}
+        <div className="h-[calc(100vh-250px)] min-h-[500px] flex flex-col gap-6">
+            <div className="grid lg:grid-cols-2 gap-6 flex-1">
+                {/* Raw Text */}
+                <div className="flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-3">
+                        <label className="text-sm font-bold text-text-secondary uppercase tracking-wider flex items-center gap-2">
+                            <Type size={14} /> Plain Text
                         </label>
+                        <button onClick={() => { setRaw(''); setEncoded(''); }} className="text-xs text-text-tertiary hover:text-accent-primary">Clear</button>
                     </div>
+                    <textarea
+                        className="flex-1 bg-surface border border-border rounded-xl p-4 font-mono text-sm outline-none focus:border-accent-primary resize-none text-text-primary placeholder:text-text-tertiary"
+                        value={raw}
+                        onChange={(e) => handleRawChange(e.target.value)}
+                        placeholder="Type normal text here..."
+                    />
+                </div>
 
-                    <div className="relative group flex-1">
-                        <textarea
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            placeholder={mode === 'escape' ? "<div class='foo'>Bar</div>" : "&lt;div class=&#39;foo&#39;&gt;Bar&lt;/div&gt;"}
-                            className="w-full h-80 bg-surface border border-border rounded-xl p-6 font-mono text-sm text-text-primary outline-none focus:border-accent-primary/50 resize-none transition-all placeholder:text-text-tertiary"
-                        ></textarea>
+                {/* Encoded Text */}
+                <div className="flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-3">
+                        <label className="text-sm font-bold text-text-secondary uppercase tracking-wider flex items-center gap-2">
+                            <Code size={14} /> HTML Entity Encoded
+                        </label>
                         <button
-                            onClick={() => setInput('')}
-                            className="absolute top-4 right-4 p-2 text-text-tertiary hover:text-red-400 bg-background/50 border border-border rounded-lg transition-colors"
+                            onClick={() => copyToClipboard(encoded)}
+                            className="flex items-center gap-1.5 text-xs font-bold text-accent-primary hover:text-accent-hover transition-colors"
                         >
-                            <RefreshCw size={16} />
+                            {copied ? <Check size={14} /> : <Copy size={14} />}
+                            {copied ? 'Copied' : 'Copy'}
                         </button>
                     </div>
-                </div>
-
-                {/* Output */}
-                <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold text-text-secondary uppercase">
-                        {mode === 'escape' ? 'Escaped Entities' : 'Unescaped Text'}
-                    </label>
-                    <div className="relative group flex-1">
-                        <textarea
-                            value={output}
-                            readOnly
-                            placeholder="Result will appear here..."
-                            className="w-full h-80 bg-black/30 border border-border/50 rounded-xl p-6 font-mono text-sm text-text-primary outline-none resize-none transition-all placeholder:text-text-tertiary"
-                        ></textarea>
-                        <div className="absolute bottom-4 right-4">
-                            <button
-                                onClick={handleCopy}
-                                className="flex items-center gap-2 px-4 py-2 bg-surface hover:bg-surface-highlight border border-border text-text-primary rounded-lg transition-colors shadow-lg"
-                            >
-                                {copied ? <Check size={16} /> : <Copy size={16} />}
-                                <span className="font-bold text-xs">{copied ? 'Copied' : 'Copy'}</span>
-                            </button>
-                        </div>
-                    </div>
+                    <textarea
+                        className="flex-1 bg-surface border border-border rounded-xl p-4 font-mono text-sm outline-none focus:border-accent-primary resize-none text-accent-primary placeholder:text-text-tertiary"
+                        value={encoded}
+                        onChange={(e) => handleEncodedChange(e.target.value)}
+                        placeholder="&lt;b&gt;Encoded output&lt;/b&gt;"
+                    />
                 </div>
             </div>
+
+            <p className="text-center text-sm text-text-tertiary">
+                Instantly converts characters to their HTML entity equivalents and back.
+            </p>
         </div>
     );
 }

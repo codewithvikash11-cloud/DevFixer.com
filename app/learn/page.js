@@ -420,7 +420,7 @@ export default function LearnPage() {
                     <div className="max-w-3xl mx-auto space-y-8 pb-20">
                         {/* Title Block */}
                         <div className="border-b border-border pb-6">
-                            <h1 className="text-3xl md:text-4xl font-black text-text-primary mb-2 tracking-tight">
+                            <h1 className="text-3xl md:text-4xl font-black text-accent-primary mb-2 tracking-tight">
                                 {activeChapter.title}
                             </h1>
                             <div className="flex items-center gap-4 text-xs font-medium text-text-tertiary">

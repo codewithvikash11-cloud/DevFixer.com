@@ -1,107 +1,133 @@
 "use client";
-
-import React, { useState, useEffect } from 'react';
-import { Copy, Check, ArrowRightLeft, RefreshCw } from 'lucide-react';
+import React, { useState } from 'react';
+import { Copy, Check, ArrowDown, ArrowUp } from 'lucide-react';
 
 export default function UrlEncoder() {
     const [input, setInput] = useState('');
     const [output, setOutput] = useState('');
-    const [mode, setMode] = useState('encode'); // 'encode' | 'decode'
     const [copied, setCopied] = useState(false);
+    const [mode, setMode] = useState('encode'); // encode | decode
+    const [error, setError] = useState('');
 
-    useEffect(() => {
+    const handleProcess = (newInput = input) => {
+        setError('');
+        if (!newInput) {
+            setOutput('');
+            return;
+        }
+
         try {
             if (mode === 'encode') {
-                setOutput(encodeURIComponent(input));
+                setOutput(encodeURIComponent(newInput));
             } else {
-                setOutput(decodeURIComponent(input));
+                setOutput(decodeURIComponent(newInput));
             }
         } catch (e) {
-            setOutput('Error: Invalid URL encoding');
+            setError('Invalid format: Unable to decode this string.');
+            setOutput('');
         }
-    }, [input, mode]);
+    };
 
-    const handleCopy = () => {
+    const handleModeChange = (newMode) => {
+        setMode(newMode);
+        // Clean slate or re-process? Let's just update the output if input exists
+        // But logic flips direction usually. For simplicity, we just change the function applied to Current Input.
+        // Wait, often user wants to take Output -> Input to reverse. 
+        // We'll keep it simple: Input box -> Process -> Output box.
+    };
+
+    // Auto-process on input change
+    const onInputChange = (val) => {
+        setInput(val);
+        // We need to defer process slightly or just run it immediate? Immediate is fine for URL encoding.
+        // But need to pass 'val' because state updates async
+
+        // Re-implement logic inline to use 'val'
+        if (!val) {
+            setOutput('');
+            setError('');
+            return;
+        }
+        try {
+            setError('');
+            if (mode === 'encode') {
+                setOutput(encodeURIComponent(val));
+            } else {
+                setOutput(decodeURIComponent(val));
+            }
+        } catch (e) {
+            setError('Invalid format');
+            setOutput('');
+        }
+    };
+
+    // Trigger effect when mode changes too
+    React.useEffect(() => {
+        onInputChange(input);
+    }, [mode]);
+
+    const copyToClipboard = () => {
+        if (!output) return;
         navigator.clipboard.writeText(output);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
 
-    const toggleMode = () => {
-        setMode(prev => prev === 'encode' ? 'decode' : 'encode');
-        setInput(output); // Swap input/output for quick toggle
-    };
-
     return (
-        <div className="flex flex-col gap-8">
-            {/* Controls */}
-            <div className="flex justify-center">
-                <div className="bg-surface border border-border p-1 rounded-xl flex items-center">
+        <div className="max-w-4xl mx-auto space-y-6">
+            {/* Toggle */}
+            <div className="flex justify-center mb-4">
+                <div className="bg-surface border border-border p-1 rounded-xl flex gap-1">
                     <button
-                        onClick={() => setMode('encode')}
-                        className={`px-6 py-2 rounded-lg font-bold text-sm transition-all ${mode === 'encode' ? 'bg-accent-primary text-white shadow-lg' : 'text-text-secondary hover:text-text-primary'}`}
+                        onClick={() => handleModeChange('encode')}
+                        className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${mode === 'encode' ? 'bg-accent-primary text-white shadow-md' : 'text-text-secondary hover:text-text-primary hover:bg-surface-active'}`}
                     >
                         Encode
                     </button>
                     <button
-                        onClick={toggleMode}
-                        className="p-2 text-text-tertiary hover:text-accent-primary transition-colors"
-                        title="Swap Mode"
-                    >
-                        <ArrowRightLeft size={18} />
-                    </button>
-                    <button
-                        onClick={() => setMode('decode')}
-                        className={`px-6 py-2 rounded-lg font-bold text-sm transition-all ${mode === 'decode' ? 'bg-accent-primary text-white shadow-lg' : 'text-text-secondary hover:text-text-primary'}`}
+                        onClick={() => handleModeChange('decode')}
+                        className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${mode === 'decode' ? 'bg-accent-primary text-white shadow-md' : 'text-text-secondary hover:text-text-primary hover:bg-surface-active'}`}
                     >
                         Decode
                     </button>
                 </div>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
-                {/* Input */}
-                <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold text-text-secondary uppercase">
-                        {mode === 'encode' ? 'Decoded Text' : 'Encoded Text'}
-                    </label>
-                    <div className="relative group flex-1">
-                        <textarea
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            placeholder={mode === 'encode' ? "Enter text to encode..." : "Enter URL to decode..."}
-                            className="w-full h-80 bg-surface border border-border rounded-xl p-6 font-mono text-sm text-text-primary outline-none focus:border-accent-primary/50 resize-none transition-all placeholder:text-text-tertiary"
-                        ></textarea>
-                        <button
-                            onClick={() => setInput('')}
-                            className="absolute top-4 right-4 p-2 text-text-tertiary hover:text-red-400 bg-background/50 border border-border rounded-lg transition-colors"
-                        >
-                            <RefreshCw size={16} />
-                        </button>
-                    </div>
+            <div className="grid md:grid-cols-2 gap-6 h-[400px]">
+                <div className="flex flex-col">
+                    <label className="text-sm font-bold text-text-secondary uppercase tracking-wider mb-2">Input</label>
+                    <textarea
+                        className="flex-1 bg-surface border border-border rounded-xl p-4 font-mono text-sm leading-relaxed outline-none focus:border-accent-primary focus:ring-1 focus:ring-accent-primary/20 resize-none transition-all placeholder:text-text-tertiary text-text-primary"
+                        placeholder={mode === 'encode' ? 'Paste text to encode...' : 'Paste URL encoded text to decode...'}
+                        value={input}
+                        onChange={(e) => onInputChange(e.target.value)}
+                    />
                 </div>
 
-                {/* Output */}
-                <div className="flex flex-col gap-2">
-                    <label className="text-xs font-bold text-text-secondary uppercase">
-                        {mode === 'encode' ? 'Encoded Result' : 'Decoded Result'}
-                    </label>
-                    <div className="relative group flex-1">
-                        <textarea
-                            value={output}
-                            readOnly
-                            placeholder="Result will appear here..."
-                            className="w-full h-80 bg-black/30 border border-border/50 rounded-xl p-6 font-mono text-sm text-text-primary outline-none resize-none transition-all placeholder:text-text-tertiary"
-                        ></textarea>
-                        <div className="absolute bottom-4 right-4">
-                            <button
-                                onClick={handleCopy}
-                                className="flex items-center gap-2 px-4 py-2 bg-surface hover:bg-surface-highlight border border-border text-text-primary rounded-lg transition-colors shadow-lg"
-                            >
-                                {copied ? <Check size={16} /> : <Copy size={16} />}
-                                <span className="font-bold text-xs">{copied ? 'Copied' : 'Copy'}</span>
-                            </button>
-                        </div>
+                <div className="flex flex-col relative">
+                    <label className="text-sm font-bold text-text-secondary uppercase tracking-wider mb-2">Result</label>
+                    <div className="flex-1 bg-surface border border-border rounded-xl p-4 relative overflow-hidden flex flex-col">
+                        {error ? (
+                            <div className="text-red-500 font-medium p-2">{error}</div>
+                        ) : (
+                            <textarea
+                                readOnly
+                                className="flex-1 w-full bg-transparent font-mono text-sm outline-none resize-none text-text-primary placeholder:text-text-tertiary"
+                                value={output}
+                                placeholder="Result..."
+                            />
+                        )}
+
+                        {output && !error && (
+                            <div className="absolute top-4 right-4">
+                                <button
+                                    onClick={copyToClipboard}
+                                    className="p-2 bg-surface hover:bg-surface-highlight border border-border rounded-lg text-text-secondary hover:text-accent-primary transition-colors shadow-sm"
+                                >
+                                    {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

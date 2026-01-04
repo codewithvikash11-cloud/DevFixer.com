@@ -25,7 +25,7 @@ const GlassEcosystem = () => {
                 {/* Code Area */}
                 <div className="p-6 font-mono text-xs md:text-sm leading-relaxed text-gray-300">
                     <div className="flex mb-2 opacity-50 border-b border-white/5 pb-2">
-                        <span className="text-blue-400 mr-2">➜</span> <span className="text-gray-500">Scanning for issues...</span>
+                        <span className="text-accent-primary mr-2">➜</span> <span className="text-gray-500">Scanning for issues...</span>
                     </div>
 
                     <div className="space-y-3">
@@ -59,13 +59,13 @@ const GlassEcosystem = () => {
                 </div>
 
                 {/* Glow Overlay */}
-                <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-blue-500/10 blur-[50px] pointer-events-none" />
+                <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-accent-primary/10 blur-[50px] pointer-events-none" />
             </div>
 
             {/* FLOATING CARDS - Layered Depth */}
             <div className="absolute right-0 md:-right-8 top-12 z-30 p-4 rounded-xl glass-strong border border-white/10 shadow-2xl animate-float-slow" style={{ animationDelay: '2s' }}>
                 <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
+                    <div className="p-2 bg-accent-primary/20 rounded-lg text-accent-primary">
                         <Zap size={20} fill="currentColor" />
                     </div>
                     <div>
@@ -76,7 +76,7 @@ const GlassEcosystem = () => {
             </div>
 
             {/* Background Glow for Depth */}
-            <div className="absolute z-0 w-[400px] h-[400px] bg-gradient-to-r from-indigo-500/20 to-purple-500/20 blur-[80px] rounded-full animate-pulse-glow" />
+            <div className="absolute z-0 w-[400px] h-[400px] bg-gradient-to-r from-accent-primary/20 to-accent-hover/20 blur-[80px] rounded-full animate-pulse-glow" />
 
         </div>
     );

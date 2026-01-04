@@ -46,12 +46,12 @@ const TerminalInterface = () => {
                 {lines.map((line, i) => (
                     <div key={i} className={`flex ${line.type === 'cmd' ? 'items-center mt-4' : ''} animate-in fade-in slide-in-from-left-2 duration-300`}>
                         {line.type === 'cmd' && (
-                            <span className="text-accent-blue mr-3">$</span>
+                            <span className="text-accent-primary mr-3">$</span>
                         )}
                         <span className={`
                             ${line.type === 'cmd' ? 'text-white font-bold' : ''}
-                            ${line.type === 'info' ? 'text-blue-200/70' : ''}
-                            ${line.type === 'success' ? 'text-emerald-400' : ''}
+                            ${line.type === 'info' ? 'text-accent-primary/70' : ''}
+                            ${line.type === 'success' ? 'text-accent-primary' : ''}
                             ${line.type === 'error' ? 'text-red-400' : ''}
                         `}>
                             {line.content}
@@ -59,7 +59,7 @@ const TerminalInterface = () => {
                     </div>
                 ))}
                 <div className="flex items-center mt-4 animate-pulse">
-                    <span className="text-accent-blue mr-3">$</span>
+                    <span className="text-accent-primary mr-3">$</span>
                     <span className="w-2.5 h-5 bg-white/50 block" />
                 </div>
             </div>

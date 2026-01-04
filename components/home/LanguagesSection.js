@@ -49,7 +49,7 @@ const LanguagesSection = () => {
         <section className="py-24 relative overflow-hidden bg-background border-y border-border">
 
             <div className="container mx-auto px-6 text-center mb-16 relative z-10">
-                <h2 className="text-3xl font-bold text-text-primary tracking-tight mb-4">Supported <span className="text-gradient-cosmic">Ecosystems</span></h2>
+                <h2 className="text-3xl font-bold text-accent-primary tracking-tight mb-4">Supported Ecosystems</h2>
                 <p className="text-text-secondary">We track error patterns across the entire modern stack.</p>
             </div>
 

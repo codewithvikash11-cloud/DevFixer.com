@@ -17,7 +17,7 @@
     --accent-primary: #008000;
     /* Core Green */
     --accent-glow: rgba(0, 128, 0, 0.12);
-    --accent-hover: #006600;
+    --accent-hover: #17b817;
 
     --accent-success: #008000;
     --accent-warning: #F59E0B;
@@ -51,12 +51,12 @@
     /* Zinc 600 */
 
     /* LUMINOUS ACCENTS */
-    --accent-primary: #00FF7F;
-    /* CodeOrbit Green */
-    --accent-glow: rgba(0, 255, 127, 0.25);
-    --accent-hover: #00CC66;
+    --accent-primary: #008000;
+    /* Core Green */
+    --accent-glow: rgba(0, 128, 0, 0.25);
+    --accent-hover: #17b817;
 
-    --accent-success: #00FF7F;
+    --accent-success: #008000;
     --accent-warning: #F59E0B;
     --accent-error: #EF4444;
     --accent-info: #3B82F6;

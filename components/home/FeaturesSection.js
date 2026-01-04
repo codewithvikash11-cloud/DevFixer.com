@@ -43,7 +43,7 @@ const BentoCard = ({ title, description, icon, className = "", href, ctaText, ch
                     </div>
                 </div>
 
-                <h3 className="text-2xl font-bold mb-3 text-text-primary group-hover:text-accent-primary transition-colors tracking-tight">
+                <h3 className="text-2xl font-bold mb-3 text-accent-primary transition-colors tracking-tight">
                     {title}
                 </h3>
 
@@ -58,7 +58,7 @@ const BentoCard = ({ title, description, icon, className = "", href, ctaText, ch
                     {href ? (
                         <Link
                             href={href}
-                            className="inline-flex items-center px-5 py-2.5 rounded-full bg-text-primary text-background font-bold text-xs hover:scale-105 hover:shadow-lg hover:shadow-accent-primary/20 transition-all duration-300 group/btn"
+                            className="inline-flex items-center px-5 py-2.5 rounded-full bg-accent-primary text-white font-bold text-xs hover:scale-105 hover:bg-accent-hover hover:shadow-lg hover:shadow-accent-primary/20 transition-all duration-300 group/btn"
                         >
                             {ctaText} <ArrowRight size={14} className="ml-2 group-hover/btn:translate-x-1 transition-transform" />
                         </Link>
@@ -163,14 +163,14 @@ const GlobalCDNVisual = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent" />
 
             {/* Pulsing Nodes */}
-            <div className="absolute top-[30%] right-[40%] w-2 h-2 bg-blue-500 rounded-full animate-ping opacity-75" />
-            <div className="absolute top-[30%] right-[40%] w-1.5 h-1.5 bg-blue-400 rounded-full shadow-[0_0_10px_#3b82f6]" />
+            <div className="absolute top-[30%] right-[40%] w-2 h-2 bg-accent-primary rounded-full animate-ping opacity-75" />
+            <div className="absolute top-[30%] right-[40%] w-1.5 h-1.5 bg-accent-primary sm:bg-accent-primary/80 rounded-full shadow-[0_0_10px_green]" />
 
             <div className="absolute top-[45%] right-[20%] w-2 h-2 bg-cyan-500 rounded-full animate-ping opacity-75 delay-700" />
             <div className="absolute top-[45%] right-[20%] w-1.5 h-1.5 bg-cyan-400 rounded-full shadow-[0_0_10px_cyan]" />
 
-            <div className="absolute top-[60%] right-[60%] w-2 h-2 bg-purple-500 rounded-full animate-ping opacity-75 delay-1000" />
-            <div className="absolute top-[60%] right-[60%] w-1.5 h-1.5 bg-purple-400 rounded-full shadow-[0_0_10px_purple]" />
+            <div className="absolute top-[60%] right-[60%] w-2 h-2 bg-accent-primary rounded-full animate-ping opacity-75 delay-1000" />
+            <div className="absolute top-[60%] right-[60%] w-1.5 h-1.5 bg-accent-primary/80 rounded-full shadow-[0_0_10px_green]" />
 
             {/* Connection Lines (SVG) */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-40">
@@ -178,7 +178,7 @@ const GlobalCDNVisual = () => {
                 <defs>
                     <linearGradient id="gradient-line" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stopColor="transparent" />
-                        <stop offset="50%" stopColor="#3b82f6" />
+                        <stop offset="50%" stopColor="#008000" />
                         <stop offset="100%" stopColor="transparent" />
                     </linearGradient>
                 </defs>
@@ -202,9 +202,9 @@ const CopyPasteVisual = () => {
                     </div>
                 </div>
                 <div className="space-y-1.5">
-                    <div className="h-1.5 w-1/3 bg-purple-500/30 rounded-full" />
+                    <div className="h-1.5 w-1/3 bg-accent-primary/30 rounded-full" />
                     <div className="h-1.5 w-3/4 bg-gray-700/50 rounded-full" />
-                    <div className="h-1.5 w-1/2 bg-blue-500/30 rounded-full" />
+                    <div className="h-1.5 w-1/2 bg-accent-hover/30 rounded-full" />
                     <div className="h-1.5 w-2/3 bg-gray-700/50 rounded-full" />
                 </div>
                 {/* Cursor clicking copy */}
@@ -224,8 +224,8 @@ const FeaturesSection = () => {
             {/* Section Header */}
             <div className="container mx-auto px-6 lg:px-12 mb-16 relative z-10">
                 <div className="max-w-2xl">
-                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-text-primary">
-                        Built for <span className="text-gradient-cosmic">Performance</span>
+                    <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-accent-primary">
+                        Built for Performance
                     </h2>
                     <p className="text-base text-text-secondary leading-relaxed">
                         Features designed for the modern stack. Everything you need to debug faster, optimizing your workflow from day one.
@@ -241,8 +241,8 @@ const FeaturesSection = () => {
                     <BentoCard
                         title="Instant Solutions"
                         description="Stop wasting hours on StackOverflow. Get direct, verified fixes for your specific error logs instantly using our AI-driven engine."
-                        icon={<Zap size={24} className="text-[#008000]" />}
-                        className="md:col-span-2 md:row-span-2 bg-gradient-to-br from-surface to-surface-highlight border-[#008000]/20 shadow-xl"
+                        icon={<Zap size={24} className="text-accent-primary" />}
+                        className="md:col-span-2 md:row-span-2 bg-gradient-to-br from-surface to-surface-highlight border-accent-primary/20 shadow-xl"
                         href="/solutions"
                         ctaText="Explore Solutions"
                     >
@@ -253,7 +253,7 @@ const FeaturesSection = () => {
                     <BentoCard
                         title="Verified by Experts"
                         description="Every solution is peer-reviewed by senior architects for security and best practices."
-                        icon={<Shield size={24} className="text-[#008000]" />}
+                        icon={<Shield size={24} className="text-accent-primary" />}
                         className="bg-surface"
                     />
 
@@ -261,14 +261,13 @@ const FeaturesSection = () => {
                     <BentoCard
                         title="Universal Knowledge"
                         description="From React hydration errors to Rust borrow checker issues—we cover the stack."
-                        icon={<Database size={24} className="text-[#008000]" />}
                         className="bg-surface"
                     />
 
                     <BentoCard
                         title="Copy-Paste Ready"
                         description="Clean, formatted code snippets."
-                        icon={<Code2 size={24} className="text-[#008000]" />}
+                        icon={<Code2 size={24} className="text-accent-primary" />}
                         className="bg-surface relative"
                         href="/errors"
                         ctaText="Learn more"
@@ -279,7 +278,7 @@ const FeaturesSection = () => {
                     <BentoCard
                         title="Global CDN"
                         description="Access solutions from any edge location within milliseconds."
-                        icon={<Globe size={24} className="text-[#008000]" />}
+                        icon={<Globe size={24} className="text-accent-primary" />}
                         className="md:col-span-2 bg-gradient-to-l from-surface to-surface-highlight relative"
                         href="/global-cdn"
                         ctaText="View Network"

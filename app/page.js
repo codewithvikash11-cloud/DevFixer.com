@@ -50,7 +50,7 @@ export default function Home() {
 
                                 <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-text-primary leading-[1.05]">
                                     The Ultimate <br className="hidden lg:block" />
-                                    <span className="text-[#008000]">
+                                    <span className="text-accent-primary">
                                         Developer Ecosystem
                                     </span>
                                 </h1>
@@ -71,9 +71,9 @@ export default function Home() {
                                 </Link>
                                 <Link
                                     href="/compiler"
-                                    className="group w-full sm:w-auto h-14 px-8 bg-surface border border-border text-text-primary rounded-full font-bold text-base tracking-wide hover:bg-surface-highlight transition-all duration-300 flex items-center justify-center space-x-2"
+                                    className="group w-full sm:w-auto h-14 px-8 bg-surface border border-border text-accent-primary rounded-full font-bold text-base tracking-wide hover:bg-surface-highlight transition-all duration-300 flex items-center justify-center space-x-2"
                                 >
-                                    <Terminal size={18} className="text-text-secondary group-hover:text-text-primary transition-colors" />
+                                    <Terminal size={18} className="text-accent-primary group-hover:text-accent-primary transition-colors" />
                                     <span>Try Playground</span>
                                 </Link>
                             </div>

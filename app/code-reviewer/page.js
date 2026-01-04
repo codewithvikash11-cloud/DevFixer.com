@@ -55,7 +55,7 @@ export const SecureComponent = ({ data }) => {
                             <span>Automated Code Audit</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-                            AI Code <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-500">Reviewer</span>
+                            AI Code <span className="text-accent-primary">Reviewer</span>
                         </h1>
                         <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
                             Check your code for security vulnerabilities, performance bottlenecks, and dirty code practices before you push.
@@ -124,8 +124,8 @@ export const SecureComponent = ({ data }) => {
                                         <div className="space-y-3">
                                             {review.issues.map((issue, i) => (
                                                 <div key={i} className={`p-3 rounded-lg border text-xs font-medium ${issue.severity === 'high' ? 'bg-red-500/10 border-red-500/20 text-red-300' :
-                                                        issue.severity === 'medium' ? 'bg-orange-500/10 border-orange-500/20 text-orange-300' :
-                                                            'bg-blue-500/10 border-blue-500/20 text-blue-300'
+                                                    issue.severity === 'medium' ? 'bg-orange-500/10 border-orange-500/20 text-orange-300' :
+                                                        'bg-blue-500/10 border-blue-500/20 text-blue-300'
                                                     }`}>
                                                     <div className="flex justify-between mb-1">
                                                         <span className="font-bold">{issue.type}</span>

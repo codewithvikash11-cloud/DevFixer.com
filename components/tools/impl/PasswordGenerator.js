@@ -116,7 +116,7 @@ export default function PasswordGenerator() {
                 <div className="bg-surface border border-border rounded-2xl p-6">
                     <div className="flex justify-between items-center mb-6">
                         <label className="font-bold text-text-primary">Password Length</label>
-                        <span className="px-3 py-1 bg-black rounded-lg text-accent-primary font-mono font-bold text-lg border border-border">{length}</span>
+                        <span className="px-3 py-1 bg-surface-highlight rounded-lg text-accent-primary font-mono font-bold text-lg border border-border">{length}</span>
                     </div>
                     <input
                         type="range"
@@ -124,7 +124,7 @@ export default function PasswordGenerator() {
                         max="32"
                         value={length}
                         onChange={(e) => setLength(parseInt(e.target.value))}
-                        className="w-full h-2 bg-black rounded-lg appearance-none cursor-pointer accent-accent-primary"
+                        className="w-full h-2 bg-surface-highlight rounded-lg appearance-none cursor-pointer accent-accent-primary"
                     />
                     <div className="flex justify-between text-xs text-text-tertiary mt-2 font-mono">
                         <span>8</span>

@@ -48,8 +48,8 @@ export default function ToolsPage() {
                     <Sparkles size={12} />
                     <span>Developer Utilities</span>
                 </div>
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-text-primary tracking-tight">
-                    Tools for <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-primary to-purple-500">Builders</span>
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-accent-primary tracking-tight">
+                    Tools for Builders
                 </h1>
                 <p className="text-text-secondary max-w-2xl mx-auto text-sm md:text-base leading-relaxed px-4">
                     A collection of 70+ powerful tools to help you develop, debug, and ship faster. Open source and free forever.

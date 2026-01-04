@@ -1,101 +1,89 @@
 "use client";
-
 import React, { useState } from 'react';
 import { Copy, Check, Filter, ArrowRight } from 'lucide-react';
 
 export default function RemoveDuplicates() {
     const [input, setInput] = useState('');
     const [output, setOutput] = useState('');
-    const [stats, setStats] = useState({ original: 0, unique: 0, removed: 0 });
     const [copied, setCopied] = useState(false);
+    const [stats, setStats] = useState({ original: 0, unique: 0, removed: 0 });
 
-    const processText = () => {
-        if (!input.trim()) return;
+    const handleProcess = () => {
+        if (!input) return;
 
-        const lines = input.split('\n');
-        const uniqueLines = [...new Set(lines.map(line => line.trim()).filter(line => line !== ''))];
+        const lines = input.split(/\r?\n/);
+        const uniqueSet = new Set(lines); // Keeps insertion order? JS Sets iterate in insertion order
+        const uniqueLines = Array.from(uniqueSet);
 
+        setOutput(uniqueLines.join('\n'));
         setStats({
             original: lines.length,
             unique: uniqueLines.length,
             removed: lines.length - uniqueLines.length
         });
-
-        setOutput(uniqueLines.join('\n'));
     };
 
-    const handleCopy = () => {
+    const copyToClipboard = () => {
+        if (!output) return;
         navigator.clipboard.writeText(output);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
 
     return (
-        <div className="grid lg:grid-cols-2 gap-8">
-            {/* Input */}
-            <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-text-secondary uppercase tracking-wider">Original List</span>
-                    {stats.original > 0 && <span className="text-xs bg-surface border border-border px-2 py-1 rounded text-text-tertiary">{stats.original} lines</span>}
+        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6 h-[calc(100vh-250px)] min-h-[500px]">
+            <div className="flex flex-col">
+                <div className="flex items-center justify-between mb-3">
+                    <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">Original List</label>
+                    <button
+                        onClick={() => { setInput(''); setOutput(''); setStats({ original: 0, unique: 0, removed: 0 }); }}
+                        className="text-xs text-text-tertiary hover:text-accent-primary transition-colors"
+                    >
+                        Clear
+                    </button>
                 </div>
                 <textarea
+                    className="flex-1 bg-surface border border-border rounded-xl p-4 font-mono text-sm leading-relaxed outline-none focus:border-accent-primary focus:ring-1 focus:ring-accent-primary/20 resize-none transition-all placeholder:text-text-tertiary text-text-primary"
+                    placeholder="Paste list items here (one per line)..."
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Paste your list here (one item per line)..."
-                    className="w-full h-96 bg-surface border border-border rounded-xl p-6 font-mono text-sm text-text-primary outline-none focus:border-accent-primary/50 resize-none transition-all placeholder:text-text-tertiary"
-                ></textarea>
-                <button
-                    onClick={processText}
-                    disabled={!input.trim()}
-                    className="w-full py-3 bg-accent-primary hover:bg-accent-hover text-white font-bold rounded-lg transition-all shadow-lg shadow-accent-primary/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    <Filter size={18} />
-                    Remove Duplicates
-                    <ArrowRight size={18} />
-                </button>
+                />
             </div>
 
-            {/* Output */}
-            <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-text-secondary uppercase tracking-wider">Unique Items</span>
-                    {stats.unique > 0 && <span className="text-xs bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-1 rounded font-bold">{stats.removed} Removed</span>}
+            <div className="flex flex-col relative">
+                {/* Action Button Centered on Mobile, Absolute on desktop center? No, let's keep simple layout */}
+                <div className="flex items-center justify-between mb-3">
+                    <label className="text-sm font-bold text-text-secondary uppercase tracking-wider">Unique List</label>
+                    <button
+                        onClick={handleProcess}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold bg-accent-primary hover:bg-accent-hover text-white rounded-lg transition-colors shadow-lg shadow-accent-primary/20"
+                    >
+                        <Filter size={14} /> Remove Duplicates
+                    </button>
                 </div>
-                <div className="relative group flex-1">
+
+                <div className="flex-1 bg-surface border border-border rounded-xl p-4 relative overflow-hidden flex flex-col">
                     <textarea
-                        value={output}
                         readOnly
-                        placeholder="Cleaned list will appear here..."
-                        className="w-full h-96 bg-black/30 border border-border/50 rounded-xl p-6 font-mono text-sm text-text-primary outline-none resize-none transition-all placeholder:text-text-tertiary"
-                    ></textarea>
+                        className="flex-1 w-full bg-transparent font-mono text-sm outline-none resize-none text-text-primary placeholder:text-text-tertiary"
+                        value={output}
+                        placeholder="Result will appear here..."
+                    />
+
                     {output && (
-                        <div className="absolute bottom-4 right-4">
+                        <div className="pt-3 border-t border-border flex items-center justify-between">
+                            <div className="text-xs text-text-secondary">
+                                Removed <span className="font-bold text-accent-primary">{stats.removed}</span> duplicates
+                            </div>
                             <button
-                                onClick={handleCopy}
-                                className="flex items-center gap-2 px-4 py-2 bg-surface hover:bg-surface-highlight border border-border text-text-primary rounded-lg transition-colors shadow-lg"
+                                onClick={copyToClipboard}
+                                className="flex items-center gap-2 px-3 py-1.5 bg-surface-highlight hover:bg-surface-active text-text-secondary hover:text-white rounded-lg transition-colors border border-border"
                             >
-                                {copied ? <Check size={16} /> : <Copy size={16} />}
+                                {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
                                 <span className="font-bold text-xs">{copied ? 'Copied' : 'Copy'}</span>
                             </button>
                         </div>
                     )}
-                </div>
-                {/* Stats Bar */}
-                <div className="p-4 bg-surface border border-border rounded-xl flex items-center justify-around text-center">
-                    <div>
-                        <div className="text-2xl font-bold text-text-primary">{stats.original}</div>
-                        <div className="text-[10px] uppercase text-text-tertiary font-bold tracking-wider">Input</div>
-                    </div>
-                    <div className="h-8 w-px bg-border"></div>
-                    <div>
-                        <div className="text-2xl font-bold text-accent-primary">{stats.unique}</div>
-                        <div className="text-[10px] uppercase text-text-tertiary font-bold tracking-wider">Unique</div>
-                    </div>
-                    <div className="h-8 w-px bg-border"></div>
-                    <div>
-                        <div className="text-2xl font-bold text-red-400">{stats.removed}</div>
-                        <div className="text-[10px] uppercase text-text-tertiary font-bold tracking-wider">Duplicates</div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -82,7 +82,7 @@ export default function PasswordStrength() {
                 </div>
 
                 {/* Security Tips */}
-                <div className="bg-blue-500/5 border border-blue-500/10 rounded-xl p-6 mt-6">
+                <div className="bg-accent-primary/5 border border-accent-primary/10 rounded-xl p-6 mt-6">
                     <h3 className="flex items-center gap-2 text-blue-400 font-bold mb-3">
                         <ShieldCheck size={18} />
                         <span>Security Tips</span>

@@ -11,7 +11,7 @@ export default function LanguagesPage() {
     return (
         <LayoutWrapper>
             <div className="mb-12 md:mb-16 text-center">
-                <h1 className="text-3xl md:text-5xl font-black mb-4">Technologies</h1>
+                <h1 className="text-3xl md:text-5xl font-black mb-4 text-accent-primary">Technologies</h1>
                 <p className="text-text-secondary max-w-2xl mx-auto">
                     Browse our comprehensive collection of debugging guides and error solutions
                     for every major programming language and tool.

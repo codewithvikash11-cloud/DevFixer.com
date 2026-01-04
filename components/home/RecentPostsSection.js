@@ -29,10 +29,10 @@ const RecentPostsSection = () => {
             <div className="container mx-auto px-6 lg:px-12">
                 <div className="flex flex-col md:flex-row items-end justify-between mb-12 gap-6">
                     <div>
-                        <span className="text-xs font-black tracking-widest uppercase text-pink-500 mb-2 block">Fresh from the Lab</span>
-                        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white">Latest Verified Fixes</h2>
+                        <span className="text-xs font-black tracking-widest uppercase text-accent-primary mb-2 block">Fresh from the Lab</span>
+                        <h2 className="text-3xl md:text-4xl font-black text-accent-primary">Latest Verified Fixes</h2>
                     </div>
-                    <Link href="/errors" className="group flex items-center space-x-2 text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-indigo-500 transition-colors">
+                    <Link href="/errors" className="group flex items-center space-x-2 text-sm font-bold text-accent-primary hover:text-accent-hover transition-colors">
                         <span>View Archive</span>
                         <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
@@ -41,9 +41,9 @@ const RecentPostsSection = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {posts.map((post) => (
                         <Link key={post.slug} href={`/errors/${post.slug}`} className="group flex flex-col h-full">
-                            <div className="flex-1 p-8 bg-gray-50 dark:bg-[#0f0f0f] border border-gray-100 dark:border-white/5 rounded-3xl hover:border-pink-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-pink-500/5 group-hover:bg-white dark:group-hover:bg-[#121212]">
+                            <div className="flex-1 p-8 bg-gray-50 dark:bg-[#0f0f0f] border border-gray-100 dark:border-white/5 rounded-3xl hover:border-accent-primary/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent-primary/5 group-hover:bg-white dark:group-hover:bg-[#121212]">
                                 <div className="flex items-center justify-between mb-6">
-                                    <span className="px-3 py-1 bg-white dark:bg-white/10 border border-gray-200 dark:border-white/5 rounded-full text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:bg-pink-500 group-hover:text-white group-hover:border-pink-600 transition-all">
+                                    <span className="px-3 py-1 bg-white dark:bg-white/10 border border-gray-200 dark:border-white/5 rounded-full text-[10px] font-black uppercase tracking-widest text-gray-500 group-hover:bg-accent-primary group-hover:text-white group-hover:border-accent-primary transition-all">
                                         {post.language}
                                     </span>
                                     <div className="flex items-center text-yellow-500 space-x-1 text-xs font-bold">
@@ -51,7 +51,7 @@ const RecentPostsSection = () => {
                                         <span>4.9</span>
                                     </div>
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2 leading-tight group-hover:text-pink-500 transition-colors">
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2 leading-tight group-hover:text-accent-primary transition-colors">
                                     {post.title}
                                 </h3>
                                 <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-3 mb-6 leading-relaxed">

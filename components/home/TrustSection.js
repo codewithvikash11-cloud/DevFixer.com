@@ -9,7 +9,7 @@ export default function TrustSection() {
     return (
         <section className="py-10 border-y border-white/5 bg-white/[0.02]">
             <div className="container mx-auto px-6 text-center">
-                <p className="text-sm font-medium text-text-tertiary uppercase tracking-widest mb-6">
+                <p className="text-sm font-medium text-accent-primary uppercase tracking-widest mb-6">
                     Powering developers at
                 </p>
                 <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">

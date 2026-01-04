@@ -123,7 +123,7 @@ export default function SnippetsPage() {
             <div className="min-h-screen bg-background pb-20">
                 {/* Header */}
                 <div className="pt-20 pb-10 text-center px-4">
-                    <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4">Snippet Library</h1>
+                    <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-4 text-accent-primary">Snippet Library</h1>
                     <p className="text-text-secondary max-w-xl mx-auto text-lg">
                         Copy-paste ready solutions for your everyday coding tasks.
                     </p>
@@ -151,8 +151,8 @@ export default function SnippetsPage() {
                                     key={cat.name}
                                     onClick={() => setActiveCategory(cat.name)}
                                     className={`flex items-center space-x-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${activeCategory === cat.name
-                                            ? 'bg-accent-blue text-white shadow-lg shadow-accent-blue/20 transform scale-105'
-                                            : 'bg-panel border border-border text-text-secondary hover:bg-white/5'
+                                        ? 'bg-accent-blue text-white shadow-lg shadow-accent-blue/20 transform scale-105'
+                                        : 'bg-panel border border-border text-text-secondary hover:bg-white/5'
                                         }`}
                                 >
                                     <cat.icon size={14} />

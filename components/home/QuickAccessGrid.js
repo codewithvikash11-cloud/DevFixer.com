@@ -11,36 +11,36 @@ const cards = [
         description: 'Run code instantly in 40+ languages.',
         image: '/Compiler.png',
         href: '/compiler',
-        color: 'text-[#008000]',
-        bg: 'bg-[#008000]/10',
-        border: 'group-hover:border-[#008000]/50'
+        color: 'text-accent-primary',
+        bg: 'bg-accent-primary/10',
+        border: 'group-hover:border-accent-primary/50'
     },
     {
         title: 'Dev Tools',
         description: 'Formatters, converters, and generators.',
         image: '/Dev Tools.png',
         href: '/tools',
-        color: 'text-[#008000]',
-        bg: 'bg-[#008000]/10',
-        border: 'group-hover:border-[#008000]/50'
+        color: 'text-accent-primary',
+        bg: 'bg-accent-primary/10',
+        border: 'group-hover:border-accent-primary/50'
     },
     {
         title: 'API Tester',
         description: 'Debug REST endpoints directly.',
         image: '/API Tester.png',
         href: '/api-tester',
-        color: 'text-[#008000]',
-        bg: 'bg-[#008000]/10',
-        border: 'group-hover:border-[#008000]/50'
+        color: 'text-accent-primary',
+        bg: 'bg-accent-primary/10',
+        border: 'group-hover:border-accent-primary/50'
     },
     {
         title: 'Learn',
         description: 'Master new skills with interactive lessons.',
         image: '/Learn.png',
         href: '/learn',
-        color: 'text-[#008000]',
-        bg: 'bg-[#008000]/10',
-        border: 'group-hover:border-[#008000]/50'
+        color: 'text-accent-primary',
+        bg: 'bg-accent-primary/10',
+        border: 'group-hover:border-accent-primary/50'
     }
 ];
 
@@ -76,7 +76,7 @@ export default function QuickAccessGrid() {
                                 {card.description}
                             </p>
 
-                            <div className="flex items-center text-xs font-bold text-text-tertiary group-hover:text-text-primary transition-colors">
+                            <div className="flex items-center text-xs font-bold text-text-tertiary group-hover:text-accent-primary transition-colors">
                                 <span>Open</span>
                                 <ArrowRight size={12} className="ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                             </div>

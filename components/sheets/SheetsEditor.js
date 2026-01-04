@@ -166,7 +166,7 @@ export default function SheetsEditor() {
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="text-lg font-bold bg-transparent border-none focus:outline-none focus:ring-0 p-0 text-text-primary placeholder:text-text-tertiary w-full sm:w-auto"
+                            className="text-lg font-bold bg-transparent border-none focus:outline-none focus:ring-0 p-0 text-accent-primary placeholder:text-text-tertiary w-full sm:w-auto"
                             placeholder="Enter sheet name..."
                         />
                         <p className="text-xs text-text-secondary">

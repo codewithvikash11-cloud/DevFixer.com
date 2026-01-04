@@ -168,7 +168,7 @@ export default function ErrorsListingPage() {
                     <div className="container mx-auto px-4 py-4 md:py-6">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                             <div>
-                                <h1 className="text-2xl font-bold tracking-tight">Error Database</h1>
+                                <h1 className="text-2xl font-bold tracking-tight text-accent-primary">Error Database</h1>
                                 <p className="text-sm text-text-secondary">Search {posts.length > 0 ? posts.length : '500+'} verified solutions</p>
                             </div>
 
@@ -216,8 +216,8 @@ export default function ErrorsListingPage() {
                                         key={lang}
                                         onClick={() => setSelectedLanguage(lang)}
                                         className={`w-full text-left px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center justify-between ${selectedLanguage === lang
-                                                ? 'bg-accent-primary/10 text-accent-primary'
-                                                : 'text-text-secondary hover:bg-surface hover:text-text-primary'
+                                            ? 'bg-accent-primary/10 text-accent-primary'
+                                            : 'text-text-secondary hover:bg-surface hover:text-text-primary'
                                             }`}
                                     >
                                         {lang}
@@ -237,8 +237,8 @@ export default function ErrorsListingPage() {
                                         key={diff}
                                         onClick={() => setSelectedDifficulty(diff)}
                                         className={`w-full text-left px-3 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center justify-between ${selectedDifficulty === diff
-                                                ? 'bg-accent-primary/10 text-accent-primary'
-                                                : 'text-text-secondary hover:bg-surface hover:text-text-primary'
+                                            ? 'bg-accent-primary/10 text-accent-primary'
+                                            : 'text-text-secondary hover:bg-surface hover:text-text-primary'
                                             }`}
                                     >
                                         {diff}

@@ -79,28 +79,28 @@ export default function SocialShare({ title, url }) {
             <div className="grid grid-cols-4 gap-2">
                 <button
                     onClick={() => handleShare('twitter')}
-                    className="flex items-center justify-center p-3 rounded-xl bg-background border border-border hover:border-accent-blue/50 hover:bg-accent-blue/5 hover:text-accent-blue transition-all"
+                    className="flex items-center justify-center p-3 rounded-xl bg-background border border-border hover:border-accent-primary/50 hover:bg-accent-primary/5 hover:text-accent-primary transition-all"
                     title="Share on Twitter"
                 >
                     <Twitter size={18} />
                 </button>
                 <button
                     onClick={() => handleShare('linkedin')}
-                    className="flex items-center justify-center p-3 rounded-xl bg-background border border-border hover:border-blue-700/50 hover:bg-blue-700/5 hover:text-blue-700 transition-all"
+                    className="flex items-center justify-center p-3 rounded-xl bg-background border border-border hover:border-accent-primary/50 hover:bg-accent-primary/5 hover:text-accent-primary transition-all"
                     title="Share on LinkedIn"
                 >
                     <Linkedin size={18} />
                 </button>
                 <button
                     onClick={() => handleShare('facebook')}
-                    className="flex items-center justify-center p-3 rounded-xl bg-background border border-border hover:border-blue-600/50 hover:bg-blue-600/5 hover:text-blue-600 transition-all"
+                    className="flex items-center justify-center p-3 rounded-xl bg-background border border-border hover:border-accent-primary/50 hover:bg-accent-primary/5 hover:text-accent-primary transition-all"
                     title="Share on Facebook"
                 >
                     <Facebook size={18} />
                 </button>
                 <button
                     onClick={handleCopy}
-                    className="flex items-center justify-center p-3 rounded-xl bg-background border border-border hover:border-green-500/50 hover:bg-green-500/5 hover:text-green-500 transition-all relative"
+                    className="flex items-center justify-center p-3 rounded-xl bg-background border border-border hover:border-accent-primary/50 hover:bg-accent-primary/5 hover:text-accent-primary transition-all relative"
                     title="Copy Link"
                 >
                     {copied ? <Check size={18} /> : <LinkIcon size={18} />}
@@ -110,7 +110,7 @@ export default function SocialShare({ title, url }) {
             {typeof navigator !== 'undefined' && navigator.share && (
                 <button
                     onClick={handleNativeShare}
-                    className="w-full py-3 bg-accent-blue/10 text-accent-blue rounded-xl text-xs font-black uppercase tracking-widest hover:bg-accent-blue hover:text-white transition-all"
+                    className="w-full py-3 bg-accent-primary/10 text-accent-primary rounded-xl text-xs font-black uppercase tracking-widest hover:bg-accent-primary hover:text-white transition-all"
                 >
                     Share via...
                 </button>

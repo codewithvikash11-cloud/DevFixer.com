@@ -8,22 +8,22 @@ const steps = [
         icon: <Search size={24} />,
         title: "Search Error",
         description: "Paste your stack trace.",
-        accent: "text-[#008000]",
-        border: "group-hover:border-[#008000]/50"
+        accent: "text-accent-primary",
+        border: "group-hover:border-accent-primary/50"
     },
     {
         icon: <BookOpen size={24} />,
         title: "Get Solution",
         description: "Receive a verified patch.",
-        accent: "text-[#008000]",
-        border: "group-hover:border-[#008000]/50"
+        accent: "text-accent-primary",
+        border: "group-hover:border-accent-primary/50"
     },
     {
         icon: <CheckCircle size={24} />,
         title: "Deploy Fix",
         description: "Ship confidently.",
-        accent: "text-[#008000]",
-        border: "group-hover:border-[#008000]/50"
+        accent: "text-accent-primary",
+        border: "group-hover:border-accent-primary/50"
     }
 ];
 
@@ -35,8 +35,8 @@ const HowItWorksSection = () => {
             <div className="container mx-auto px-6 lg:px-12 relative z-10">
                 <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
                     <div>
-                        <h2 className="text-3xl font-bold tracking-tight text-text-primary mb-2">
-                            How it <span className="text-gradient">works</span>
+                        <h2 className="text-3xl font-bold tracking-tight text-accent-primary mb-2">
+                            How it works
                         </h2>
                         <p className="text-text-secondary">Three simple steps to zero-bug policy.</p>
                     </div>

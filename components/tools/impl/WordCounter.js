@@ -1,81 +1,61 @@
 "use client";
-
-import React, { useState, useEffect } from 'react';
-import { Copy, Check, RefreshCw } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Copy, Check, AlignLeft, Clock } from 'lucide-react';
 
 export default function WordCounter() {
     const [text, setText] = useState('');
-    const [stats, setStats] = useState({
-        words: 0,
-        chars: 0,
-        charsNoSpace: 0,
-        sentences: 0,
-        paragraphs: 0,
-        lines: 0
-    });
     const [copied, setCopied] = useState(false);
 
-    useEffect(() => {
-        const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-        const chars = text.length;
-        const charsNoSpace = text.replace(/\s/g, '').length;
-        const sentences = text.trim() === '' ? 0 : text.split(/[.!?]+/).filter(Boolean).length;
-        const paragraphs = text.trim() === '' ? 0 : text.split(/\n\n+/).filter(Boolean).length;
-        const lines = text.trim() === '' ? 0 : text.split(/\n/).length;
+    const stats = useMemo(() => {
+        if (!text) return { characters: 0, words: 0, sentences: 0, paragraphs: 0, readingTime: 0 };
 
-        setStats({ words, chars, charsNoSpace, sentences, paragraphs, lines });
+        const characters = text.length;
+        const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+        const sentences = text.trim() ? text.split(/[.!?]+/).filter(Boolean).length : 0;
+        const paragraphs = text.trim() ? text.split(/\n\s*\n/).filter(Boolean).length : 0;
+        const readingTime = Math.ceil(words / 200); // approx 200 wpm
+
+        return { characters, words, sentences, paragraphs, readingTime };
     }, [text]);
 
-    const handleCopy = () => {
+    const copyToClipboard = () => {
         navigator.clipboard.writeText(text);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
 
-    const handleClear = () => {
-        setText('');
-    };
-
     return (
-        <div className="flex flex-col gap-6">
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="max-w-4xl mx-auto space-y-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                     { label: 'Words', value: stats.words },
-                    { label: 'Characters', value: stats.chars },
-                    { label: 'No Spaces', value: stats.charsNoSpace },
+                    { label: 'Characters', value: stats.characters },
                     { label: 'Sentences', value: stats.sentences },
                     { label: 'Paragraphs', value: stats.paragraphs },
-                    { label: 'Lines', value: stats.lines },
-                ].map((stat, i) => (
-                    <div key={i} className="bg-surface border border-border rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-accent-primary">{stat.value}</div>
-                        <div className="text-xs text-text-secondary uppercase tracking-wider font-bold mt-1">{stat.label}</div>
+                ].map((stat) => (
+                    <div key={stat.label} className="bg-surface border border-border p-4 rounded-xl text-center">
+                        <div className="text-3xl font-bold text-accent-primary mb-1">{stat.value}</div>
+                        <div className="text-xs font-bold text-text-tertiary uppercase tracking-wider">{stat.label}</div>
                     </div>
                 ))}
             </div>
 
-            {/* Input Area */}
-            <div className="relative group">
+            <div className="bg-surface border border-border rounded-2xl p-1 relative flex flex-col min-h-[400px]">
                 <textarea
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    placeholder="Type or paste your text here..."
-                    className="w-full h-80 bg-surface border border-border rounded-xl p-6 font-mono text-sm text-text-primary outline-none focus:border-accent-primary/50 resize-none transition-all placeholder:text-text-tertiary"
-                ></textarea>
+                    placeholder="Start typing or paste text to analyze..."
+                    className="flex-1 w-full bg-transparent p-6 text-base md:text-lg outline-none resize-none text-text-primary placeholder:text-text-tertiary leading-relaxed"
+                />
 
-                {/* Actions */}
                 <div className="absolute bottom-4 right-4 flex gap-2">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-surface-highlight rounded-lg text-xs font-medium text-text-secondary mr-2">
+                        <Clock size={14} />
+                        <span>~{stats.readingTime} min read</span>
+                    </div>
                     <button
-                        onClick={handleClear}
-                        className="p-2 text-text-tertiary hover:text-red-400 bg-background/50 border border-border rounded-lg transition-colors"
-                        title="Clear Text"
-                    >
-                        <RefreshCw size={18} />
-                    </button>
-                    <button
-                        onClick={handleCopy}
-                        className="flex items-center gap-2 px-4 py-2 bg-accent-primary hover:bg-accent-hover text-white rounded-lg transition-colors shadow-lg shadow-accent-primary/20"
+                        onClick={copyToClipboard}
+                        className="flex items-center gap-2 px-4 py-2 bg-accent-primary hover:bg-accent-hover text-white rounded-lg transition-all shadow-lg shadow-accent-primary/20"
                     >
                         {copied ? <Check size={18} /> : <Copy size={18} />}
                         <span className="font-bold text-sm">{copied ? 'Copied' : 'Copy Text'}</span>
