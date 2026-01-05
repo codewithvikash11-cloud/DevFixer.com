@@ -41,6 +41,13 @@ export function AuthProvider({ children }) {
     };
 
     const login = async (email, password) => {
+        console.log("Attempting login for:", email);
+        console.log("Appwrite Ref:", account);
+        // Debugging Env Vars (don't log secrets in production really, but helpful here)
+        // Note: We can't easily access the internal config of 'account' instance publically always, 
+        // but we can check the process.env
+        console.log("Project ID:", process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
+
         try {
             // Create session
             await account.createEmailPasswordSession(email, password);
@@ -50,6 +57,9 @@ export function AuthProvider({ children }) {
             return { success: true };
         } catch (error) {
             console.error("Login Error:", error);
+            // Log specific Appwrite error details if available
+            if (error.code) console.error("Error Code:", error.code);
+            if (error.type) console.error("Error Type:", error.type);
             return { success: false, error: error.message };
         }
     };

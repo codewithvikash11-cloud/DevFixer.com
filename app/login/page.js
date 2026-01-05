@@ -19,7 +19,7 @@ export default function LoginPage() {
         setError('');
         setLoading(true);
 
-        const res = await login(formData.email, formData.password);
+        const res = await login(formData.email.trim(), formData.password);
         if (res.success) {
             router.push('/dashboard');
         } else {

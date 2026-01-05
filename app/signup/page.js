@@ -19,7 +19,7 @@ export default function SignupPage() {
         setError('');
         setLoading(true);
 
-        const res = await signup(formData.email, formData.password, formData.name);
+        const res = await signup(formData.email.trim(), formData.password, formData.name);
         if (res.success) {
             router.push('/dashboard');
         } else {
