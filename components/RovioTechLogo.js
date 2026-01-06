@@ -2,8 +2,8 @@
 
 import Logo from './Logo';
 
-// Re-export the main logo as CodeOrbitLogo for compatibility
+// Re-export the main logo as RovioTechLogo for compatibility
 // This ensures alignment across the app
-export default function CodeOrbitLogo(props) {
+export default function RovioTechLogo(props) {
     return <Logo {...props} />;
 }

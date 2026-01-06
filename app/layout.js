@@ -16,34 +16,34 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata = {
     metadataBase: new URL('https://codeorbit.dev'),
     title: {
-        default: 'CodeOrbit - The Ultimate Developer Playground',
-        template: '%s | CodeOrbit'
+        default: 'Rovio Tech - The Ultimate Developer Playground',
+        template: '%s | Rovio Tech'
     },
     description: 'Build, compile, and debug code instantly. The all-in-one developer platform for HTML, CSS, JavaScript, and more.',
-    keywords: ['online compiler', 'code playground', 'web development', 'codeorbit', 'developer tools'],
-    authors: [{ name: 'CodeOrbit Team' }],
-    creator: 'CodeOrbit',
+    keywords: ['online compiler', 'code playground', 'web development', 'rovio tech', 'developer tools'],
+    authors: [{ name: 'Rovio Tech Team' }],
+    creator: 'Rovio Tech',
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        url: 'https://codeorbit.dev',
-        siteName: 'CodeOrbit',
-        title: 'CodeOrbit - Build Faster',
+        url: 'https://roviotech.com',
+        siteName: 'Rovio Tech',
+        title: 'Rovio Tech - Build Faster',
         description: 'The ultimate developer playground.',
         images: [
             {
                 url: '/og-image.jpg',
                 width: 1200,
                 height: 630,
-                alt: 'CodeOrbit Platform',
+                alt: 'Rovio Tech Platform',
             },
         ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'CodeOrbit',
+        title: 'Rovio Tech',
         description: 'Build code faster than ever.',
-        creator: '@codeorbit',
+        creator: '@roviotech',
     },
     alternates: {
         canonical: '/',

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useNavbar } from '@/context/NavbarContext';
 import RequestPanel from '@/components/api-tester/RequestPanel';
 import ResponsePanel from '@/components/api-tester/ResponsePanel';
-import CodeOrbitFooter from '@/components/compiler/CodeOrbitFooter';
+import RovioTechFooter from '@/components/compiler/RovioTechFooter';
 
 export default function ApiTesterPage() {
 
@@ -104,7 +104,7 @@ export default function ApiTesterPage() {
                 </div>
             </main>
 
-            <CodeOrbitFooter />
+            <RovioTechFooter />
         </div>
     );
 }

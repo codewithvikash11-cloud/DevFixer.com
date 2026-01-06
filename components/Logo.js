@@ -35,7 +35,7 @@ const Logo = ({ className, iconOnly = false }) => {
             {!iconOnly && (
                 <div className="flex flex-col">
                     <span className="text-xl font-bold tracking-tight text-text-primary leading-none">
-                        Code<span className="text-[#008000]">Orbit</span>
+                        Rovio<span className="text-[#008000]">Tech</span>
                     </span>
                 </div>
             )}

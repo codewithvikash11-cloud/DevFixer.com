@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import CodeEditor from '@/components/compiler/CodeEditor';
 import OutputPanel from '@/components/compiler/OutputPanel';
-import CodeOrbitFooter from '@/components/compiler/CodeOrbitFooter';
+import RovioTechFooter from '@/components/compiler/RovioTechFooter';
 import { useNavbar } from '@/context/NavbarContext';
 import { LANGUAGE_TEMPLATES } from '@/lib/templates';
 import { executeCode } from '@/lib/piston';
@@ -16,11 +16,11 @@ const FILES = {
 };
 
 const BACKEND_LANGUAGES = {
-    python: { name: 'Python', icon: FileCode, template: 'print("Hello CodeOrbit!")' },
-    javascript: { name: 'Node.js', icon: FileCode, template: 'console.log("Hello CodeOrbit!");' },
-    cpp: { name: 'C++', icon: FileType, template: '#include <iostream>\n\nint main() {\n    std::cout << "Hello CodeOrbit!" << std::endl;\n    return 0;\n}' },
-    java: { name: 'Java', icon: FileType, template: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello CodeOrbit!");\n    }\n}' },
-    go: { name: 'Go', icon: FileCode, template: 'package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Hello CodeOrbit!")\n}' },
+    python: { name: 'Python', icon: FileCode, template: 'print("Hello Rovio Tech!")' },
+    javascript: { name: 'Node.js', icon: FileCode, template: 'console.log("Hello Rovio Tech!");' },
+    cpp: { name: 'C++', icon: FileType, template: '#include <iostream>\n\nint main() {\n    std::cout << "Hello Rovio Tech!" << std::endl;\n    return 0;\n}' },
+    java: { name: 'Java', icon: FileType, template: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello Rovio Tech!");\n    }\n}' },
+    go: { name: 'Go', icon: FileCode, template: 'package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Hello Rovio Tech!")\n}' },
     sqlite3: { name: 'SQL', icon: FileType, template: 'CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT);\nINSERT INTO users (name) VALUES ("Alice"), ("Bob");\nSELECT * FROM users;' },
 };
 
@@ -292,7 +292,7 @@ export default function CompilerPage() {
             </div>
 
             {/* 3. Footer */}
-            <CodeOrbitFooter />
+            <RovioTechFooter />
         </div>
     );
 }

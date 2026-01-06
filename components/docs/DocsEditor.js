@@ -192,7 +192,7 @@ export default function DocsEditor() {
             TextAlign.configure({ types: ['heading', 'paragraph'] }),
         ],
         content: `
-            <h2>Welcome to CodeOrbit Docs</h2>
+            <h2>Welcome to Rovio Tech Docs</h2>
             <p>Start typing your masterpiece here...</p>
             <blockquote>Code is poetry.</blockquote>
         `,

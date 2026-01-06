@@ -66,10 +66,10 @@ export default function LearnPage() {
     // 1. Load Persistence on Mount
     useEffect(() => {
         try {
-            const savedProgress = localStorage.getItem('codeorbit_learn_progress');
+            const savedProgress = localStorage.getItem('roviotech_learn_progress');
             if (savedProgress) setCompletedChapters(JSON.parse(savedProgress));
 
-            const savedBookmarks = localStorage.getItem('codeorbit_learn_bookmarks');
+            const savedBookmarks = localStorage.getItem('roviotech_learn_bookmarks');
             if (savedBookmarks) setBookmarkedChapters(JSON.parse(savedBookmarks));
         } catch (e) {
             console.error("Failed to load persistence", e);
@@ -182,7 +182,7 @@ export default function LearnPage() {
             newCompleted = [...completedChapters, chapterId];
         }
         setCompletedChapters(newCompleted);
-        localStorage.setItem('codeorbit_learn_progress', JSON.stringify(newCompleted));
+        localStorage.setItem('roviotech_learn_progress', JSON.stringify(newCompleted));
     };
 
     const toggleBookmark = (e) => {
@@ -195,7 +195,7 @@ export default function LearnPage() {
             newBookmarks = [...bookmarkedChapters, id];
         }
         setBookmarkedChapters(newBookmarks);
-        localStorage.setItem('codeorbit_learn_bookmarks', JSON.stringify(newBookmarks));
+        localStorage.setItem('roviotech_learn_bookmarks', JSON.stringify(newBookmarks));
     };
 
     const navigateChapter = (direction) => {
