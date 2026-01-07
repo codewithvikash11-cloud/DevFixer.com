@@ -136,7 +136,7 @@ export default function AdminDashboard() {
                     <div className="grid grid-cols-1 gap-4">
                         <Link href="/admin/posts" className="p-4 bg-panel border border-border rounded-2xl hover:border-accent-primary/50 transition-all group shadow-sm hover:shadow-md">
                             <div className="flex items-center justify-between mb-2">
-                                <div className="p-2 bg-blue-500/10 text-blue-500 rounded-lg group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                                <div className="p-2 bg-accent-primary/10 text-accent-primary rounded-lg group-hover:bg-accent-primary group-hover:text-white transition-colors">
                                     <FileText size={20} />
                                 </div>
                                 <ArrowUpRight size={16} className="text-text-tertiary group-hover:text-accent-primary" />
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
 
                         <Link href="/admin/pages" className="p-4 bg-panel border border-border rounded-2xl hover:border-accent-primary/50 transition-all group shadow-sm hover:shadow-md">
                             <div className="flex items-center justify-between mb-2">
-                                <div className="p-2 bg-purple-500/10 text-purple-500 rounded-lg group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                                <div className="p-2 bg-accent-primary/10 text-accent-primary rounded-lg group-hover:bg-accent-primary group-hover:text-white transition-colors">
                                     <Briefcase size={20} />
                                 </div>
                                 <ArrowUpRight size={16} className="text-text-tertiary group-hover:text-accent-primary" />
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
 
                         <Link href="/admin/users" className="p-4 bg-panel border border-border rounded-2xl hover:border-accent-primary/50 transition-all group shadow-sm hover:shadow-md">
                             <div className="flex items-center justify-between mb-2">
-                                <div className="p-2 bg-orange-500/10 text-orange-500 rounded-lg group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                <div className="p-2 bg-accent-primary/10 text-accent-primary rounded-lg group-hover:bg-accent-primary group-hover:text-white transition-colors">
                                     <Users size={20} />
                                 </div>
                                 <ArrowUpRight size={16} className="text-text-tertiary group-hover:text-accent-primary" />

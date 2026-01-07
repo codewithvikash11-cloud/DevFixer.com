@@ -108,100 +108,37 @@ export default function CompilerPage() {
     };
 
     // NAVBAR CONTENT
-    const CompilerTabs = (
-        <div className="flex items-center gap-4">
-            {/* Mode Switcher */}
-            <div className="flex bg-[#1e293b] p-1 rounded-lg">
-                <button
-                    onClick={() => setCompilerMode('web')}
-                    className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${compilerMode === 'web' ? 'bg-accent-primary text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
-                >
-                    Web
-                </button>
-                <button
-                    onClick={() => setCompilerMode('backend')}
-                    className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${compilerMode === 'backend' ? 'bg-accent-primary text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
-                >
-                    Backend
-                </button>
-            </div>
-
-            {compilerMode === 'web' ? (
-                // WEB TABS
-                <div className="flex items-center gap-1">
-                    {Object.keys(FILES).map((tab) => {
-                        const isActive = activeTab === tab;
-                        return (
-                            <button
-                                key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`
-                                    relative px-3 py-1.5 text-sm font-medium transition-colors rounded-md
-                                    ${isActive ? "text-white" : "text-gray-400 hover:text-white"}
-                                `}
-                            >
-                                {tab}
-                                {isActive && (
-                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-1/2 bg-accent-primary rounded-full shadow-[0_0_8px_var(--accent-primary)]"></div>
-                                )}
-                            </button>
-                        );
-                    })}
-                </div>
-            ) : (
-                // BACKEND LANGUAGE SELECTOR
-                <div className="relative group">
-                    <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white bg-[#1e293b] border border-[#334155] rounded-lg hover:border-accent-primary/50 transition-colors">
-                        {BACKEND_LANGUAGES[backendLanguage].name}
-                        <ChevronDown size={14} className="text-gray-400" />
-                    </button>
-                    {/* Dropdown would go here - simplified for now with native select */}
-                    <select
-                        value={backendLanguage}
-                        onChange={(e) => setBackendLanguage(e.target.value)}
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    >
-                        {Object.entries(BACKEND_LANGUAGES).map(([key, lang]) => (
-                            <option key={key} value={key}>{lang.name}</option>
-                        ))}
-                    </select>
-                </div>
-            )}
+    // TOOLBAR COMPONENTS
+    const ModeSwitcher = (
+        <div className="flex bg-[#1e293b] p-0.5 rounded-lg border border-[#334155] mr-4">
+            <button
+                onClick={() => setCompilerMode('web')}
+                className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${compilerMode === 'web' ? 'bg-accent-primary text-white shadow-sm' : 'text-gray-400 hover:text-white'}`}
+            >
+                Web
+            </button>
+            <button
+                onClick={() => setCompilerMode('backend')}
+                className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${compilerMode === 'backend' ? 'bg-accent-primary text-white shadow-sm' : 'text-gray-400 hover:text-white'}`}
+            >
+                Backend
+            </button>
         </div>
     );
 
-    const CompilerActions = (
-        <div className="flex items-center gap-3">
-            {/* Theme Selector */}
-            <div className="hidden md:flex items-center bg-[#1e293b] rounded-lg border border-[#334155] px-2">
-                <LayoutTemplate size={14} className="text-gray-400 mr-2" />
-                <select
-                    value={activeTheme}
-                    onChange={(e) => setActiveTheme(e.target.value)}
-                    className="bg-transparent text-xs text-white font-medium py-1.5 outline-none cursor-pointer"
-                >
-                    <option value="vs-dark">VS Dark</option>
-                    <option value="dracula">Dracula</option>
-                    <option value="monokai">Monokai</option>
-                    <option value="github-dark">GitHub Dark</option>
-                </select>
-            </div>
-
-            {compilerMode === 'backend' && (
-                <button
-                    onClick={runBackendCode}
-                    disabled={isRunning}
-                    className="flex items-center gap-2 px-4 py-1.5 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(0,128,0,0.4)]"
-                >
-                    {isRunning ? <Square size={14} className="animate-pulse" /> : <Play size={14} />}
-                    <span>{isRunning ? 'Running...' : 'Run'}</span>
-                </button>
-            )}
-
-            <button onClick={handleShare} className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[#1e293b] hover:bg-[#2e3e52] text-white text-xs font-bold rounded-lg border border-[#334155] transition-all">
-                <Share2 size={14} />
-                <span>Share</span>
-            </button>
+    const ThemeSelector = (
+        <div className="flex items-center gap-2">
+            <LayoutTemplate size={14} className="text-gray-400" />
+            <select
+                value={activeTheme}
+                onChange={(e) => setActiveTheme(e.target.value)}
+                className="bg-transparent text-xs text-gray-400 font-medium py-1 outline-none cursor-pointer hover:text-white transition-colors"
+            >
+                <option value="vs-dark">VS Dark</option>
+                <option value="dracula">Dracula</option>
+                <option value="monokai">Monokai</option>
+                <option value="github-dark">GitHub Dark</option>
+            </select>
         </div>
     );
 
@@ -210,19 +147,17 @@ export default function CompilerPage() {
 
     // Sync Navbar Content
     useEffect(() => {
-        setCenterContent(CompilerTabs);
-        setCustomActions(CompilerActions);
-        setHideSearch(true);
-        setHideLinks(true);
+        setCenterContent(null);
+        setCustomActions(null);
+        setHideSearch(false);
+        setHideLinks(false);
 
         return () => {
-            setCenterContent(null);
-            setCustomActions(null);
             setHideSearch(false);
             setHideLinks(false);
         };
 
-    }, [compilerMode, activeTab, backendLanguage, activeTheme, isRunning]);
+    }, []);
 
     return (
         <div className="flex flex-col min-h-[calc(100vh-4rem)] md:h-[calc(100vh-4rem)] bg-[#000000] text-white font-sans overflow-y-auto md:overflow-hidden">
@@ -232,6 +167,55 @@ export default function CompilerPage() {
 
                 {/* LEFT: Code Editor */}
                 <div className="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-[#1e293b] min-h-[500px] md:min-h-0">
+
+                    {/* LEFT PANEL HEADER */}
+                    <div className="h-12 bg-[#0f172a] border-b border-[#334155] flex items-center justify-between px-4 overflow-x-auto no-scrollbar">
+                        <div className="flex items-center">
+                            {ModeSwitcher}
+
+                            {/* Tabs / Lang Selector */}
+                            {compilerMode === 'web' ? (
+                                <div className="flex items-center gap-1">
+                                    {Object.keys(FILES).map((tab) => {
+                                        const isActive = activeTab === tab;
+                                        return (
+                                            <button
+                                                key={tab}
+                                                onClick={() => setActiveTab(tab)}
+                                                className={`
+                                                    relative px-3 py-1.5 text-xs font-bold transition-colors rounded-t-lg
+                                                    ${isActive ? "text-accent-primary bg-[#1e293b] border-t border-x border-[#334155]" : "text-gray-400 hover:text-white hover:bg-[#1e293b]/50"}
+                                                `}
+                                                style={{ marginBottom: isActive ? '-1px' : '0' }}
+                                            >
+                                                {tab}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            ) : (
+                                <div className="relative group flex items-center gap-2">
+                                    <FileCode size={14} className="text-accent-primary" />
+                                    <select
+                                        value={backendLanguage}
+                                        onChange={(e) => setBackendLanguage(e.target.value)}
+                                        className="bg-transparent text-xs font-bold text-white outline-none cursor-pointer appearance-none pr-4"
+                                    >
+                                        {Object.entries(BACKEND_LANGUAGES).map(([key, lang]) => (
+                                            <option key={key} value={key}>{lang.name}</option>
+                                        ))}
+                                    </select>
+                                    <ChevronDown size={10} className="text-gray-400 pointer-events-none -ml-4" />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Right side of Left Header */}
+                        <div className="hidden sm:flex items-center gap-4 pl-4 border-l border-[#334155] ml-4">
+                            {ThemeSelector}
+                        </div>
+                    </div>
+
                     {/* Editor Area */}
                     <div className="flex-1 relative bg-[#000000]">
                         <CodeEditor
@@ -248,11 +232,16 @@ export default function CompilerPage() {
                     {compilerMode === 'web' ? (
                         <div className="flex-1 flex flex-col bg-white">
                             {/* Preview Header */}
-                            <div className="h-11 bg-white border-b flex items-center justify-between px-4">
-                                <span className="text-xs font-bold text-gray-400 tracking-wider uppercase">Live Preview</span>
+                            <div className="h-12 bg-white border-b flex items-center justify-between px-4">
+                                <span className="text-xs font-bold text-gray-500 tracking-wider uppercase flex items-center gap-2">
+                                    <LayoutTemplate size={14} />
+                                    Live Preview
+                                </span>
                                 <div className="flex gap-2">
-                                    <Share2 size={16} className="text-gray-400 cursor-pointer hover:text-black" onClick={handleShare} />
-                                    <MoreHorizontal size={16} className="text-gray-400 cursor-pointer" />
+                                    <button onClick={handleShare} className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-lg transition-all">
+                                        <Share2 size={12} />
+                                        Share
+                                    </button>
                                 </div>
                             </div>
                             <div className="flex-1 relative">
@@ -267,12 +256,21 @@ export default function CompilerPage() {
                     ) : (
                         // BACKEND CONSOLE
                         <div className="flex-1 flex flex-col bg-[#0f172a]">
-                            <div className="h-11 bg-[#1e293b] border-b border-[#334155] flex items-center justify-between px-4">
+                            <div className="h-12 bg-[#1e293b] border-b border-[#334155] flex items-center justify-between px-4">
                                 <span className="text-xs font-bold text-gray-400 tracking-wider uppercase flex items-center gap-2">
                                     <Terminal size={14} />
                                     Console Output
                                 </span>
-                                <div className="text-[10px] text-gray-500">Piston Exec Environment</div>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        onClick={runBackendCode}
+                                        disabled={isRunning}
+                                        className="flex items-center gap-2 px-4 py-1.5 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(0,128,0,0.4)]"
+                                    >
+                                        {isRunning ? <Square size={12} className="animate-pulse" /> : <Play size={12} />}
+                                        <span>{isRunning ? 'Running...' : 'Run'}</span>
+                                    </button>
+                                </div>
                             </div>
                             <div className="flex-1 p-4 font-mono text-sm overflow-auto">
                                 {output.length === 0 ? (

@@ -10,8 +10,8 @@ export default {
         background: "var(--background)",
         panel: "var(--panel)",
         surface: {
-            DEFAULT: "var(--surface)",
-            highlight: "var(--surface-highlight)",
+          DEFAULT: "var(--surface)",
+          highlight: "var(--surface-highlight)",
         },
         text: {
           primary: "var(--text-primary)",
@@ -25,11 +25,6 @@ export default {
           warning: "var(--accent-warning)",
           error: "var(--accent-error)",
           info: "var(--accent-info)",
-          // Legacy mappings for safety
-          blue: "var(--accent-info)",
-          green: "var(--accent-primary)",
-          purple: "var(--accent-primary)", // Consolidate to primary
-          yellow: "var(--accent-warning)",
         },
         border: "var(--border)",
       },

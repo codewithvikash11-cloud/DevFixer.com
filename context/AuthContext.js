@@ -42,22 +42,27 @@ export function AuthProvider({ children }) {
 
     const login = async (email, password) => {
         console.log("Attempting login for:", email);
-        console.log("Appwrite Ref:", account);
-        // Debugging Env Vars (don't log secrets in production really, but helpful here)
-        // Note: We can't easily access the internal config of 'account' instance publically always, 
-        // but we can check the process.env
-        console.log("Project ID:", process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
 
         try {
-            // Create session
+            // 1. Check if a session already exists
+            try {
+                await account.get();
+                // If get() succeeds, a session exists. We must delete it to allow new login.
+                console.warn("Active session found. Logging out before new login...");
+                await account.deleteSession('current');
+            } catch (ignored) {
+                // checks failed = no session = good to proceed
+            }
+
+            // 2. Create new session
             await account.createEmailPasswordSession(email, password);
-            // Verify & Get User
+
+            // 3. Verify & Get User
             const u = await account.get();
             setUser(u);
             return { success: true };
         } catch (error) {
             console.error("Login Error:", error);
-            // Log specific Appwrite error details if available
             if (error.code) console.error("Error Code:", error.code);
             if (error.type) console.error("Error Type:", error.type);
             return { success: false, error: error.message };

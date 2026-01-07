@@ -74,8 +74,8 @@ const MenuBar = ({ editor, onSave, isChecking }) => {
                 />
             </div>
 
-            {/* Alignment Group */}
-            <div className="flex items-center gap-1 px-2 border-r border-border/50 hidden sm:flex">
+            {/* Alignment Group - Keep hidden on smallest screens to save space, but visible on small tablets */}
+            <div className="flex items-center gap-1 px-2 border-r border-border/50 hidden xs:flex">
                 <MenuButton
                     onClick={() => editor.chain().focus().setTextAlign('left').run()}
                     isActive={editor.isActive({ textAlign: 'left' })}
@@ -119,7 +119,7 @@ const MenuBar = ({ editor, onSave, isChecking }) => {
             </div>
 
             {/* Media Group */}
-            <div className="flex items-center gap-1 px-2 border-r border-border/50 hidden md:flex">
+            <div className="flex items-center gap-1 px-2 border-r border-border/50">
                 <MenuButton
                     onClick={addImage}
                     icon={ImageIcon}
@@ -134,7 +134,7 @@ const MenuBar = ({ editor, onSave, isChecking }) => {
             </div>
 
             {/* History Group */}
-            <div className="flex items-center gap-1 px-2 border-r border-border/50 hidden lg:flex">
+            <div className="flex items-center gap-1 px-2 border-r border-border/50">
                 <MenuButton
                     onClick={() => editor.chain().focus().undo().run()}
                     disabled={!editor.can().undo()}
@@ -198,7 +198,7 @@ export default function DocsEditor() {
         `,
         editorProps: {
             attributes: {
-                class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto focus:outline-none min-h-[500px] px-8 py-8 bg-white dark:bg-[#0d1117] rounded-xl shadow-sm border border-border/50 text-slate-900 dark:text-gray-200',
+                class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto focus:outline-none min-h-[500px] px-8 py-8 bg-surface dark:bg-surface rounded-xl shadow-sm border border-border/50 text-text-primary',
             },
             handlePaste: (view, event, slice) => {
                 const text = slice.content.textBetween(0, slice.content.size);

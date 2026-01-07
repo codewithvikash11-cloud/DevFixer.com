@@ -208,13 +208,13 @@ export default function SheetsEditor() {
             </div>
 
             {/* Grid Canvas */}
-            <div className="flex-1 overflow-auto relative bg-[#f9fafb] dark:bg-[#0b0f14]">
+            <div className="flex-1 overflow-auto relative bg-panel">
                 <table className="border-collapse w-full">
                     <thead>
                         <tr>
                             <th className="w-10 bg-[#f3f4f6] dark:bg-[#161b22] border-b border-r border-[#e5e7eb] dark:border-[#30363d] sticky top-0 left-0 z-30"></th>
                             {data[0].map((_, c) => (
-                                <th key={c} className="bg-[#f3f4f6] dark:bg-[#161b22] border-b border-r border-[#e5e7eb] dark:border-[#30363d] min-w-[100px] h-8 text-xs font-semibold text-text-secondary sticky top-0 z-20 select-none">
+                                <th key={c} className="bg-surface-highlight border-b border-r border-border min-w-[100px] h-8 text-xs font-semibold text-text-secondary sticky top-0 z-20 select-none">
                                     {getColLabel(c)}
                                 </th>
                             ))}
@@ -223,23 +223,23 @@ export default function SheetsEditor() {
                     <tbody>
                         {data.map((row, r) => (
                             <tr key={r}>
-                                <td className="bg-[#f3f4f6] dark:bg-[#161b22] border-b border-r border-[#e5e7eb] dark:border-[#30363d] w-10 text-center text-xs text-text-secondary select-none sticky left-0 z-20 font-mono font-medium">
+                                <td className="bg-surface-highlight border-b border-r border-border w-10 text-center text-xs text-text-secondary select-none sticky left-0 z-20 font-mono font-medium">
                                     {r + 1}
                                 </td>
                                 {row.map((cell, c) => (
                                     <td
                                         key={`${r}-${c}`}
                                         className={cn(
-                                            "border-b border-r border-[#e5e7eb] dark:border-[#30363d] min-w-[100px] p-0 relative transition-colors duration-75",
+                                            "border-b border-r border-border min-w-[100px] p-0 relative transition-colors duration-75",
                                             selectedCell?.r === r && selectedCell?.c === c
                                                 ? "ring-2 ring-accent-primary z-10 bg-accent-primary/5"
-                                                : "bg-white dark:bg-[#0d1117] hover:bg-slate-50 dark:hover:bg-[#1c2128]"
+                                                : "bg-surface hover:bg-surface-highlight"
                                         )}
                                         onClick={() => handleSelect(r, c)}
                                     >
                                         <input
                                             className={cn(
-                                                "w-full h-full px-2 py-1 bg-transparent border-none focus:outline-none text-sm text-slate-900 dark:text-gray-200 cursor-text font-mono",
+                                                "w-full h-full px-2 py-1 bg-transparent border-none focus:outline-none text-sm text-text-primary cursor-text font-mono",
                                                 cell.style.bold && "font-bold",
                                                 cell.style.textAlign && `text-${cell.style.textAlign}`
                                             )}

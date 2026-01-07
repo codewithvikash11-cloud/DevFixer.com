@@ -74,7 +74,7 @@ const RewritePanel = () => {
     };
 
     return (
-        <div className="flex flex-col h-[calc(100vh-200px)] max-h-[800px] gap-6">
+        <div className="flex flex-col min-h-[800px] lg:min-h-0 lg:h-[calc(100vh-200px)] lg:max-h-[800px] gap-6">
             {/* Controls */}
             <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-surface border border-border/50 rounded-2xl">
                 <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">

@@ -3,69 +3,69 @@
 :root {
     /* PREMIUM LIGHT THEME */
     --background: #FFFFFF;
-    --panel: #F7F7F7;
+    --panel: #F9FAFB;
     --surface: #FFFFFF;
-    --surface-highlight: #F4F4F5;
+    --surface-highlight: #F3F4F6;
 
-    --text-primary: #111111;
-    --text-secondary: #4B5563;
-    /* Gray 600 */
-    --text-tertiary: #9CA3AF;
-    /* Gray 400 */
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
 
-    /* BRAND ACCENTS */
+    /* BRAND ACCENTS - STRICT #008000 */
     --accent-primary: #008000;
-    /* Core Green */
-    --accent-glow: rgba(0, 128, 0, 0.12);
-    --accent-hover: #17b817;
+    --accent-glow: rgba(0, 128, 0, 0.15);
+    --accent-hover: #006600;
+    /* Darker green for hover */
 
     --accent-success: #008000;
     --accent-warning: #F59E0B;
     --accent-error: #EF4444;
-    --accent-info: #3B82F6;
+    --accent-info: #008000;
+    /* Unified to Brand Green where possible */
 
-    --border: rgba(0, 0, 0, 0.08);
-    --border-hover: rgba(0, 0, 0, 0.12);
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
 
-    --glass-surface: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-surface: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.05);
 
     --font-sans: var(--font-inter);
     --font-mono: var(--font-jetbrains-mono);
 }
 
 [data-theme='dark'] {
-    /* ELITE DARK THEME - TRUE BLACK */
+    /* TRUE BLACK DARK THEME */
     --background: #000000;
-    /* Pure Black */
-    --panel: #0A0A0A;
-    /* Slightly lighter for sidebar/panels */
-    --surface: #050505;
-    /* Very dark surface */
-    --surface-highlight: #111111;
+    /* True Black */
+    --panel: #09090b;
+    /* Zinc 950 */
+    --surface: #000000;
+    --surface-highlight: #18181b;
+    /* Zinc 900 */
 
     --text-primary: #FFFFFF;
     --text-secondary: #A1A1AA;
-    /* Zinc 400 */
     --text-tertiary: #52525B;
-    /* Zinc 600 */
 
-    /* LUMINOUS ACCENTS */
+    /* BRAND ACCENTS - LUMINOUS GREEN */
     --accent-primary: #008000;
-    /* Core Green */
-    --accent-glow: rgba(0, 128, 0, 0.25);
-    --accent-hover: #17b817;
+    --accent-glow: rgba(0, 128, 0, 0.35);
+    --accent-hover: #00A600;
+    /* Lighter green for dark mode hover */
 
     --accent-success: #008000;
     --accent-warning: #F59E0B;
     --accent-error: #EF4444;
-    --accent-info: #3B82F6;
+    --accent-info: #008000;
+    /* Unified */
 
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.15);
+    --border: #27272A;
+    /* Zinc 800 */
+    --border-hover: #3F3F46;
+    /* Zinc 700 */
 
-    --glass-surface: rgba(10, 10, 10, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-surface: rgba(0, 0, 0, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 @layer base {
@@ -78,7 +78,6 @@
         scroll-behavior: smooth;
         -webkit-tap-highlight-color: transparent;
         font-size: 15px;
-        /* Slightly easier readability */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
@@ -97,8 +96,8 @@
     h4,
     h5,
     h6 {
-        font-weight: 600;
-        letter-spacing: -0.025em;
+        font-weight: 700;
+        letter-spacing: -0.03em;
         color: var(--text-primary);
     }
 
@@ -111,33 +110,29 @@
 @layer utilities {
     .glass {
         background: var(--glass-surface);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 1px solid var(--glass-border);
-    }
-
-    .glass-strong {
-        background: var(--panel);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border-bottom: 1px solid var(--border);
     }
 
     .spotlight-card {
         background: var(--surface);
         border: 1px solid var(--border);
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all 0.3s ease;
     }
 
     .spotlight-card:hover {
-        background: var(--surface-highlight);
         border-color: var(--accent-primary);
-        box-shadow: 0 0 20px var(--accent-glow);
+        box-shadow: 0 0 30px var(--accent-glow);
         transform: translateY(-2px);
     }
 
     .glow-text {
-        text-shadow: 0 0 25px var(--accent-glow);
+        text-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    .text-balance {
+        text-wrap: balance;
     }
 
     .scrollbar-hide::-webkit-scrollbar {

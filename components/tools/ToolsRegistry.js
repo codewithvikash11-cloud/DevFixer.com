@@ -111,7 +111,7 @@ export const TOOLS_REGISTRY = [
     { id: 'iban-validator', title: 'IBAN Validator', description: 'Validate International Bank Account Numbers.', icon: CreditCard, category: TOOLS_CATEGORIES.DEV, color: 'text-accent-primary', bg: 'bg-accent-primary/10' },
 
     // --- MATH & TIME ---
-    { id: 'date-converter', title: 'Date Converter', description: 'Timestamp and Date conversions.', icon: Calendar, category: TOOLS_CATEGORIES.MATH, color: 'text-orange-400', bg: 'bg-orange-400/10' },
+    { id: 'date-converter', title: 'Date Converter', description: 'Timestamp and Date conversions.', icon: Calendar, category: TOOLS_CATEGORIES.MATH, color: 'text-accent-primary', bg: 'bg-accent-primary/10' },
     { id: 'math-evaluator', title: 'Math Evaluator', description: 'Evaluate complex mathematical expressions.', icon: Calculator, category: TOOLS_CATEGORIES.MATH, color: 'text-accent-primary', bg: 'bg-accent-primary/10' },
     { id: 'percentage-calculator', title: 'Percentage Calc', description: 'Calculate percentages easily.', icon: Percent, category: TOOLS_CATEGORIES.MATH, color: 'text-accent-primary', bg: 'bg-accent-primary/10' },
     { id: 'eta-calculator', title: 'ETA Calculator', description: 'Estimate time of arrival.', icon: Clock, category: TOOLS_CATEGORIES.MATH, color: 'text-accent-primary', bg: 'bg-accent-primary/10' },

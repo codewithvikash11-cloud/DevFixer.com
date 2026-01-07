@@ -40,7 +40,7 @@ export default function Home() {
                     if (data.hero) {
                         setHeroContent(prev => ({
                             ...prev,
-                            title: <span dangerouslySetInnerHTML={{ __html: data.hero.title.replace('Developer Ecosystem', '<span class="text-accent-primary">Developer Ecosystem</span>') }} />,
+                            title: <span dangerouslySetInnerHTML={{ __html: data.hero.title.replace('Developer Ecosystem', '<span class=\"text-accent-primary\">Developer Ecosystem</span>') }} />,
                             // Note: Real parsing would be safer/more complex, here we do simple replacement or direct string usage
                             // Ideally, we just set the string and let the component handle styling, but for now we simplisticly map.
                             description: data.hero.description || prev.description,
