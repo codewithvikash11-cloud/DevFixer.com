@@ -26,6 +26,7 @@ const RewritePanel = () => {
     const [rewrittenText, setRewrittenText] = useState("");
     const [selectedTone, setSelectedTone] = useState("professional");
     const [isRewriting, setIsRewriting] = useState(false);
+    const resultRef = React.useRef(null);
 
     const handleRewrite = () => {
         if (!originalText) return;
@@ -63,6 +64,13 @@ const RewritePanel = () => {
         }, 1500);
     };
 
+    // Auto-scroll effect
+    React.useEffect(() => {
+        if (!isRewriting && rewrittenText && resultRef.current) {
+            resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    }, [isRewriting, rewrittenText]);
+
     const handleSave = () => {
         if (!rewrittenText) return;
         documentService.saveDocument({
@@ -77,7 +85,7 @@ const RewritePanel = () => {
         <div className="flex flex-col min-h-[800px] lg:min-h-0 lg:h-[calc(100vh-200px)] lg:max-h-[800px] gap-6">
             {/* Controls */}
             <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-surface border border-border/50 rounded-2xl">
-                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                <div className="flex flex-wrap items-center gap-2">
                     <span className="text-sm font-bold text-text-secondary uppercase mr-2">Tone:</span>
                     {TONES.map(tone => (
                         <button
@@ -123,7 +131,7 @@ const RewritePanel = () => {
             {/* Dual Panes */}
             <div className="flex-1 flex flex-col lg:flex-row gap-4 h-full">
                 {/* Original */}
-                <div className="flex-1 bg-surface border border-border/50 rounded-2xl flex flex-col overflow-hidden group focus-within:border-accent-primary/50 transition-colors">
+                <div className="flex-1 bg-surface border border-border/50 rounded-2xl flex flex-col overflow-hidden group focus-within:border-accent-primary/50 transition-colors min-h-[300px]">
                     <div className="h-10 bg-panel/30 border-b border-border/50 flex items-center justify-between px-4">
                         <span className="text-xs font-bold text-text-secondary uppercase flex items-center gap-2">
                             <AlignLeft size={14} /> Original
@@ -134,7 +142,7 @@ const RewritePanel = () => {
                         value={originalText}
                         onChange={(e) => setOriginalText(e.target.value)}
                         placeholder="Paste text to rewrite..."
-                        className="flex-1 bg-transparent resize-none p-6 focus:outline-none text-text-primary leading-relaxed"
+                        className="flex-1 bg-transparent resize-none p-6 focus:outline-none text-text-primary leading-relaxed h-full overflow-y-auto"
                     />
                 </div>
 
@@ -144,7 +152,7 @@ const RewritePanel = () => {
                 </div>
 
                 {/* Rewritten */}
-                <div className="flex-1 bg-surface border border-border/50 rounded-2xl flex flex-col overflow-hidden group relative">
+                <div ref={resultRef} className="flex-1 bg-surface border border-border/50 rounded-2xl flex flex-col overflow-hidden group relative min-h-[300px]">
                     {/* Gradient Overlay when empty */}
                     {!rewrittenText && !isRewriting && (
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
