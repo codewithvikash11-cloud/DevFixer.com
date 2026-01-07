@@ -114,13 +114,13 @@ export default function CompilerPage() {
             <div className="flex bg-[#1e293b] p-1 rounded-lg">
                 <button
                     onClick={() => setCompilerMode('web')}
-                    className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${compilerMode === 'web' ? 'bg-[#008000] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                    className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${compilerMode === 'web' ? 'bg-accent-primary text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
                 >
                     Web
                 </button>
                 <button
                     onClick={() => setCompilerMode('backend')}
-                    className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${compilerMode === 'backend' ? 'bg-[#008000] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                    className={`px-3 py-1 text-xs font-bold rounded-md transition-all ${compilerMode === 'backend' ? 'bg-accent-primary text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
                 >
                     Backend
                 </button>
@@ -142,7 +142,7 @@ export default function CompilerPage() {
                             >
                                 {tab}
                                 {isActive && (
-                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-1/2 bg-[#008000] rounded-full shadow-[0_0_8px_#008000]"></div>
+                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-1/2 bg-accent-primary rounded-full shadow-[0_0_8px_var(--accent-primary)]"></div>
                                 )}
                             </button>
                         );
@@ -151,7 +151,7 @@ export default function CompilerPage() {
             ) : (
                 // BACKEND LANGUAGE SELECTOR
                 <div className="relative group">
-                    <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white bg-[#1e293b] border border-[#334155] rounded-lg hover:border-[#008000]/50 transition-colors">
+                    <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white bg-[#1e293b] border border-[#334155] rounded-lg hover:border-accent-primary/50 transition-colors">
                         {BACKEND_LANGUAGES[backendLanguage].name}
                         <ChevronDown size={14} className="text-gray-400" />
                     </button>
@@ -191,7 +191,7 @@ export default function CompilerPage() {
                 <button
                     onClick={runBackendCode}
                     disabled={isRunning}
-                    className="flex items-center gap-2 px-4 py-1.5 bg-[#008000] hover:bg-[#006600] text-white text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(0,128,0,0.4)]"
+                    className="flex items-center gap-2 px-4 py-1.5 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(0,128,0,0.4)]"
                 >
                     {isRunning ? <Square size={14} className="animate-pulse" /> : <Play size={14} />}
                     <span>{isRunning ? 'Running...' : 'Run'}</span>

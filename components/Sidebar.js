@@ -79,8 +79,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                                 // Desktop specific sizing
                                 "lg:justify-center lg:px-0 lg:w-12 lg:h-12 lg:mx-auto lg:rounded-2xl",
                                 isActive
-                                    ? "bg-accent-primary/10 text-accent-primary shadow-[0_0_15px_rgba(59,130,246,0.3)] border border-accent-primary/20"
-                                    : "text-text-secondary hover:bg-surface-highlight hover:text-text-primary"
+                                    ? "bg-accent-primary/10 text-accent-primary shadow-[0_0_20px_var(--accent-glow)] border border-accent-primary/20 font-bold"
+                                    : "text-text-secondary hover:bg-surface-highlight hover:text-text-primary hover:border-border"
                             )}
                         >
                             <Icon isActive={isActive} />

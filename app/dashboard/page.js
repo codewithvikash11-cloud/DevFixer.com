@@ -209,7 +209,7 @@ export default function DashboardPage() {
                 {/* Header */}
                 <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <div className="flex items-center space-x-2 text-accent-blue mb-2 font-mono text-[10px] font-black tracking-[0.3em] uppercase">
+                        <div className="flex items-center space-x-2 text-accent-primary mb-2 font-mono text-[10px] font-black tracking-[0.3em] uppercase">
                             <Settings size={14} />
                             <span>Contributor Dashboard</span>
                         </div>
@@ -251,7 +251,7 @@ export default function DashboardPage() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div onClick={() => setView('list')} className="p-6 spotlight-card rounded-3xl cursor-pointer group shadow-lg">
                                 <div className="flex items-center justify-between mb-4">
-                                    <div className="p-3 bg-accent-blue/10 rounded-2xl text-accent-blue">
+                                    <div className="p-3 bg-accent-primary/10 rounded-2xl text-accent-primary">
                                         <Hash size={24} />
                                     </div>
                                     <ArrowRight size={20} className="text-text-secondary group-hover:translate-x-1 transition-transform" />
@@ -292,7 +292,7 @@ export default function DashboardPage() {
                             </button>
                             <button
                                 onClick={() => { handleCreateNew(); setFormData(p => ({ ...p, postType: 'blog' })); }}
-                                className="flex-1 py-4 bg-accent-blue text-white rounded-2xl font-black text-sm shadow-xl shadow-accent-blue/20 hover:scale-[1.01] transition-all uppercase tracking-widest flex items-center justify-center gap-2"
+                                className="flex-1 py-4 bg-accent-primary text-white rounded-2xl font-black text-sm shadow-xl shadow-accent-primary/20 hover:scale-[1.01] transition-all uppercase tracking-widest flex items-center justify-center gap-2"
                             >
                                 <PenLine size={18} />
                                 Write Blog
@@ -320,7 +320,7 @@ export default function DashboardPage() {
                                     placeholder="Search your posts..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full bg-panel border border-border rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent-blue transition-all"
+                                    className="w-full bg-panel border border-border rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent-primary transition-all"
                                 />
                             </div>
                             <div className="flex gap-2">
@@ -330,7 +330,7 @@ export default function DashboardPage() {
                                         onClick={() => setFilterStatus(s)}
                                         className={cn(
                                             "px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border transition-all",
-                                            filterStatus === s ? "bg-accent-blue text-white border-accent-blue" : "bg-panel border-border text-text-secondary hover:bg-white/5"
+                                            filterStatus === s ? "bg-accent-primary text-white border-accent-primary" : "bg-panel border-border text-text-secondary hover:bg-white/5"
                                         )}
                                     >
                                         {s}
@@ -370,7 +370,7 @@ export default function DashboardPage() {
                                                     {new Date(post.createdAt || Date.now()).toLocaleDateString()}
                                                 </td>
                                                 <td className="py-4 pr-6 text-right space-x-2">
-                                                    <button onClick={() => handleEdit(post)} className="p-2 bg-accent-blue/10 text-accent-blue hover:bg-accent-blue hover:text-white rounded-lg transition-all">
+                                                    <button onClick={() => handleEdit(post)} className="p-2 bg-accent-primary/10 text-accent-primary hover:bg-accent-primary hover:text-white rounded-lg transition-all">
                                                         <PenLine size={16} />
                                                     </button>
                                                     <button onClick={() => handleDelete(post.slug)} className="p-2 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-all">
@@ -401,8 +401,8 @@ export default function DashboardPage() {
                                 <span>Back to List</span>
                             </button>
                             <div className="flex items-center bg-panel border border-border rounded-xl p-1">
-                                <button onClick={() => setIsPreview(false)} className={cn("px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all", !isPreview ? "bg-accent-blue text-white" : "text-text-secondary hover:text-white")}>Editor</button>
-                                <button onClick={() => setIsPreview(true)} className={cn("px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all", isPreview ? "bg-accent-blue text-white" : "text-text-secondary hover:text-white")}>Preview</button>
+                                <button onClick={() => setIsPreview(false)} className={cn("px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all", !isPreview ? "bg-accent-primary text-white" : "text-text-secondary hover:text-white")}>Editor</button>
+                                <button onClick={() => setIsPreview(true)} className={cn("px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all", isPreview ? "bg-accent-primary text-white" : "text-text-secondary hover:text-white")}>Preview</button>
                             </div>
                         </div>
 
@@ -426,11 +426,11 @@ export default function DashboardPage() {
                                             <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">
                                                 {formData.postType === 'error' ? 'Solution Title' : 'Blog Title'}
                                             </label>
-                                            <input name="title" value={formData.title} onChange={handleChange} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors" required />
+                                            <input name="title" value={formData.title} onChange={handleChange} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-primary focus:outline-none transition-colors" required />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">Slug</label>
-                                            <input name="slug" value={formData.slug} onChange={handleChange} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-blue focus:outline-none transition-colors font-mono text-sm" required />
+                                            <input name="slug" value={formData.slug} onChange={handleChange} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:border-accent-primary focus:outline-none transition-colors font-mono text-sm" required />
                                         </div>
                                     </div>
 
@@ -464,7 +464,7 @@ export default function DashboardPage() {
                                     </div>
 
                                     <div className="pt-4">
-                                        <button type="submit" disabled={status === 'saving'} className="w-full bg-accent-blue text-white py-4 rounded-xl font-black uppercase tracking-widest hover:scale-[1.01] active:scale-95 transition-all shadow-xl shadow-accent-blue/20 flex items-center justify-center gap-2">
+                                        <button type="submit" disabled={status === 'saving'} className="w-full bg-accent-primary text-white py-4 rounded-xl font-black uppercase tracking-widest hover:scale-[1.01] active:scale-95 transition-all shadow-xl shadow-accent-primary/20 flex items-center justify-center gap-2">
                                             {status === 'saving' ? 'Saving...' : <><Save size={20} /> Save Changes</>}
                                         </button>
                                     </div>

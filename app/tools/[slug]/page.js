@@ -74,6 +74,21 @@ const MathEvaluator = dynamic(() => import('@/components/tools/impl/MathEvaluato
 const PercentageCalculator = dynamic(() => import('@/components/tools/impl/PercentageCalculator'), { loading: () => <ToolLoader /> });
 const EmailNormalizer = dynamic(() => import('@/components/tools/impl/EmailNormalizer'), { loading: () => <ToolLoader /> });
 const IbanValidator = dynamic(() => import('@/components/tools/impl/IbanValidator'), { loading: () => <ToolLoader /> });
+const MacLookup = dynamic(() => import('@/components/tools/impl/MacLookup'), { loading: () => <ToolLoader /> });
+const OutlookSafelink = dynamic(() => import('@/components/tools/impl/OutlookSafelink'), { loading: () => <ToolLoader /> });
+const SvgPlaceholder = dynamic(() => import('@/components/tools/impl/SvgPlaceholder'), { loading: () => <ToolLoader /> });
+const PdfSignature = dynamic(() => import('@/components/tools/impl/PdfSignature'), { loading: () => <ToolLoader /> });
+const EmojiPicker = dynamic(() => import('@/components/tools/impl/EmojiPicker'), { loading: () => <ToolLoader /> });
+const JsonCsvConverter = dynamic(() => import('@/components/tools/impl/JsonCsvConverter'), { loading: () => <ToolLoader /> });
+const JsonTomlConverter = dynamic(() => import('@/components/tools/impl/JsonTomlConverter'), { loading: () => <ToolLoader /> });
+const BasicAuthGenerator = dynamic(() => import('@/components/tools/impl/BasicAuthGenerator'), { loading: () => <ToolLoader /> });
+const DnsLookup = dynamic(() => import('@/components/tools/impl/DnsLookup'), { loading: () => <ToolLoader /> });
+const RandomPort = dynamic(() => import('@/components/tools/impl/RandomPort'), { loading: () => <ToolLoader /> });
+const GitCheatsheet = dynamic(() => import('@/components/tools/impl/GitCheatsheet'), { loading: () => <ToolLoader /> });
+const ChmodCalculator = dynamic(() => import('@/components/tools/impl/ChmodCalculator'), { loading: () => <ToolLoader /> });
+const DockerCompose = dynamic(() => import('@/components/tools/impl/DockerCompose'), { loading: () => <ToolLoader /> });
+const CrontabGenerator = dynamic(() => import('@/components/tools/impl/CrontabGenerator'), { loading: () => <ToolLoader /> });
+const KeycodeInfo = dynamic(() => import('@/components/tools/impl/KeycodeInfo'), { loading: () => <ToolLoader /> });
 
 const COMPONENT_MAP = {
     'json-formatter': JsonFormatter,
@@ -104,7 +119,10 @@ const COMPONENT_MAP = {
     'lorem-ipsum': LoremIpsum,
     'url-encoder': UrlEncoder,
     'html-entity': HtmlEntity,
-    'csv-json': CsvToJson,
+    'csv-json': JsonCsvConverter,
+    'json-csv': JsonCsvConverter,
+    'dns-lookup': DnsLookup,
+    'random-port': RandomPort,
     'random-string': RandomString,
     'json-ts': JsonToTs,
     'fake-data': FakeData,
@@ -119,7 +137,7 @@ const COMPONENT_MAP = {
     'text-unicode': () => <TextTools type="text-unicode" />,
     'numeronym': () => <TextTools type="numeronym" />,
     'ascii-art': AsciiArt,
-    'emoji-picker': ComingSoon,
+    'emoji-picker': EmojiPicker,
     'user-agent': UserAgentParser,
     'meta-generator': MetaGenerator,
     'og-generator': MetaGenerator,
@@ -137,6 +155,10 @@ const COMPONENT_MAP = {
     'json-yaml': YamlJsonConverter,
     'ipv4-subnet': () => <NetworkCalculators type="ipv4-subnet" />,
     'ipv6-ula': () => <NetworkCalculators type="ipv6-ula" />,
+    'git-cheatsheet': GitCheatsheet,
+    'basic-auth': BasicAuthGenerator,
+    'toml-json': JsonTomlConverter,
+    'json-toml': JsonTomlConverter,
     'url-parser': UrlParser,
     'obfuscator': Obfuscator,
     'device-info': DeviceInfo,
@@ -151,6 +173,14 @@ const COMPONENT_MAP = {
     'percentage-calculator': PercentageCalculator,
     'email-normalizer': EmailNormalizer,
     'iban-validator': IbanValidator,
+    'mac-lookup': MacLookup,
+    'outlook-safelink': OutlookSafelink,
+    'svg-placeholder': SvgPlaceholder,
+    'pdf-signature': PdfSignature,
+    'chmod-calculator': ChmodCalculator,
+    'docker-compose': DockerCompose,
+    'crontab': CrontabGenerator,
+    'keycode-info': KeycodeInfo,
 };
 
 function ToolLoader() {

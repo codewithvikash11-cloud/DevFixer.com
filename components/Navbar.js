@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Search, Menu, X, Command, LogOut, ArrowRight, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
@@ -12,8 +12,10 @@ import { useNavbar } from '@/context/NavbarContext';
 
 const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customActions: propActions, hideSearch: propHideSearch, hideLinks: propHideLinks = false }) => {
     const router = useRouter();
+    const pathname = usePathname();
     const { user, logout } = useAuth();
 
+    // ... (rest of context connection and state)
     // Context connection
     const {
         centerContent: contextCenter,
@@ -41,7 +43,6 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
 
     useEffect(() => {
         if (isSearchOpen && inputRef.current) {
-            // Small delay to ensure render
             setTimeout(() => inputRef.current?.focus(), 50);
         }
     }, [isSearchOpen]);
@@ -61,7 +62,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                 ? "glass-strong border-b border-border shadow-sm"
                 : "bg-transparent border-b border-transparent"
         )}>
-            {/* Mobile Search Overlay - Full Screen Mode */}
+            {/* Mobile Search Overlay */}
             <div className={cn(
                 "absolute inset-0 z-50 flex items-center px-4 gap-4 md:hidden bg-background transition-opacity duration-300 ease-out",
                 isSearchOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
@@ -99,7 +100,6 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
 
                 {/* Left: Brand & Menu */}
                 <div className="flex items-center gap-3 lg:gap-8 shrink-0">
-                    {/* Mobile Hamburger - Larger Tap Target */}
                     <button
                         onClick={onMenuClick}
                         className="p-2 -ml-2 lg:hidden text-text-secondary hover:text-text-primary active:scale-90 transition-transform"
@@ -114,11 +114,11 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
 
                     {/* Desktop Nav Links */}
                     {!hideLinks && (
-                        <div className="hidden lg:flex items-center gap-0.5 ml-2">
-                            <NavLink href="/compiler">Compiler</NavLink>
-                            <NavLink href="/snippets">Snippets</NavLink>
-                            <NavLink href="/errors">Errors</NavLink>
-                            <NavLink href="/languages">Languages</NavLink>
+                        <div className="hidden lg:flex items-center gap-1 ml-4">
+                            <NavLink href="/compiler" active={pathname?.startsWith('/compiler')}>Compiler</NavLink>
+                            <NavLink href="/snippets" active={pathname?.startsWith('/snippets')}>Snippets</NavLink>
+                            <NavLink href="/errors" active={pathname?.startsWith('/errors')}>Errors</NavLink>
+                            <NavLink href="/tools" active={pathname?.startsWith('/tools')}>Tools</NavLink>
                         </div>
                     )}
                 </div>
@@ -157,7 +157,6 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                         </>
                     )}
 
-                    {/* Mobile Search Trigger */}
                     {!hideSearch && !centerContent && (
                         <button
                             onClick={() => setIsSearchOpen(true)}
@@ -189,12 +188,20 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
     );
 };
 
-const NavLink = ({ href, children }) => (
+const NavLink = ({ href, children, active }) => (
     <Link
         href={href}
-        className="px-3 py-2 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors rounded-md hover:bg-surface"
+        className={cn(
+            "px-3 py-2 text-sm font-medium transition-all rounded-lg relative",
+            active
+                ? "text-accent-primary bg-accent-primary/5 font-bold"
+                : "text-text-secondary hover:text-text-primary hover:bg-surface"
+        )}
     >
         {children}
+        {active && (
+            <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-primary rounded-full" />
+        )}
     </Link>
 );
 

@@ -94,7 +94,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                 </nav>
 
                 <div className="p-6 mt-auto border-t border-border">
-                    <div className="p-4 rounded-xl bg-gradient-to-br from-accent-blue/10 to-accent-purple/10 border border-border">
+                    <div className="p-4 rounded-xl bg-gradient-to-br from-accent-primary/10 to-accent-success/10 border border-border">
                         <h4 className="text-xs font-bold text-text-primary mb-1">Rovio Tech Mobile</h4>
                         <p className="text-[10px] text-text-secondary">Code on the go.</p>
                     </div>
