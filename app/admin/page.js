@@ -1,137 +1,171 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { getAdminStats } from '@/lib/actions/admin';
 import {
-    ShieldCheck,
-    AlertTriangle,
     Users,
+    FileText,
+    Briefcase,
+    AlertTriangle,
     Activity,
     ArrowUpRight,
-    ArrowDownRight
+    Search,
+    Clock
 } from 'lucide-react';
-import { adminService } from '@/lib/admin-service';
+import Link from 'next/link';
 
 export default function AdminDashboard() {
+    const [isLoading, setIsLoading] = useState(true);
     const [stats, setStats] = useState({
-        level: 'SECURE',
-        threats: 0,
-        aiDetections: 0,
-        avgTrust: 0
+        users: 0,
+        posts: 0,
+        tools: 0,
+        errors: 0
     });
-    // Stats from DB
-    const [dbStats, setDbStats] = useState({
-        totalUsers: 0,
-        totalPosts: 0,
-        pendingReviews: 0,
-        activeUsers: 0
-    });
-    const [recentLogs, setRecentLogs] = useState([]);
 
     useEffect(() => {
-        // Load Real DB Stats
-        const loadStats = async () => {
-            const data = await getAdminStats();
-            setDbStats(data);
-        };
-        loadStats();
-
-        // Polling for live feeling
-        const interval = setInterval(() => {
-            // Refresh stats?
-            loadStats();
-            setRecentLogs(adminService.getSecurityLogs().slice(0, 5));
-        }, 5000);
-        return () => clearInterval(interval);
+        // Mock data fetch for Phase 1 - will be replaced by API calls in Phase 2/3
+        // We simulate a fetch delay to test loading states
+        const timer = setTimeout(() => {
+            setStats({
+                users: 1240,
+                posts: 45,
+                tools: 78,
+                errors: 12
+            });
+            setIsLoading(false);
+        }, 800);
+        return () => clearTimeout(timer);
     }, []);
 
-    if (!stats) return <div className="p-10 text-accent-primary animate-pulse">Loading secure dashboard...</div>;
-
     return (
-        <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
+        <div className="space-y-8">
             {/* Header */}
-            <div>
-                <h1 className="text-2xl md:text-3xl font-black text-white mb-2">Security Overview</h1>
-                <p className="text-gray-500 text-sm">Real-time platform monitoring and threat detection.</p>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h1 className="text-3xl font-black text-text-primary tracking-tight mb-2">Dashboard</h1>
+                    <p className="text-text-secondary">Overview of platform performance and content.</p>
+                </div>
+                <div className="flex items-center gap-3">
+                    <span className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-bold border border-green-500/20">
+                        <Activity size={12} />
+                        All Systems Operational
+                    </span>
+                    <button className="px-4 py-2 bg-accent-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-accent-primary/20 hover:scale-[1.02] transition-transform">
+                        Generate Report
+                    </button>
+                </div>
             </div>
 
-            {/* KPI Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatCard
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <StatsCard
                     title="Total Users"
-                    value={dbStats.totalUsers}
+                    value={stats.users.toLocaleString()}
                     icon={Users}
-                    color="text-blue-400"
-                    sub="Registered Accounts"
+                    trend="+12%"
+                    trendUp={true}
+                    loading={isLoading}
                 />
-                <StatCard
-                    title="Pending Reviews"
-                    value={dbStats.pendingReviews}
+                <StatsCard
+                    title="Active Tools"
+                    value={stats.tools.toLocaleString()}
+                    icon={Briefcase}
+                    trend="+4"
+                    trendUp={true}
+                    loading={isLoading}
+                />
+                <StatsCard
+                    title="Published Posts"
+                    value={stats.posts.toLocaleString()}
+                    icon={FileText}
+                    trend="+8%"
+                    trendUp={true}
+                    loading={isLoading}
+                />
+                <StatsCard
+                    title="Security Alerts"
+                    value={stats.errors.toLocaleString()}
                     icon={AlertTriangle}
-                    color={dbStats.pendingReviews > 0 ? "text-accent-warning" : "text-green-500"}
-                    sub="Action Needed"
-                />
-                <StatCard
-                    title="Total Posts"
-                    value={dbStats.totalPosts}
-                    icon={Activity}
-                    color="text-purple-400"
-                    sub="Platform Content"
-                />
-                <StatCard
-                    title="Avg Trust Score"
-                    value="98%"
-                    icon={ShieldCheck}
-                    color="text-green-400"
-                    sub="User Risk Level"
+                    trend="-2"
+                    trendUp={false} // Good that it's down, but technically "trendUp" usually means increasing number
+                    isBad={false}   // Helper to color code
+                    loading={isLoading}
                 />
             </div>
 
-            {/* Charts / Lists Split */}
+            {/* Recent Activity & Quick Actions */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Main Activity Feed */}
-                <div className="lg:col-span-2 bg-[#0A0A0A] border border-[#222] rounded-2xl p-6">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="font-bold text-white text-lg">Live Security Feed</h3>
-                        <span className="flex items-center gap-2 text-xs font-mono text-accent-primary animate-pulse">
-                            <span className="w-2 h-2 rounded-full bg-accent-primary"></span>
-                            LIVE
-                        </span>
+                {/* Recent Activity Column */}
+                <div className="lg:col-span-2 space-y-6">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-lg font-bold text-text-primary">Recent Activity</h2>
+                        <button className="text-xs text-accent-primary font-bold hover:underline">View All</button>
                     </div>
 
-                    <div className="space-y-4">
-                        {recentLogs.length === 0 ? (
-                            <div className="text-center py-10 text-gray-600 italic">No recent security events logged. System clean.</div>
-                        ) : (
-                            recentLogs.map(log => (
-                                <LogItem key={log.id} log={log} />
-                            ))
-                        )}
+                    <div className="bg-panel border border-border rounded-2xl overflow-hidden shadow-sm">
+                        <div className="divide-y divide-border">
+                            {[1, 2, 3, 4, 5].map((i) => (
+                                <div key={i} className="p-4 flex items-center justify-between hover:bg-surface/50 transition-colors group">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center text-text-secondary group-hover:bg-accent-primary/10 group-hover:text-accent-primary transition-colors">
+                                            <FileText size={18} />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-text-primary">New blog post published</p>
+                                            <p className="text-xs text-text-secondary">"Understanding React Server Components"</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <span className="text-xs text-text-tertiary flex items-center gap-1">
+                                            <Clock size={12} />
+                                            2h ago
+                                        </span>
+                                        <button className="p-2 text-text-secondary hover:text-accent-primary">
+                                            <ArrowUpRight size={16} />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
-                {/* Quick Actions / System Status */}
+                {/* Quick Actions Column */}
                 <div className="space-y-6">
-                    <div className="bg-[#0A0A0A] border border-[#222] rounded-2xl p-6">
-                        <h3 className="font-bold text-white text-lg mb-4">System Status</h3>
-                        <div className="space-y-4">
-                            <StatusRow label="AI Detection Engine" status="Online" color="bg-accent-primary" />
-                            <StatusRow label="Plagiarism Scanner" status="Online" color="bg-accent-primary" />
-                            <StatusRow label="Behavior Tracker" status="Active" color="bg-accent-primary" />
-                            <StatusRow label="Database Connection" status="Stable" color="bg-blue-500" />
-                        </div>
-                    </div>
+                    <h2 className="text-lg font-bold text-text-primary">Quick Actions</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                        <Link href="/admin/posts" className="p-4 bg-panel border border-border rounded-2xl hover:border-accent-primary/50 transition-all group shadow-sm hover:shadow-md">
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="p-2 bg-blue-500/10 text-blue-500 rounded-lg group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                                    <FileText size={20} />
+                                </div>
+                                <ArrowUpRight size={16} className="text-text-tertiary group-hover:text-accent-primary" />
+                            </div>
+                            <h3 className="font-bold text-text-primary">Write New Article</h3>
+                            <p className="text-xs text-text-secondary mt-1">Create blog post or error solution</p>
+                        </Link>
 
-                    <div className="bg-gradient-to-br from-accent-primary/10 to-transparent border border-accent-primary/20 rounded-2xl p-6">
-                        <h3 className="font-bold text-accent-primary text-lg mb-2">Admin Action Required</h3>
-                        <p className="text-sm text-gray-400 mb-4">
-                            {dbStats.pendingReviews > 0
-                                ? `${dbStats.pendingReviews} items pending review in the secure queue.`
-                                : "No pending items. You're all caught up!"}
-                        </p>
-                        <button className="w-full py-2 bg-accent-primary hover:bg-accent-hover text-black font-bold rounded-lg transition-colors text-sm">
-                            Go to Review Queue
-                        </button>
+                        <Link href="/admin/pages" className="p-4 bg-panel border border-border rounded-2xl hover:border-accent-primary/50 transition-all group shadow-sm hover:shadow-md">
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="p-2 bg-purple-500/10 text-purple-500 rounded-lg group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                                    <Briefcase size={20} />
+                                </div>
+                                <ArrowUpRight size={16} className="text-text-tertiary group-hover:text-accent-primary" />
+                            </div>
+                            <h3 className="font-bold text-text-primary">Manage Tools</h3>
+                            <p className="text-xs text-text-secondary mt-1">Edit descriptions and metadata</p>
+                        </Link>
+
+                        <Link href="/admin/users" className="p-4 bg-panel border border-border rounded-2xl hover:border-accent-primary/50 transition-all group shadow-sm hover:shadow-md">
+                            <div className="flex items-center justify-between mb-2">
+                                <div className="p-2 bg-orange-500/10 text-orange-500 rounded-lg group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                                    <Users size={20} />
+                                </div>
+                                <ArrowUpRight size={16} className="text-text-tertiary group-hover:text-accent-primary" />
+                            </div>
+                            <h3 className="font-bold text-text-primary">User Management</h3>
+                            <p className="text-xs text-text-secondary mt-1">Review active sessions</p>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -139,62 +173,27 @@ export default function AdminDashboard() {
     );
 }
 
-function StatCard({ title, value, icon: Icon, color, sub }) {
+function StatsCard({ title, value, icon: Icon, trend, trendUp, loading }) {
+    if (loading) {
+        return <div className="h-32 bg-panel border border-border rounded-2xl animate-pulse"></div>;
+    }
+
     return (
-        <div className="bg-[#0A0A0A] border border-[#222] p-5 rounded-2xl hover:border-accent-primary/20 transition-colors group">
+        <div className="p-6 bg-panel border border-border rounded-2xl shadow-sm hover:shadow-lg transition-all group">
             <div className="flex items-start justify-between mb-4">
                 <div>
-                    <h3 className="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">{title}</h3>
-                    <div className={`text-2xl font-black ${color}`}>{value}</div>
+                    <p className="text-sm font-bold text-text-secondary uppercase tracking-wider">{title}</p>
+                    <h3 className="text-3xl font-black text-text-primary mt-1">{value}</h3>
                 </div>
-                <div className={`p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-colors ${color}`}>
+                <div className="p-3 bg-surface border border-border rounded-xl text-text-tertiary group-hover:text-accent-primary group-hover:border-accent-primary/30 transition-colors">
                     <Icon size={20} />
                 </div>
             </div>
-            <div className="flex items-center gap-1 text-xs text-gray-500">
-                <ArrowUpRight size={12} className="text-accent-primary" />
-                <span>{sub}</span>
-            </div>
-        </div>
-    );
-}
-
-function StatusRow({ label, status, color }) {
-    return (
-        <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-400">{label}</span>
             <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${color}`}></span>
-                <span className="text-xs font-bold text-white">{status}</span>
-            </div>
-        </div>
-    );
-}
-
-function LogItem({ log }) {
-    const isRejected = log.status === 'REJECTED';
-    return (
-        <div className="flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-[#333]">
-            <div className={`mt-1 w-2 h-2 rounded-full ${isRejected ? 'bg-red-500' : 'bg-accent-primary'}`} />
-            <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                    <span className={`text-xs font-bold px-2 py-0.5 rounded ${isRejected ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}`}>
-                        {log.status}
-                    </span>
-                    <span className="text-[10px] text-gray-500 font-mono">
-                        {new Date(log.timestamp).toLocaleTimeString()}
-                    </span>
-                </div>
-                <p className="text-sm text-gray-300 mb-1">
-                    {log.rejectionReason || "Content approved automatically."}
-                </p>
-                <div className="flex gap-2 text-[10px] text-gray-500">
-                    <span>AI: {log.ai?.score}%</span>
-                    <span>•</span>
-                    <span>Plagiarism: {log.plagiarism?.score}%</span>
-                    <span>•</span>
-                    <span>Trust Impact: {log.behavior?.trustScore < 100 ? 'NEGATIVE' : 'NEUTRAL'}</span>
-                </div>
+                <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${trendUp ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
+                    {trend}
+                </span>
+                <span className="text-xs text-text-tertiary">vs last month</span>
             </div>
         </div>
     );

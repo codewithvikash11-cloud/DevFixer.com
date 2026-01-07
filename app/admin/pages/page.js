@@ -1,85 +1,113 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { getAllPages, createPage } from '@/lib/actions/pages';
-import { Plus, Layout, Globe, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import {
+    Layout,
+    Edit,
+    Globe,
+    CheckCircle,
+    AlertCircle,
+    ArrowUpRight
+} from 'lucide-react';
+import { getPostBySlug } from '@/lib/posts';
+
+// Defined system pages that we want to be editable
+const SYSTEM_PAGES = [
+    { id: 'home', title: 'Home Page', path: '/', description: 'Hero section, features, and trust bar.' },
+    { id: 'tools', title: 'Tools Hub', path: '/tools', description: 'Header text and SEO settings.' },
+    { id: 'compiler', title: 'Online Compiler', path: '/compiler', description: 'Editor defaults and layouts.' },
+    { id: 'api-tester', title: 'API Tester', path: '/api-tester', description: 'Initial state and proxy settings.' },
+    { id: 'pricing', title: 'Pricing Page', path: '/pricing', description: 'Plans, prices, and features table.' },
+    { id: 'about', title: 'About / Learn', path: '/learn', description: 'Platform mission and content.' },
+];
 
 export default function PagesManager() {
-    const [pages, setPages] = useState([]);
+    // We'll fetch status to see if a custom config exists for each page
+    const [pageStatuses, setPageStatuses] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        load();
+        checkPageStatuses();
     }, []);
 
-    const load = async () => {
-        setLoading(true);
-        const data = await getAllPages();
-        setPages(data);
+    const checkPageStatuses = async () => {
+        const statuses = {};
+        await Promise.all(SYSTEM_PAGES.map(async (page) => {
+            try {
+                // standardized slug format: page-[id]
+                const data = await getPostBySlug(`page-${page.id}`);
+                statuses[page.id] = !!data;
+            } catch (e) {
+                statuses[page.id] = false;
+            }
+        }));
+        setPageStatuses(statuses);
         setLoading(false);
     };
 
-    const handleCreate = async () => {
-        const title = prompt("Enter page title:");
-        if (!title) return;
-        const slug = title.toLowerCase().replace(/ /g, '-');
-
-        const res = await createPage({ title, slug });
-        if (res.success) load();
-        else alert("Failed: " + res.error);
-    };
-
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="flex items-center justify-between">
+        <div className="space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-black text-white mb-2">Pages & Layout</h1>
-                    <p className="text-gray-500 text-sm">Visually edit site structure and SEO.</p>
+                    <h1 className="text-3xl font-black text-text-primary tracking-tight">Pages Manager</h1>
+                    <p className="text-text-secondary">Edit content, SEO, and layouts for core system pages.</p>
                 </div>
-                <button
-                    onClick={handleCreate}
-                    className="flex items-center gap-2 bg-accent-primary hover:bg-accent-hover text-black px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-accent-primary/20"
-                >
-                    <Plus size={18} /> Add New Page
-                </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* Seed Default Pages Card */}
-                {pages.length === 0 && !loading && (
-                    <div onClick={handleCreate} className="border border-[#222] border-dashed rounded-2xl p-8 flex flex-col items-center justify-center text-gray-500 hover:text-white hover:border-gray-500 cursor-pointer transition-all">
-                        <Plus size={32} className="mb-4" />
-                        <span className="font-bold">Initialize System Pages</span>
-                    </div>
-                )}
+                {SYSTEM_PAGES.map((page) => {
+                    const isCustomized = pageStatuses[page.id];
 
-                {pages.map(page => (
-                    <div key={page.$id} className="bg-[#0A0A0A] border border-[#222] rounded-2xl p-6 group hover:border-[#444] transition-all">
-                        <div className="flex items-start justify-between mb-4">
-                            <div className="p-3 bg-white/5 rounded-xl text-gray-400 group-hover:text-white transition-colors">
-                                <Layout size={24} />
+                    return (
+                        <div key={page.id} className="bg-panel border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-all group relative">
+                            {/* Status Indicator */}
+                            <div className="absolute top-4 right-4">
+                                {loading ? (
+                                    <div className="w-2 h-2 rounded-full bg-text-tertiary animate-pulse"></div>
+                                ) : isCustomized ? (
+                                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 text-[10px] font-black uppercase tracking-wider border border-green-500/20">
+                                        <CheckCircle size={10} /> Customized
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface text-text-tertiary text-[10px] font-black uppercase tracking-wider border border-border">
+                                        <Globe size={10} /> Default
+                                    </div>
+                                )}
                             </div>
-                            <div className={`px-2 py-1 rounded text-[10px] uppercase font-bold border ${page.isPublished ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'}`}>
-                                {page.isPublished ? 'Published' : 'Draft'}
+
+                            <div className="p-6">
+                                <div className="w-12 h-12 rounded-xl bg-accent-primary/10 flex items-center justify-center text-accent-primary mb-4 group-hover:scale-110 transition-transform duration-300">
+                                    <Layout size={24} />
+                                </div>
+
+                                <h3 className="text-xl font-bold text-text-primary mb-1">{page.title}</h3>
+                                <p className="text-sm text-text-secondary mb-6 h-10">{page.description}</p>
+
+                                <div className="flex items-center gap-2">
+                                    <Link
+                                        href={`/admin/pages/${page.id}`}
+                                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-text-primary text-background rounded-xl font-bold hover:opacity-90 transition-opacity"
+                                    >
+                                        <Edit size={16} />
+                                        Edit Content
+                                    </Link>
+                                    <Link
+                                        href={page.path}
+                                        target="_blank"
+                                        className="p-2.5 bg-surface border border-border rounded-xl text-text-secondary hover:text-text-primary hover:border-accent-primary/30 transition-colors"
+                                        title="View Live Page"
+                                    >
+                                        <ArrowUpRight size={18} />
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
 
-                        <h3 className="text-xl font-bold text-white mb-1">{page.title}</h3>
-                        <div className="flex items-center gap-2 text-xs text-gray-500 font-mono mb-6">
-                            <Globe size={12} />
-                            <span>/{page.slug}</span>
+                            {/* Decorative gradient */}
+                            <div className="h-1 w-full bg-gradient-to-r from-transparent via-accent-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
-
-                        <Link
-                            href={`/admin/pages/${page.$id}`}
-                            className="flex items-center justify-between w-full p-3 bg-[#111] rounded-xl text-sm font-bold text-gray-300 hover:bg-white/10 hover:text-white transition-all"
-                        >
-                            <span>Open Visual Editor</span>
-                            <ChevronRight size={16} />
-                        </Link>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );
