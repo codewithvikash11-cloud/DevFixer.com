@@ -63,6 +63,18 @@ const TextTools = dynamic(() => import('@/components/tools/impl/TextTools'), { l
 const UrlParser = dynamic(() => import('@/components/tools/impl/UrlParser'), { loading: () => <ToolLoader /> });
 const NetworkCalculators = dynamic(() => import('@/components/tools/impl/NetworkCalculators'), { loading: () => <ToolLoader /> });
 
+const Chronometer = dynamic(() => import('@/components/tools/impl/Chronometer'), { loading: () => <ToolLoader /> });
+const TemperatureConverter = dynamic(() => import('@/components/tools/impl/TemperatureConverter'), { loading: () => <ToolLoader /> });
+const TextStatistics = dynamic(() => import('@/components/tools/impl/TextStatistics'), { loading: () => <ToolLoader /> });
+const CameraRecorder = dynamic(() => import('@/components/tools/impl/CameraRecorder'), { loading: () => <ToolLoader /> });
+const WysiwygEditor = dynamic(() => import('@/components/tools/impl/WysiwygEditor'), { loading: () => <ToolLoader /> });
+const MimeTypes = dynamic(() => import('@/components/tools/impl/MimeTypes'), { loading: () => <ToolLoader /> });
+const EtaCalculator = dynamic(() => import('@/components/tools/impl/EtaCalculator'), { loading: () => <ToolLoader /> });
+const MathEvaluator = dynamic(() => import('@/components/tools/impl/MathEvaluator'), { loading: () => <ToolLoader /> });
+const PercentageCalculator = dynamic(() => import('@/components/tools/impl/PercentageCalculator'), { loading: () => <ToolLoader /> });
+const EmailNormalizer = dynamic(() => import('@/components/tools/impl/EmailNormalizer'), { loading: () => <ToolLoader /> });
+const IbanValidator = dynamic(() => import('@/components/tools/impl/IbanValidator'), { loading: () => <ToolLoader /> });
+
 const COMPONENT_MAP = {
     'json-formatter': JsonFormatter,
     'base64': Base64Converter,
@@ -92,9 +104,9 @@ const COMPONENT_MAP = {
     'lorem-ipsum': LoremIpsum,
     'url-encoder': UrlEncoder,
     'html-entity': HtmlEntity,
-    'csv-to-json': CsvToJson,
+    'csv-json': CsvToJson,
     'random-string': RandomString,
-    'json-to-ts': JsonToTs,
+    'json-ts': JsonToTs,
     'fake-data': FakeData,
     'ip-lookup': IpLookup,
     'http-status': HttpStatus,
@@ -106,8 +118,8 @@ const COMPONENT_MAP = {
     'text-binary': () => <TextTools type="text-binary" />,
     'text-unicode': () => <TextTools type="text-unicode" />,
     'numeronym': () => <TextTools type="numeronym" />,
-    'ascii-art': AsciiArt, // Already existed? Check if I need to map it or if it was there. It was there.
-    'emoji-picker': ComingSoon, // Placeholder for now, or implement separate picker.
+    'ascii-art': AsciiArt,
+    'emoji-picker': ComingSoon,
     'user-agent': UserAgentParser,
     'meta-generator': MetaGenerator,
     'og-generator': MetaGenerator,
@@ -116,16 +128,29 @@ const COMPONENT_MAP = {
     'markdown-html': MarkdownToHtml,
     'text-diff': DiffChecker,
     'diff-checker': DiffChecker,
-    'base64-file': Base64Converter, // Assuming Base64Converter will be enhanced or supports it
+    'base64-file': Base64Converter,
     'xml-json': JsonToXml,
     'json-xml': JsonToXml,
     'html-entity': HtmlEntity,
-    'yaml-formatter': YamlJsonConverter, // Temporary map until specific formatter or check if YamlJsonConverter handles it
+    'yaml-formatter': YamlJsonConverter,
     'yaml-json': YamlJsonConverter,
     'json-yaml': YamlJsonConverter,
     'ipv4-subnet': () => <NetworkCalculators type="ipv4-subnet" />,
     'ipv6-ula': () => <NetworkCalculators type="ipv6-ula" />,
     'url-parser': UrlParser,
+    'obfuscator': Obfuscator,
+    'device-info': DeviceInfo,
+    'chronometer': Chronometer,
+    'temperature-converter': TemperatureConverter,
+    'text-stats': TextStatistics,
+    'camera-recorder': CameraRecorder,
+    'wysiwyg-editor': WysiwygEditor,
+    'mime-types': MimeTypes,
+    'eta-calculator': EtaCalculator,
+    'math-evaluator': MathEvaluator,
+    'percentage-calculator': PercentageCalculator,
+    'email-normalizer': EmailNormalizer,
+    'iban-validator': IbanValidator,
 };
 
 function ToolLoader() {
