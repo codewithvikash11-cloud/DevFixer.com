@@ -1,11 +1,11 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import LayoutWrapper from '@/components/LayoutWrapper';
-import { getPageBySlug } from '@/lib/pages';
+import { pagesService } from '@/lib/pages';
 
 export async function generateMetadata(props) {
     const params = await props.params;
-    const page = getPageBySlug(params.slug);
+    const page = await pagesService.getPageBySlug(params.slug);
 
     if (!page) {
         return { title: 'Page Not Found' };
@@ -26,7 +26,7 @@ export default async function GenericPage(props) {
         notFound();
     }
 
-    const page = getPageBySlug(slug);
+    const page = await pagesService.getPageBySlug(slug);
 
     if (!page) {
         notFound();

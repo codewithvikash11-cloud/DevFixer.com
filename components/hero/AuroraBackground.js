@@ -11,7 +11,7 @@ const AuroraBackground = () => {
 
             {/* 2. Cosmic Nebulas - Deeper, slower moving */}
             {/* 2. Cosmic Nebulas - Deeper, slower moving - Using Blue/Cyan for Vercel/Linear Vibe */}
-            <div className="absolute top-[-20%] left-[20%] w-[60vw] h-[60vw] bg-blue-600/20 dark:bg-blue-500/10 rounded-full blur-[120px] animate-float-slow mix-blend-screen" />
+            <div className="absolute top-[-20%] left-[20%] w-[60vw] h-[60vw] bg-green-600/20 dark:bg-green-500/10 rounded-full blur-[120px] animate-float-slow mix-blend-screen" />
             <div className="absolute bottom-[-10%] right-[10%] w-[50vw] h-[50vw] bg-cyan-500/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen" />
 
             {/* 3. Central Spotlight - Focuses attention on content */}

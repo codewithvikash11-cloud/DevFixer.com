@@ -16,13 +16,13 @@ export default function GlobalCDNPage() {
                 <div className="container mx-auto px-6 lg:px-12 relative z-10 text-center pt-20">
 
                     <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-surface border border-border/50 shadow-sm backdrop-blur-sm mb-6 animate-float-slow">
-                        <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                        <span className="w-2 h-2 rounded-full bg-accent-primary animate-pulse" />
                         <span className="text-xs font-bold tracking-widest uppercase text-text-secondary">Network Status: Operational</span>
                     </div>
 
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-text-primary mb-6">
                         Solutions at the <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 animate-pulse-glow">Edge.</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-primary to-green-400 animate-pulse-glow">Edge.</span>
                     </h1>
 
                     <p className="text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed mb-10">
@@ -50,15 +50,15 @@ export default function GlobalCDNPage() {
 
                         {/* Abstract Globe/Network Visual */}
                         <div className="relative h-[400px] w-full flex items-center justify-center">
-                            <div className="w-[300px] h-[300px] rounded-full border border-blue-500/30 animate-[spin_60s_linear_infinite] relative">
-                                <div className="absolute inset-0 rounded-full border border-dashed border-blue-500/20 animate-[spin_40s_linear_infinite_reverse]" />
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full shadow-[0_0_20px_rgba(59,130,246,1)] animate-pulse" />
+                            <div className="w-[300px] h-[300px] rounded-full border border-accent-primary/30 animate-[spin_60s_linear_infinite] relative">
+                                <div className="absolute inset-0 rounded-full border border-dashed border-accent-primary/20 animate-[spin_40s_linear_infinite_reverse]" />
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-accent-primary rounded-full shadow-[0_0_20px_rgba(0,128,0,1)] animate-pulse" />
 
                                 {/* Orbiting "PoPs" */}
                                 <div className="absolute top-0 left-1/2 w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_cyan] animate-float" />
                                 <div className="absolute bottom-10 right-10 w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_10px_purple] animate-float-slow" />
                             </div>
-                            <div className="absolute inset-0 bg-blue-500/5 blur-[100px] rounded-full" />
+                            <div className="absolute inset-0 bg-accent-primary/5 blur-[100px] rounded-full" />
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ export default function GlobalCDNPage() {
                             desc="When a fix is updated, it propagates globally in under 200ms."
                         />
                         <FeatureCard
-                            icon={<Server className="text-blue-400" />}
+                            icon={<Server className="text-accent-primary" />}
                             title="Edge Compute"
                             desc="We process stack traces on the edge to strip PII before it hits our core."
                         />
@@ -95,7 +95,7 @@ export default function GlobalCDNPage() {
 const StatRow = ({ label, value }) => (
     <div className="flex items-center justify-between border-b border-white/10 pb-4">
         <span className="text-gray-400 font-medium">{label}</span>
-        <span className="text-2xl font-mono font-bold text-blue-400">{value}</span>
+        <span className="text-2xl font-mono font-bold text-accent-primary">{value}</span>
     </div>
 );
 

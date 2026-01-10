@@ -58,7 +58,7 @@ export default function SocialShare({ title, url }) {
                     url: shareUrl,
                 });
             } catch (err) {
-                console.log('Error sharing:', err);
+                // console.log('Error sharing:', err);
             }
         }
     }

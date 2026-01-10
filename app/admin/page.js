@@ -12,6 +12,7 @@ import {
     Clock
 } from 'lucide-react';
 import Link from 'next/link';
+import { adminService } from '@/lib/admin-service';
 
 export default function AdminDashboard() {
     const [isLoading, setIsLoading] = useState(true);
@@ -23,18 +24,23 @@ export default function AdminDashboard() {
     });
 
     useEffect(() => {
-        // Mock data fetch for Phase 1 - will be replaced by API calls in Phase 2/3
-        // We simulate a fetch delay to test loading states
-        const timer = setTimeout(() => {
-            setStats({
-                users: 1240,
-                posts: 45,
-                tools: 78,
-                errors: 12
-            });
-            setIsLoading(false);
-        }, 800);
-        return () => clearTimeout(timer);
+        const fetchStats = async () => {
+            try {
+                const data = await adminService.getStats();
+                setStats({
+                    users: data.totalUsers,
+                    posts: data.totalPosts,
+                    tools: 0, // Tools not yet in DB
+                    errors: 0 // Placeholder until logs service connected
+                });
+            } catch (error) {
+                console.error("Dashboard Stats Error:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchStats();
     }, []);
 
     return (

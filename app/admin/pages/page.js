@@ -1,113 +1,87 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { pagesService } from '@/lib/pages';
 import Link from 'next/link';
-import {
-    Layout,
-    Edit,
-    Globe,
-    CheckCircle,
-    AlertCircle,
-    ArrowUpRight
-} from 'lucide-react';
-import { getPostBySlug } from '@/lib/posts';
+import { Plus, Edit2, Trash2, Eye, File, Loader2 } from 'lucide-react';
 
-// Defined system pages that we want to be editable
-const SYSTEM_PAGES = [
-    { id: 'home', title: 'Home Page', path: '/', description: 'Hero section, features, and trust bar.' },
-    { id: 'tools', title: 'Tools Hub', path: '/tools', description: 'Header text and SEO settings.' },
-    { id: 'compiler', title: 'Online Compiler', path: '/compiler', description: 'Editor defaults and layouts.' },
-    { id: 'api-tester', title: 'API Tester', path: '/api-tester', description: 'Initial state and proxy settings.' },
-    { id: 'pricing', title: 'Pricing Page', path: '/pricing', description: 'Plans, prices, and features table.' },
-    { id: 'about', title: 'About / Learn', path: '/learn', description: 'Platform mission and content.' },
-];
-
-export default function PagesManager() {
-    // We'll fetch status to see if a custom config exists for each page
-    const [pageStatuses, setPageStatuses] = useState({});
-    const [loading, setLoading] = useState(true);
+export default function PagesAdmin() {
+    const [pages, setPages] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        checkPageStatuses();
+        loadPages();
     }, []);
 
-    const checkPageStatuses = async () => {
-        const statuses = {};
-        await Promise.all(SYSTEM_PAGES.map(async (page) => {
-            try {
-                // standardized slug format: page-[id]
-                const data = await getPostBySlug(`page-${page.id}`);
-                statuses[page.id] = !!data;
-            } catch (e) {
-                statuses[page.id] = false;
-            }
-        }));
-        setPageStatuses(statuses);
-        setLoading(false);
+    const loadPages = async () => {
+        const data = await pagesService.getPages();
+        setPages(data);
+        setIsLoading(false);
+    };
+
+    const handleDelete = async (slug) => {
+        if (!confirm("Are you sure?")) return;
+        await pagesService.deletePage(slug);
+        setPages(pages.filter(p => p.slug !== slug));
     };
 
     return (
         <div className="space-y-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-black text-text-primary tracking-tight">Pages Manager</h1>
-                    <p className="text-text-secondary">Edit content, SEO, and layouts for core system pages.</p>
+                    <h1 className="text-3xl font-black text-text-primary tracking-tight mb-2">Pages</h1>
+                    <p className="text-text-secondary">Manage static pages like About, Terms, Privacy.</p>
                 </div>
+                <Link
+                    href="/admin/posts/new?type=page" // Reusing post editor for now with type flag if needed, or separate route
+                    className="flex items-center gap-2 px-5 py-2.5 bg-accent-primary text-white font-bold rounded-xl hover:scale-[1.02] transition-transform"
+                >
+                    <Plus size={18} />
+                    Create Page
+                </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {SYSTEM_PAGES.map((page) => {
-                    const isCustomized = pageStatuses[page.id];
-
-                    return (
-                        <div key={page.id} className="bg-panel border border-border rounded-2xl overflow-hidden hover:shadow-lg transition-all group relative">
-                            {/* Status Indicator */}
-                            <div className="absolute top-4 right-4">
-                                {loading ? (
-                                    <div className="w-2 h-2 rounded-full bg-text-tertiary animate-pulse"></div>
-                                ) : isCustomized ? (
-                                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 text-[10px] font-black uppercase tracking-wider border border-green-500/20">
-                                        <CheckCircle size={10} /> Customized
-                                    </div>
-                                ) : (
-                                    <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface text-text-tertiary text-[10px] font-black uppercase tracking-wider border border-border">
-                                        <Globe size={10} /> Default
-                                    </div>
-                                )}
-                            </div>
-
-                            <div className="p-6">
-                                <div className="w-12 h-12 rounded-xl bg-accent-primary/10 flex items-center justify-center text-accent-primary mb-4 group-hover:scale-110 transition-transform duration-300">
-                                    <Layout size={24} />
-                                </div>
-
-                                <h3 className="text-xl font-bold text-text-primary mb-1">{page.title}</h3>
-                                <p className="text-sm text-text-secondary mb-6 h-10">{page.description}</p>
-
-                                <div className="flex items-center gap-2">
-                                    <Link
-                                        href={`/admin/pages/${page.id}`}
-                                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-text-primary text-background rounded-xl font-bold hover:opacity-90 transition-opacity"
-                                    >
-                                        <Edit size={16} />
-                                        Edit Content
-                                    </Link>
-                                    <Link
-                                        href={page.path}
-                                        target="_blank"
-                                        className="p-2.5 bg-surface border border-border rounded-xl text-text-secondary hover:text-text-primary hover:border-accent-primary/30 transition-colors"
-                                        title="View Live Page"
-                                    >
-                                        <ArrowUpRight size={18} />
-                                    </Link>
-                                </div>
-                            </div>
-
-                            {/* Decorative gradient */}
-                            <div className="h-1 w-full bg-gradient-to-r from-transparent via-accent-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                    );
-                })}
+            <div className="bg-panel border border-border rounded-2xl overflow-hidden">
+                <table className="w-full text-left">
+                    <thead className="bg-surface border-b border-border">
+                        <tr>
+                            <th className="p-4 text-xs font-bold text-text-secondary uppercase">Page Name</th>
+                            <th className="p-4 text-xs font-bold text-text-secondary uppercase">Slug</th>
+                            <th className="p-4 text-xs font-bold text-text-secondary uppercase">Status</th>
+                            <th className="p-4 text-xs font-bold text-text-secondary uppercase text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border">
+                        {isLoading ? (
+                            <tr><td colSpan="4" className="p-8 text-center animate-pulse">Loading...</td></tr>
+                        ) : pages.length === 0 ? (
+                            <tr><td colSpan="4" className="p-8 text-center text-text-tertiary">No pages found. Create one!</td></tr>
+                        ) : (
+                            pages.map(page => (
+                                <tr key={page.id} className="hover:bg-surface/50 transition-colors">
+                                    <td className="p-4 font-bold flex items-center gap-3">
+                                        <File size={16} className="text-text-tertiary" />
+                                        {page.title}
+                                    </td>
+                                    <td className="p-4 text-sm font-mono text-text-secondary">/{page.slug}</td>
+                                    <td className="p-4">
+                                        <span className="px-2 py-1 bg-green-500/10 text-green-500 rounded text-xs font-bold uppercase">
+                                            {page.status}
+                                        </span>
+                                    </td>
+                                    <td className="p-4 text-right flex justify-end gap-2">
+                                        <Link href={`/admin/posts/edit/${page.slug}?type=page`} className="p-2 hover:bg-surface rounded text-blue-500">
+                                            <Edit2 size={16} />
+                                        </Link>
+                                        <button onClick={() => handleDelete(page.slug)} className="p-2 hover:bg-surface rounded text-red-500">
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
