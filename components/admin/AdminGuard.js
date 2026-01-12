@@ -6,16 +6,21 @@ import { useRouter } from 'next/navigation';
 import { isAdmin } from '@/lib/admin';
 import { ShieldAlert } from 'lucide-react';
 
+import { usePathname } from 'next/navigation';
+
 export default function AdminGuard({ children }) {
     const { user, loading } = useAuth();
     const router = useRouter();
+    const pathname = usePathname();
     const [isAuthorized, setIsAuthorized] = useState(false);
+
+
 
     useEffect(() => {
         if (!loading) {
             if (!user) {
-                // Not logged in -> Redirect to login
-                router.push('/login?redirect=/admin');
+                // Not logged in -> Redirect to admin login
+                router.push('/admin/login');
             } else if (!isAdmin(user.email)) {
                 // Logged in but not admin -> Show unauthorized or redirect home
                 // We'll show unauthorized state here to avoid infinite loops if they try to access
@@ -25,6 +30,11 @@ export default function AdminGuard({ children }) {
             }
         }
     }, [user, loading, router]);
+
+    // Bypass guard for login page (moved after hooks)
+    if (pathname === '/admin/login') {
+        return <>{children}</>;
+    }
 
     if (loading) {
         return (
