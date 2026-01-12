@@ -2,8 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
 import { usePathname } from 'next/navigation';
-import { X, Home, Terminal, Code, BookOpen, Layout, Globe, Network, Briefcase, GraduationCap, ScrollText, ShieldCheck } from 'lucide-react';
+import { X, Home, Terminal, Code, BookOpen, Layout, Globe, Network, Briefcase, GraduationCap, ScrollText, ShieldCheck, LogIn, UserPlus } from 'lucide-react';
 import {
     GrammarIcon,
     RewriteIcon,
@@ -18,6 +19,7 @@ import Logo from './Logo';
 
 export default function MobileMenu({ isOpen, onClose }) {
     const pathname = usePathname();
+    const { user } = useAuth();
 
     const items = [
         { label: 'Home', href: '/', icon: Home, color: 'text-accent-success', activeColor: 'text-accent-primary', activeBg: 'bg-accent-primary/10' },
@@ -95,10 +97,31 @@ export default function MobileMenu({ isOpen, onClose }) {
 
                 <div className="p-6 mt-auto border-t border-border">
                     <div className="p-4 rounded-xl bg-gradient-to-br from-accent-primary/10 to-accent-success/10 border border-border">
-                        <h4 className="text-xs font-bold text-text-primary mb-1">Rovio Tech Mobile</h4>
+                        <h4 className="text-xs font-bold text-text-primary mb-1">ErrorWiki Mobile</h4>
                         <p className="text-[10px] text-text-secondary">Code on the go.</p>
                     </div>
                 </div>
+
+                {!user && (
+                    <div className="p-6 pt-0 space-y-3">
+                        <Link
+                            href="/login"
+                            onClick={onClose}
+                            className="flex items-center justify-center w-full py-3 rounded-xl border border-[#008000] text-[#008000] font-bold text-sm"
+                        >
+                            <LogIn size={18} className="mr-2" />
+                            Login
+                        </Link>
+                        <Link
+                            href="/signup"
+                            onClick={onClose}
+                            className="flex items-center justify-center w-full py-3 rounded-xl bg-[#008000] text-white font-bold text-sm shadow-lg shadow-[#008000]/20"
+                        >
+                            <UserPlus size={18} className="mr-2" />
+                            Sign Up
+                        </Link>
+                    </div>
+                )}
             </div>
         </>
     );

@@ -6,7 +6,7 @@ export default function RovioTechFooter() {
     return (
         <footer className="h-8 bg-[#0a0a0a] border-t border-[#1e293b] flex items-center justify-between px-6 text-[10px] text-gray-500">
             <div className="flex items-center gap-4">
-                <span className="hover:text-white cursor-pointer transition-colors">&copy; 2026 Rovio Tech</span>
+                <span className="hover:text-white cursor-pointer transition-colors">&copy; 2026 ErrorWiki</span>
                 <span className="hover:text-white cursor-pointer transition-colors">About</span>
                 <span className="hover:text-white cursor-pointer transition-colors">Learn</span>
                 <span className="hover:text-white cursor-pointer transition-colors">Contact</span>

@@ -33,10 +33,10 @@ export default function SignupPage() {
             <div className="min-h-[80vh] flex items-center justify-center px-4">
                 <div className="w-full max-w-md bg-panel border-2 border-border p-8 rounded-[2.5rem] shadow-2xl animate-in fade-in zoom-in duration-500">
                     <div className="text-center mb-10">
-                        <div className="w-16 h-16 bg-accent-green/10 border border-accent-green/20 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-                            <UserPlus size={32} className="text-accent-green" />
+                        <div className="w-16 h-16 bg-accent-primary/10 border border-accent-primary/20 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                            <UserPlus size={32} className="text-accent-primary" />
                         </div>
-                        <h1 className="text-3xl font-black uppercase tracking-tight mb-2">Join DevFixer</h1>
+                        <h1 className="text-3xl font-black uppercase tracking-tight mb-2">Join ErrorWiki</h1>
                         <p className="text-text-secondary">Create an account to start contributing</p>
                     </div>
 
@@ -50,13 +50,13 @@ export default function SignupPage() {
                         <div className="space-y-2">
                             <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">Full Name</label>
                             <div className="relative group">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-accent-green transition-colors" size={18} />
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-accent-primary transition-colors" size={18} />
                                 <input
                                     type="text"
                                     required
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full bg-background border border-border rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent-green transition-all"
+                                    className="w-full bg-background border border-border rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent-primary transition-all"
                                     placeholder="John Doe"
                                 />
                             </div>
@@ -65,13 +65,13 @@ export default function SignupPage() {
                         <div className="space-y-2">
                             <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">Email Address</label>
                             <div className="relative group">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-accent-green transition-colors" size={18} />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-accent-primary transition-colors" size={18} />
                                 <input
                                     type="email"
                                     required
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full bg-background border border-border rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent-green transition-all"
+                                    className="w-full bg-background border border-border rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent-primary transition-all"
                                     placeholder="you@example.com"
                                 />
                             </div>
@@ -80,13 +80,13 @@ export default function SignupPage() {
                         <div className="space-y-2">
                             <label className="text-[10px] font-black uppercase tracking-widest text-text-secondary ml-1">Password</label>
                             <div className="relative group">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-accent-green transition-colors" size={18} />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within:text-accent-primary transition-colors" size={18} />
                                 <input
                                     type="password"
                                     required
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                    className="w-full bg-background border border-border rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent-green transition-all"
+                                    className="w-full bg-background border border-border rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-accent-primary transition-all"
                                     placeholder="••••••••"
                                     minLength={8}
                                 />
@@ -96,7 +96,7 @@ export default function SignupPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-accent-green text-white py-4 rounded-xl font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-accent-green/20 flex items-center justify-center gap-2"
+                            className="w-full bg-accent-primary text-white py-4 rounded-xl font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-accent-primary/20 flex items-center justify-center gap-2"
                         >
                             {loading ? 'Creating Account...' : <><span>create Account</span> <ArrowRight size={18} /></>}
                         </button>
@@ -104,7 +104,7 @@ export default function SignupPage() {
 
                     <div className="mt-8 text-center text-sm text-text-secondary">
                         Already have an account?{' '}
-                        <Link href="/login" className="text-accent-green font-bold hover:underline">
+                        <Link href="/login" className="text-accent-primary font-bold hover:underline">
                             Sign in instead
                         </Link>
                     </div>

@@ -168,7 +168,8 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
 
                     <ThemeToggle />
 
-                    {user && (
+                    {/* Authenticated State */}
+                    {user ? (
                         <>
                             <div className="h-6 w-px bg-border mx-1 hidden sm:block" />
                             <div className="flex items-center gap-3">
@@ -180,6 +181,23 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                                     <LogOut size={18} />
                                 </button>
                             </div>
+                        </>
+                    ) : (
+                        /* Unauthenticated State - Login / Signup */
+                        <>
+                            <div className="h-6 w-px bg-border mx-1 hidden sm:block" />
+                            <Link
+                                href="/login"
+                                className="hidden sm:inline-flex px-4 py-2 text-sm font-bold text-[#008000] hover:text-[#006600] transition-colors"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                href="/signup"
+                                className="hidden sm:inline-flex px-5 py-2 text-sm font-bold bg-[#008000] text-white rounded-lg hover:bg-[#006600] transition-all shadow-md shadow-[#008000]/20"
+                            >
+                                Sign Up
+                            </Link>
                         </>
                     )}
                 </div>

@@ -16,11 +16,11 @@ const FILES = {
 };
 
 const BACKEND_LANGUAGES = {
-    python: { name: 'Python', icon: FileCode, template: 'print("Hello Rovio Tech!")' },
-    javascript: { name: 'Node.js', icon: FileCode, template: 'console.log("Hello Rovio Tech!");' },
-    cpp: { name: 'C++', icon: FileType, template: '#include <iostream>\n\nint main() {\n    std::cout << "Hello Rovio Tech!" << std::endl;\n    return 0;\n}' },
-    java: { name: 'Java', icon: FileType, template: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello Rovio Tech!");\n    }\n}' },
-    go: { name: 'Go', icon: FileCode, template: 'package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Hello Rovio Tech!")\n}' },
+    python: { name: 'Python', icon: FileCode, template: 'print("Hello ErrorWiki!")' },
+    javascript: { name: 'Node.js', icon: FileCode, template: 'console.log("Hello ErrorWiki!");' },
+    cpp: { name: 'C++', icon: FileType, template: '#include <iostream>\n\nint main() {\n    std::cout << "Hello ErrorWiki!" << std::endl;\n    return 0;\n}' },
+    java: { name: 'Java', icon: FileType, template: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello ErrorWiki!");\n    }\n}' },
+    go: { name: 'Go', icon: FileCode, template: 'package main\n\nimport "fmt"\n\nfunc main() {\n    fmt.Println("Hello ErrorWiki!")\n}' },
     sqlite3: { name: 'SQL', icon: FileType, template: 'CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT);\nINSERT INTO users (name) VALUES ("Alice"), ("Bob");\nSELECT * FROM users;' },
 };
 

@@ -14,36 +14,36 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-    metadataBase: new URL('https://codeorbit.dev'),
+    metadataBase: new URL('https://errorwiki.com'),
     title: {
-        default: 'Rovio Tech - The Ultimate Developer Playground',
-        template: '%s | Rovio Tech'
+        default: 'ErrorWiki - The Ultimate Developer Playground',
+        template: '%s | ErrorWiki'
     },
     description: 'Build, compile, and debug code instantly. The all-in-one developer platform for HTML, CSS, JavaScript, and more.',
-    keywords: ['online compiler', 'code playground', 'web development', 'rovio tech', 'developer tools'],
-    authors: [{ name: 'Rovio Tech Team' }],
-    creator: 'Rovio Tech',
+    keywords: ['online compiler', 'code playground', 'web development', 'errorwiki', 'developer tools'],
+    authors: [{ name: 'ErrorWiki Team' }],
+    creator: 'ErrorWiki',
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        url: 'https://roviotech.com',
-        siteName: 'Rovio Tech',
-        title: 'Rovio Tech - Build Faster',
+        url: 'https://errorwiki.com',
+        siteName: 'ErrorWiki',
+        title: 'ErrorWiki - Build Faster',
         description: 'The ultimate developer playground.',
         images: [
             {
                 url: '/og-image.jpg',
                 width: 1200,
                 height: 630,
-                alt: 'Rovio Tech Platform',
+                alt: 'ErrorWiki Platform',
             },
         ],
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Rovio Tech',
+        title: 'ErrorWiki',
         description: 'Build code faster than ever.',
-        creator: '@roviotech',
+        creator: '@errorwiki',
     },
     alternates: {
         canonical: '/',

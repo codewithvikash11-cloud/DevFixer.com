@@ -65,8 +65,8 @@ export default function Home() {
                     __html: JSON.stringify({
                         "@context": "https://schema.org",
                         "@type": "WebSite",
-                        "name": "DevFixer",
-                        "url": "https://devfixer.com",
+                        "name": "ErrorWiki",
+                        "url": "https://errorwiki.com",
                         "description": "The elite knowledge base and toolkit for developers.",
                     })
                 }}

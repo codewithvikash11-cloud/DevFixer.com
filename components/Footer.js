@@ -26,7 +26,7 @@ const Footer = () => {
                         <div className="flex items-center gap-4">
                             <SocialLink icon={<Github size={18} />} href="https://github.com" />
                             <SocialLink icon={<Twitter size={18} />} href="https://twitter.com" />
-                            <SocialLink icon={<Globe size={18} />} href="https://devfixer.com" />
+                            <SocialLink icon={<Globe size={18} />} href="https://errorwiki.com" />
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
                     <p className="text-xs font-medium text-text-tertiary">
-                        &copy; {new Date().getFullYear()} DevFixer Inc. All rights reserved.
+                        &copy; {new Date().getFullYear()} ErrorWiki Inc. All rights reserved.
                     </p>
                     <div className="flex items-center gap-1.5 text-xs font-medium text-text-tertiary border border-border px-3 py-1.5 rounded-full bg-surface/50">
                         <span>Crafted by developers</span>

@@ -82,7 +82,7 @@ export default function ToolsPage() {
                             <div className="h-px bg-border flex-1"></div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             {tools.map((tool) => (
                                 <Link
                                     key={tool.id}
@@ -93,19 +93,22 @@ export default function ToolsPage() {
                                         <div className={`w-10 h-10 rounded-lg ${tool.bg} ${tool.color} flex items-center justify-center transition-transform group-hover:scale-110 duration-300`}>
                                             <tool.icon size={20} />
                                         </div>
-                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity -mr-2 -mt-2">
-                                            <div className="p-2 text-text-tertiary hover:text-accent-primary">
-                                                <Zap size={14} className="fill-current" />
-                                            </div>
-                                        </div>
                                     </div>
+
+                                    {/* Action button added to footer, removed zap overlay to declutter */}
 
                                     <h3 className="text-sm font-bold text-text-primary group-hover:text-accent-primary transition-colors mb-1 truncate pr-2">
                                         {tool.title}
                                     </h3>
-                                    <p className="text-xs text-text-secondary line-clamp-2 leading-relaxed">
+                                    <p className="text-xs text-text-secondary line-clamp-2 leading-relaxed mb-4 flex-1">
                                         {tool.description}
                                     </p>
+
+                                    <div className="mt-auto pt-2">
+                                        <button className="w-full py-2 rounded-lg bg-[#008000] text-white text-xs font-bold uppercase tracking-wide hover:bg-[#006600] transition-colors shadow-md shadow-[#008000]/10 flex items-center justify-center gap-2">
+                                            Solve Error <Zap size={14} className="fill-current" />
+                                        </button>
+                                    </div>
                                 </Link>
                             ))}
                         </div>
