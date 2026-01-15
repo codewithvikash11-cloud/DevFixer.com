@@ -6,9 +6,25 @@ import { Copy, Check, FileCode, CheckCircle2 } from 'lucide-react';
 const CodeBlock = ({ code, language = 'javascript', fileName = 'example.js' }) => {
     const [copied, setCopied] = useState(false);
 
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(code);
-        setCopied(true);
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText(code);
+            setCopied(true);
+        } catch (err) {
+            // Fallback for older browsers or non-secure contexts
+            const textArea = document.createElement("textarea");
+            textArea.value = code;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                setCopied(true);
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(textArea);
+        }
         setTimeout(() => setCopied(false), 2000);
     };
 
@@ -31,7 +47,7 @@ const CodeBlock = ({ code, language = 'javascript', fileName = 'example.js' }) =
                 </div>
                 <button
                     onClick={copyToClipboard}
-                    className="p-1.5 hover:bg-white/5 rounded-lg transition-all active:scale-90 flex items-center space-x-2 group/btn"
+                    className="p-2 md:p-1.5 hover:bg-white/5 rounded-lg transition-all active:scale-95 flex items-center space-x-2 group/btn touch-manipulation"
                     title="Copy to clipboard"
                 >
                     {copied ? (

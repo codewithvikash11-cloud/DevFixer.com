@@ -1,52 +1,17 @@
 [
   {
-    "slug": "typeerror-map-undefined",
-    "title": "TypeError: Cannot read property 'map' of undefined",
-    "language": "javascript",
-    "difficulty": "Beginner",
-    "description": "This error occurs when you attempt to iterate over a variable that is supposed to be an array but is instead undefined.",
-    "content": "In JavaScript, the .map() function is a method of the Array prototype. If you call it on a variable that has not been initialized, or a variable that was expected to be returned as an array (e.g., from an API call) but resulted in undefined, the engine throws this TypeError.",
-    "code": "// This will crash if data is null\nconst list = data.map(item => item.name);\n\n// Solution 1: Optional Chaining\nconst list = data?.map(item => item.name);\n\n// Solution 2: Default Value\nconst list = (data || []).map(item => item.name);\n\n// Solution 3: Guard Clause\nif (!data) return null;",
+    "id": "1",
+    "title": "Welcome to ErrorWiki",
+    "slug": "welcome-to-errorwiki",
+    "content": "This is a sample post. Edit me in the admin panel!",
     "status": "published",
-    "author": "Sarah Drasner",
-    "createdAt": "2024-01-15T12:00:00Z"
-  },
-  {
-    "slug": "python-indentation-error",
-    "title": "IndentationError: unexpected indent",
-    "language": "python",
-    "difficulty": "Beginner",
-    "description": "Python relies on indentation to define scope. Mismatched spaces or tabs will raise this error.",
-    "content": "Unlike many C-style languages that use braces {}, Python uses whitespace to delimit blocks of code. Mixing tabs and spaces is the most common cause of this error.",
-    "code": "# Bad (Mixing tabs and spaces)\ndef greet():\n  print('Hello')\n\tprint('World')\n\n# Good (Consistent 4 spaces)\ndef greet():\n    print('Hello')\n    print('World')",
-    "status": "published",
-    "author": "Guido van Rossum",
-    "createdAt": "2024-01-16T10:00:00Z"
-  },
-  {
-    "title": "vikash",
-    "slug": "vikash",
-    "language": "javascript",
-    "description": "cfgvtehyhtgt thtg ht ty",
-    "content": "gbtrbth54 gtg",
-    "code": "wfrg4g 5y gytn 5grtb yhg4",
-    "status": "published",
-    "seoTitle": "Vikash",
-    "seoDescription": "",
-    "createdAt": "2025-12-25T10:07:45.209Z",
-    "author": "DevFixer Admin"
-  },
-  {
-    "title": "how to center a div",
-    "slug": "how-to-center-a-div",
-    "language": "javascript",
-    "description": "hey in this blog i teach you how to center a div.",
-    "content": "",
-    "code": "div{\n display:flex;\n justify-content:center;\n align-items:center;\n}",
-    "status": "published",
-    "seoTitle": "",
-    "seoDescription": "",
-    "createdAt": "2025-12-25T17:50:17.724Z",
-    "author": "DevFixer Admin"
+    "createdAt": "2023-01-01T00:00:00.000Z",
+    "updatedAt": "2023-01-01T00:00:00.000Z",
+    "description": "Welcome post",
+    "tags": [
+      "welcome",
+      "errorwiki"
+    ],
+    "language": "markdown"
   }
 ]

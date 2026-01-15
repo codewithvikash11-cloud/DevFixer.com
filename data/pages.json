@@ -1,48 +1,18 @@
 [
     {
+        "id": "1",
+        "title": "Home",
         "slug": "home",
-        "isSystem": true,
-        "title": "Home Page",
-        "sections": {
-            "heroTitle": "The Error Archive",
-            "heroSubtitle": "Access thousands of verified solutions, technical breakdowns, and preventative guidelines curated by senior software architects.",
-            "heroTag": ""
-        }
+        "isPublished": true,
+        "seoTitle": "Home - ErrorWiki",
+        "seoDescription": "Welcome to ErrorWiki"
     },
     {
-        "slug": "about-us",
-        "isSystem": false,
-        "title": "About DevFixer",
-        "content": "# About DevFixer\n\nDevFixer is a community-driven database of verified coding solutions.\n\n## Our Mission\n\nTo help developers solve problems faster by providing accurate, tested solutions to common programming errors.\n\n## The Team\n\nBuilt by developers, for developers."
-    },
-    {
-        "slug": "extension",
-        "isSystem": false,
-        "title": "VS Code Extension",
-        "content": "# DevFixer for VS Code\n\nDebug faster without leaving your editor.\n\n## Features\n\n- **Instant Error Analysis**: Automatically detects error logs in your terminal.\n- **One-Click Fixes**: Apply verified solutions directly to your codebase.\n- **Offline Mode**: Access cached solutions even when offline.\n\n## Coming Soon\n\nWe are currently in private beta. Join the waitlist to get early access.\n\n[Download Beta (Coming Soon)](#)"
-    },
-    {
-        "slug": "contribute",
-        "isSystem": false,
-        "title": "Contribute Fixes",
-        "content": "# Help Us Fix the Web\n\nDevFixer is built by developers like you. Contribute your knowledge and help millions of others debug faster.\n\n## How to Contribute\n\n1. **Find an Unsolved Error**: Check our specific 'Requests' section.\n2. **Submit a Solution**: Provide a clear, verified code snippet.\n3. **Get Verified**: Our senior architects review every submission.\n\n[Submit a Fix](#) | [View Guidelines](#)"
-    },
-    {
-        "slug": "leaderboard",
-        "isSystem": false,
-        "title": "Contributor Leaderboard",
-        "content": "# Top Debuggers\n\nRecognizing the developers who have saved the most hours for the community.\n\n| Rank | User | Fixes | Reputation |\n|------|------|-------|------------|\n| 1 | @Vikash22 | 142 | 5,400 |\n| 2 | @SarahDev | 98 | 3,200 |\n| 3 | @CodeNinja | 85 | 2,950 |\n\n_Leaderboard updates weekly._"
-    },
-    {
-        "slug": "discussions",
-        "isSystem": false,
-        "title": "Community Discussions",
-        "content": "# Developer Discussions\n\nJoin the conversation about best practices, architectural patterns, and the future of debugging.\n\n## Popular Topics\n\n- **React Server Components**: Best practices for error handling.\n- **Rust vs Go**: Performance benchmarks in 2024.\n- **AI Debugging**: How LLMs are changing the workflow.\n\n[Start a New Topic](#)"
-    },
-    {
-        "slug": "api",
-        "isSystem": false,
-        "title": "DevFixer API",
-        "content": "# API Documentation\n\nIntegrate DevFixer's solution database into your own tools.\n\n## Endpoints\n\n### Get Solution by Error Code\n\n`GET https://api.devfixer.com/v1/solutions/{error_code}`\n\n**Response:**\n\n```json\n{\n  \"id\": \"err_123\",\n  \"solution\": \"Check for null values...\",\n  \"verified\": true\n}\n```\n\n[Request API Key](#)"
+        "id": "2",
+        "title": "About",
+        "slug": "about",
+        "isPublished": true,
+        "seoTitle": "About Us",
+        "seoDescription": "About ErrorWiki"
     }
 ]

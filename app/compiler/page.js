@@ -48,7 +48,18 @@ export default function CompilerPage() {
             await navigator.clipboard.writeText(textToShare);
             alert("Code copied to clipboard!");
         } catch (err) {
-            console.error("Failed to copy:", err);
+            // Fallback
+            const textArea = document.createElement("textarea");
+            textArea.value = textToShare;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert("Code copied to clipboard!");
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(textArea);
         }
     };
 
@@ -238,9 +249,9 @@ export default function CompilerPage() {
                                     Live Preview
                                 </span>
                                 <div className="flex gap-2">
-                                    <button onClick={handleShare} className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-lg transition-all">
+                                    <button onClick={handleShare} className="flex items-center gap-1.5 px-3 py-2 md:py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-lg transition-all active:scale-95 touch-manipulation">
                                         <Share2 size={12} />
-                                        Share
+                                        Copy Code
                                     </button>
                                 </div>
                             </div>
@@ -265,7 +276,7 @@ export default function CompilerPage() {
                                     <button
                                         onClick={runBackendCode}
                                         disabled={isRunning}
-                                        className="flex items-center gap-2 px-4 py-1.5 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(0,128,0,0.4)]"
+                                        className="flex items-center gap-2 px-4 py-2 md:py-1.5 bg-accent-primary hover:bg-accent-hover text-white text-xs font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(0,128,0,0.4)] active:scale-95 touch-manipulation"
                                     >
                                         {isRunning ? <Square size={12} className="animate-pulse" /> : <Play size={12} />}
                                         <span>{isRunning ? 'Running...' : 'Run'}</span>

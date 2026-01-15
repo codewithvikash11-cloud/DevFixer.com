@@ -1,0 +1,99 @@
+
+> devfixer.com@1.0.0 build
+> next build
+
+Γû▓ Next.js 16.1.0 (Turbopack)
+- Environments: .env.local
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 3 errors:
+./lib/appwrite.js:2:1
+Module not found: Can't resolve 'appwrite'
+  1 |
+> 2 | import { Client, Databases, Account, Query } from 'appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 |
+  4 | const client = new Client();
+  5 | const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
+
+
+
+Import traces:
+  App Route:
+    ./lib/appwrite.js
+    ./lib/pages.js
+    ./app/api/pages/route.js
+
+  Server Component:
+    ./lib/appwrite.js
+    ./lib/pages.js
+    ./app/[slug]/page.js
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./lib/appwrite.js:21:1
+Module not found: Can't resolve 'appwrite'
+  19 | export const databases = new Databases(client);
+  20 | export const account = new Account(client);
+> 21 | export { Query, ID } from 'appwrite';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  22 |
+  23 | export const appwriteConfig = {
+  24 |     databaseId: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+
+
+
+Import traces:
+  App Route:
+    ./lib/appwrite.js
+    ./lib/pages.js
+    ./app/api/pages/route.js
+
+  Server Component:
+    ./lib/appwrite.js
+    ./lib/pages.js
+    ./app/[slug]/page.js
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./lib/appwrite-server.js:1:1
+Module not found: Can't resolve 'node-appwrite'
+> 1 | import { Client, Databases, Users, Storage, Query, ID } from 'node-appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 |
+  3 | // Helper to create a unified Admin Client
+  4 | const createAdminClient = () => {
+
+
+
+Import traces:
+  Server Component:
+    ./lib/appwrite-server.js
+    ./lib/actions/content.js
+
+  Client Component Browser:
+    ./lib/appwrite-server.js [Client Component Browser]
+    ./lib/comments.js [Client Component Browser]
+    ./app/admin/comments/page.js [Client Component Browser]
+    ./app/admin/comments/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/appwrite-server.js [Client Component SSR]
+    ./lib/comments.js [Client Component SSR]
+    ./app/admin/comments/page.js [Client Component SSR]
+    ./app/admin/comments/page.js [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./lib/appwrite.js:2:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./lib/appwrite.js:21:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./lib/appwrite-server.js:1:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)

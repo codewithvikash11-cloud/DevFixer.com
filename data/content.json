@@ -1,0 +1,23 @@
+{
+    "hero_title": {
+        "id": "1",
+        "key": "hero_title",
+        "value": "Fix Your Code. Fast.",
+        "section": "home",
+        "type": "text"
+    },
+    "hero_subtitle": {
+        "id": "2",
+        "key": "hero_subtitle",
+        "value": "The ultimate AI-powered toolkit for developers.",
+        "section": "home",
+        "type": "text"
+    },
+    "announcement_bar": {
+        "id": "3",
+        "key": "announcement_bar",
+        "value": "🚀 New Feature: AI Security Scanner is now live!",
+        "section": "global",
+        "type": "text"
+    }
+}

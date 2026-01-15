@@ -5,6 +5,6 @@ export default function robots() {
             allow: '/',
             disallow: ['/admin/', '/api/'],
         },
-        sitemap: 'https://devfixer.com/sitemap.xml',
+        sitemap: 'https://errorwiki.com/sitemap.xml',
     }
 }

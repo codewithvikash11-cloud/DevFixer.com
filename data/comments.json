@@ -1,0 +1,11 @@
+[
+    {
+        "id": "1",
+        "content": "Great post!",
+        "author": "User1",
+        "status": "approved",
+        "postId": "1",
+        "postTitle": "Getting Started",
+        "createdAt": "2023-01-01T10:00:00.000Z"
+    }
+]

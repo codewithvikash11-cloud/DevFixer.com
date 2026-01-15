@@ -1,0 +1,706 @@
+
+> devfixer.com@1.0.0 build
+> next build
+
+Γû▓ Next.js 16.1.0 (Turbopack)
+- Environments: .env.local
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 25 errors:
+./app/admin/homepage/page.js:4:1
+Module not found: Can't resolve '@/lib/actions/homepage'
+  2 |
+  3 | import React, { useState, useEffect } from 'react';
+> 4 | import { getHomepageData, updateHomepageData } from '@/lib/actions/homepage';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { Save, Loader2, Layout, Type, Image as ImageIcon, Link as LinkIcon, Plus, Trash2 } from 'lucide-react';
+  6 |
+  7 | const DEFAULT_CONFIG = {
+
+Import map: aliased to relative './lib/actions/homepage' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/homepage/page.js [Client Component Browser]
+    ./app/admin/homepage/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/homepage/page.js [Client Component SSR]
+    ./app/admin/homepage/page.js [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/admin/menu/page.js:4:1
+Module not found: Can't resolve '@/lib/actions/menus'
+  2 |
+  3 | import React, { useState, useEffect } from 'react';
+> 4 | import { createMenu, updateMenu, deleteMenu, reorderMenus } from '@/lib/actions/menus';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { getMenus } from '@/lib/actions/menus'; // Will add this to actions
+  6 | import { Plus, GripVertical, Trash2, Save, Loader2 } from 'lucide-react';
+  7 | import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+
+Import map: aliased to relative './lib/actions/menus' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/menu/page.js [Client Component Browser]
+    ./app/admin/menu/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/menu/page.js [Client Component SSR]
+    ./app/admin/menu/page.js [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/admin/menu/page.js:5:1
+Module not found: Can't resolve '@/lib/actions/menus'
+  3 | import React, { useState, useEffect } from 'react';
+  4 | import { createMenu, updateMenu, deleteMenu, reorderMenus } from '@/lib/actions/menus';
+> 5 | import { getMenus } from '@/lib/actions/menus'; // Will add this to actions
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Plus, GripVertical, Trash2, Save, Loader2 } from 'lucide-react';
+  7 | import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+  8 |
+
+Import map: aliased to relative './lib/actions/menus' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/menu/page.js [Client Component Browser]
+    ./app/admin/menu/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/menu/page.js [Client Component SSR]
+    ./app/admin/menu/page.js [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/admin/settings/page.js:4:1
+Module not found: Can't resolve '@/lib/actions/settings'
+  2 |
+  3 | import React, { useState, useEffect } from 'react';
+> 4 | import { getSettings, updateSettings } from '@/lib/actions/settings';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { Save, Globe, Lock, Mail, Palette, Loader2 } from 'lucide-react';
+  6 |
+  7 | export default function SettingsPage() {
+
+Import map: aliased to relative './lib/actions/settings' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/settings/page.js [Client Component Browser]
+    ./app/admin/settings/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/settings/page.js [Client Component SSR]
+    ./app/admin/settings/page.js [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/admin/menu/page.js:7:1
+Module not found: Can't resolve '@hello-pangea/dnd'
+   5 | import { getMenus } from '@/lib/actions/menus'; // Will add this to actions
+   6 | import { Plus, GripVertical, Trash2, Save, Loader2 } from 'lucide-react';
+>  7 | import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   8 |
+   9 | export default function MenuBuilder() {
+  10 |     const [menus, setMenus] = useState([]);
+
+
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/menu/page.js [Client Component Browser]
+    ./app/admin/menu/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/menu/page.js [Client Component SSR]
+    ./app/admin/menu/page.js [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./lib/posts.js:1:1
+Export DATABASE_ID doesn't exist in target module
+> 1 | import { databases, Query, DATABASE_ID, getCollection } from './appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { ID } from 'node-appwrite';
+  3 |
+  4 | const { col: COLLECTION_ID } = getCollection('posts');
+
+The export DATABASE_ID was not found in module [project]/lib/appwrite.js [app-client] (ecmascript).
+Did you mean to import ID?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  App Route:
+    ./lib/posts.js
+    ./app/api/posts/route.js
+
+  Server Component:
+    ./lib/posts.js
+    ./app/errors/[slug]/page.js
+
+  Client Component Browser:
+    ./lib/posts.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/posts.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+
+./lib/posts.js:1:1
+Export DATABASE_ID doesn't exist in target module
+> 1 | import { databases, Query, DATABASE_ID, getCollection } from './appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { ID } from 'node-appwrite';
+  3 |
+  4 | const { col: COLLECTION_ID } = getCollection('posts');
+
+The export DATABASE_ID was not found in module [project]/lib/appwrite.js [app-route] (ecmascript).
+Did you mean to import ID?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  App Route:
+    ./lib/posts.js
+    ./app/api/posts/route.js
+
+  Server Component:
+    ./lib/posts.js
+    ./app/errors/[slug]/page.js
+
+  Client Component Browser:
+    ./lib/posts.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/posts.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+
+./lib/posts.js:1:1
+Export DATABASE_ID doesn't exist in target module
+> 1 | import { databases, Query, DATABASE_ID, getCollection } from './appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { ID } from 'node-appwrite';
+  3 |
+  4 | const { col: COLLECTION_ID } = getCollection('posts');
+
+The export DATABASE_ID was not found in module [project]/lib/appwrite.js [app-rsc] (ecmascript).
+Did you mean to import ID?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  App Route:
+    ./lib/posts.js
+    ./app/api/posts/route.js
+
+  Server Component:
+    ./lib/posts.js
+    ./app/errors/[slug]/page.js
+
+  Client Component Browser:
+    ./lib/posts.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/posts.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+
+./lib/posts.js:1:1
+Export DATABASE_ID doesn't exist in target module
+> 1 | import { databases, Query, DATABASE_ID, getCollection } from './appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { ID } from 'node-appwrite';
+  3 |
+  4 | const { col: COLLECTION_ID } = getCollection('posts');
+
+The export DATABASE_ID was not found in module [project]/lib/appwrite.js [app-ssr] (ecmascript).
+Did you mean to import ID?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  App Route:
+    ./lib/posts.js
+    ./app/api/posts/route.js
+
+  Server Component:
+    ./lib/posts.js
+    ./app/errors/[slug]/page.js
+
+  Client Component Browser:
+    ./lib/posts.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/posts.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+
+./app/admin/posts/[id]/page.js:5:1
+Export createAdminPost doesn't exist in target module
+  3 | import React, { useEffect, useState } from 'react';
+  4 | import { useRouter, useParams } from 'next/navigation';
+> 5 | import { getPostById, createAdminPost, updateAdminPost } from '@/lib/actions/posts';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Save, ArrowLeft, Layout, FileText, Type } from 'lucide-react';
+  7 | import Link from 'next/link';
+  8 |
+
+The export createAdminPost was not found in module [project]/lib/actions/posts.js [app-client] (ecmascript).
+Did you mean to import createPost?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/posts/[id]/page.js [Client Component Browser]
+    ./app/admin/posts/[id]/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/posts/[id]/page.js [Client Component SSR]
+    ./app/admin/posts/[id]/page.js [Server Component]
+
+
+./app/admin/posts/[id]/page.js:5:1
+Export createAdminPost doesn't exist in target module
+  3 | import React, { useEffect, useState } from 'react';
+  4 | import { useRouter, useParams } from 'next/navigation';
+> 5 | import { getPostById, createAdminPost, updateAdminPost } from '@/lib/actions/posts';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Save, ArrowLeft, Layout, FileText, Type } from 'lucide-react';
+  7 | import Link from 'next/link';
+  8 |
+
+The export createAdminPost was not found in module [project]/lib/actions/posts.js [app-ssr] (ecmascript).
+Did you mean to import createPost?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/posts/[id]/page.js [Client Component Browser]
+    ./app/admin/posts/[id]/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/posts/[id]/page.js [Client Component SSR]
+    ./app/admin/posts/[id]/page.js [Server Component]
+
+
+./app/admin/pages/page.js:4:1
+Export deletePage doesn't exist in target module
+  2 |
+  3 | import React, { useState, useEffect } from 'react';
+> 4 | import { getPages, deletePage } from '@/lib/actions/pages';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import Link from 'next/link';
+  6 | import { Plus, Edit2, Trash2, Eye, File, Loader2 } from 'lucide-react';
+  7 |
+
+The export deletePage was not found in module [project]/lib/actions/pages.js [app-client] (ecmascript).
+Did you mean to import createPage?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/pages/page.js [Client Component Browser]
+    ./app/admin/pages/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/pages/page.js [Client Component SSR]
+    ./app/admin/pages/page.js [Server Component]
+
+
+./app/admin/pages/page.js:4:1
+Export deletePage doesn't exist in target module
+  2 |
+  3 | import React, { useState, useEffect } from 'react';
+> 4 | import { getPages, deletePage } from '@/lib/actions/pages';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import Link from 'next/link';
+  6 | import { Plus, Edit2, Trash2, Eye, File, Loader2 } from 'lucide-react';
+  7 |
+
+The export deletePage was not found in module [project]/lib/actions/pages.js [app-ssr] (ecmascript).
+Did you mean to import createPage?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/pages/page.js [Client Component Browser]
+    ./app/admin/pages/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/pages/page.js [Client Component SSR]
+    ./app/admin/pages/page.js [Server Component]
+
+
+./lib/posts.js:1:1
+Export getCollection doesn't exist in target module
+> 1 | import { databases, Query, DATABASE_ID, getCollection } from './appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { ID } from 'node-appwrite';
+  3 |
+  4 | const { col: COLLECTION_ID } = getCollection('posts');
+
+The export getCollection was not found in module [project]/lib/appwrite.js [app-client] (ecmascript).
+Did you mean to import appwriteConfig?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  App Route:
+    ./lib/posts.js
+    ./app/api/posts/route.js
+
+  Server Component:
+    ./lib/posts.js
+    ./app/errors/[slug]/page.js
+
+  Client Component Browser:
+    ./lib/posts.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/posts.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+
+./lib/posts.js:1:1
+Export getCollection doesn't exist in target module
+> 1 | import { databases, Query, DATABASE_ID, getCollection } from './appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { ID } from 'node-appwrite';
+  3 |
+  4 | const { col: COLLECTION_ID } = getCollection('posts');
+
+The export getCollection was not found in module [project]/lib/appwrite.js [app-route] (ecmascript).
+Did you mean to import appwriteConfig?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  App Route:
+    ./lib/posts.js
+    ./app/api/posts/route.js
+
+  Server Component:
+    ./lib/posts.js
+    ./app/errors/[slug]/page.js
+
+  Client Component Browser:
+    ./lib/posts.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/posts.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+
+./lib/posts.js:1:1
+Export getCollection doesn't exist in target module
+> 1 | import { databases, Query, DATABASE_ID, getCollection } from './appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { ID } from 'node-appwrite';
+  3 |
+  4 | const { col: COLLECTION_ID } = getCollection('posts');
+
+The export getCollection was not found in module [project]/lib/appwrite.js [app-rsc] (ecmascript).
+Did you mean to import appwriteConfig?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  App Route:
+    ./lib/posts.js
+    ./app/api/posts/route.js
+
+  Server Component:
+    ./lib/posts.js
+    ./app/errors/[slug]/page.js
+
+  Client Component Browser:
+    ./lib/posts.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/posts.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+
+./lib/posts.js:1:1
+Export getCollection doesn't exist in target module
+> 1 | import { databases, Query, DATABASE_ID, getCollection } from './appwrite';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  2 | import { ID } from 'node-appwrite';
+  3 |
+  4 | const { col: COLLECTION_ID } = getCollection('posts');
+
+The export getCollection was not found in module [project]/lib/appwrite.js [app-ssr] (ecmascript).
+Did you mean to import appwriteConfig?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  App Route:
+    ./lib/posts.js
+    ./app/api/posts/route.js
+
+  Server Component:
+    ./lib/posts.js
+    ./app/errors/[slug]/page.js
+
+  Client Component Browser:
+    ./lib/posts.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Client Component Browser]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+  Client Component SSR:
+    ./lib/posts.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Client Component SSR]
+    ./app/admin/pages/[slug]/page.js [Server Component]
+
+
+./app/admin/pages/edit/[id]/page.js:5:1
+Export getPage doesn't exist in target module
+  3 | import React, { useState, useEffect } from 'react';
+  4 | import { useRouter, useParams } from 'next/navigation';
+> 5 | import { updatePage, deletePage, getPage } from '@/lib/actions/pages';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Save, ArrowLeft, Loader2, AlertCircle, Trash2 } from 'lucide-react';
+  7 | import CodeBlock from '@/components/CodeBlock';
+  8 |
+
+The export getPage was not found in module [project]/lib/actions/pages.js [app-client] (ecmascript).
+Did you mean to import getAllPages?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/pages/edit/[id]/page.js [Client Component Browser]
+    ./app/admin/pages/edit/[id]/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/pages/edit/[id]/page.js [Client Component SSR]
+    ./app/admin/pages/edit/[id]/page.js [Server Component]
+
+
+./app/admin/pages/edit/[id]/page.js:5:1
+Export getPage doesn't exist in target module
+  3 | import React, { useState, useEffect } from 'react';
+  4 | import { useRouter, useParams } from 'next/navigation';
+> 5 | import { updatePage, deletePage, getPage } from '@/lib/actions/pages';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Save, ArrowLeft, Loader2, AlertCircle, Trash2 } from 'lucide-react';
+  7 | import CodeBlock from '@/components/CodeBlock';
+  8 |
+
+The export getPage was not found in module [project]/lib/actions/pages.js [app-ssr] (ecmascript).
+Did you mean to import getAllPages?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/pages/edit/[id]/page.js [Client Component Browser]
+    ./app/admin/pages/edit/[id]/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/pages/edit/[id]/page.js [Client Component SSR]
+    ./app/admin/pages/edit/[id]/page.js [Server Component]
+
+
+./app/admin/pages/page.js:4:1
+Export getPages doesn't exist in target module
+  2 |
+  3 | import React, { useState, useEffect } from 'react';
+> 4 | import { getPages, deletePage } from '@/lib/actions/pages';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import Link from 'next/link';
+  6 | import { Plus, Edit2, Trash2, Eye, File, Loader2 } from 'lucide-react';
+  7 |
+
+The export getPages was not found in module [project]/lib/actions/pages.js [app-client] (ecmascript).
+Did you mean to import getAllPages?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/pages/page.js [Client Component Browser]
+    ./app/admin/pages/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/pages/page.js [Client Component SSR]
+    ./app/admin/pages/page.js [Server Component]
+
+
+./app/admin/pages/page.js:4:1
+Export getPages doesn't exist in target module
+  2 |
+  3 | import React, { useState, useEffect } from 'react';
+> 4 | import { getPages, deletePage } from '@/lib/actions/pages';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import Link from 'next/link';
+  6 | import { Plus, Edit2, Trash2, Eye, File, Loader2 } from 'lucide-react';
+  7 |
+
+The export getPages was not found in module [project]/lib/actions/pages.js [app-ssr] (ecmascript).
+Did you mean to import getAllPages?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/pages/page.js [Client Component Browser]
+    ./app/admin/pages/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/pages/page.js [Client Component SSR]
+    ./app/admin/pages/page.js [Server Component]
+
+
+./app/admin/posts/[id]/page.js:5:1
+Export updateAdminPost doesn't exist in target module
+  3 | import React, { useEffect, useState } from 'react';
+  4 | import { useRouter, useParams } from 'next/navigation';
+> 5 | import { getPostById, createAdminPost, updateAdminPost } from '@/lib/actions/posts';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Save, ArrowLeft, Layout, FileText, Type } from 'lucide-react';
+  7 | import Link from 'next/link';
+  8 |
+
+The export updateAdminPost was not found in module [project]/lib/actions/posts.js [app-client] (ecmascript).
+Did you mean to import updatePost?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/posts/[id]/page.js [Client Component Browser]
+    ./app/admin/posts/[id]/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/posts/[id]/page.js [Client Component SSR]
+    ./app/admin/posts/[id]/page.js [Server Component]
+
+
+./app/admin/posts/[id]/page.js:5:1
+Export updateAdminPost doesn't exist in target module
+  3 | import React, { useEffect, useState } from 'react';
+  4 | import { useRouter, useParams } from 'next/navigation';
+> 5 | import { getPostById, createAdminPost, updateAdminPost } from '@/lib/actions/posts';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Save, ArrowLeft, Layout, FileText, Type } from 'lucide-react';
+  7 | import Link from 'next/link';
+  8 |
+
+The export updateAdminPost was not found in module [project]/lib/actions/posts.js [app-ssr] (ecmascript).
+Did you mean to import updatePost?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/posts/[id]/page.js [Client Component Browser]
+    ./app/admin/posts/[id]/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/posts/[id]/page.js [Client Component SSR]
+    ./app/admin/posts/[id]/page.js [Server Component]
+
+
+./app/admin/pages/edit/[id]/page.js:5:1
+Export updatePage doesn't exist in target module
+  3 | import React, { useState, useEffect } from 'react';
+  4 | import { useRouter, useParams } from 'next/navigation';
+> 5 | import { updatePage, deletePage, getPage } from '@/lib/actions/pages';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Save, ArrowLeft, Loader2, AlertCircle, Trash2 } from 'lucide-react';
+  7 | import CodeBlock from '@/components/CodeBlock';
+  8 |
+
+The export updatePage was not found in module [project]/lib/actions/pages.js [app-client] (ecmascript).
+Did you mean to import getAllPages?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/pages/edit/[id]/page.js [Client Component Browser]
+    ./app/admin/pages/edit/[id]/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/pages/edit/[id]/page.js [Client Component SSR]
+    ./app/admin/pages/edit/[id]/page.js [Server Component]
+
+
+./app/admin/pages/edit/[id]/page.js:5:1
+Export updatePage doesn't exist in target module
+  3 | import React, { useState, useEffect } from 'react';
+  4 | import { useRouter, useParams } from 'next/navigation';
+> 5 | import { updatePage, deletePage, getPage } from '@/lib/actions/pages';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 | import { Save, ArrowLeft, Loader2, AlertCircle, Trash2 } from 'lucide-react';
+  7 | import CodeBlock from '@/components/CodeBlock';
+  8 |
+
+The export updatePage was not found in module [project]/lib/actions/pages.js [app-ssr] (ecmascript).
+Did you mean to import getAllPages?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./app/admin/pages/edit/[id]/page.js [Client Component Browser]
+    ./app/admin/pages/edit/[id]/page.js [Server Component]
+
+  Client Component SSR:
+    ./app/admin/pages/edit/[id]/page.js [Client Component SSR]
+    ./app/admin/pages/edit/[id]/page.js [Server Component]
+
+
+    at <unknown> (./app/admin/homepage/page.js:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/admin/menu/page.js:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/admin/menu/page.js:5:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/admin/settings/page.js:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/admin/menu/page.js:7:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./lib/posts.js:1:1)
+    ... collapsed 3 duplicate lines matching above 1 lines 3 times...
+    at <unknown> (./app/admin/posts/[id]/page.js:5:1)
+    at <unknown> (./app/admin/posts/[id]/page.js:5:1)
+    at <unknown> (./app/admin/pages/page.js:4:1)
+    at <unknown> (./app/admin/pages/page.js:4:1)
+    at <unknown> (./lib/posts.js:1:1)
+    ... collapsed 3 duplicate lines matching above 1 lines 3 times...
+    at <unknown> (./app/admin/pages/edit/[id]/page.js:5:1)
+    at <unknown> (./app/admin/pages/edit/[id]/page.js:5:1)
+    at <unknown> (./app/admin/pages/page.js:4:1)
+    at <unknown> (./app/admin/pages/page.js:4:1)
+    at <unknown> (./app/admin/posts/[id]/page.js:5:1)
+    at <unknown> (./app/admin/posts/[id]/page.js:5:1)
+    at <unknown> (./app/admin/pages/edit/[id]/page.js:5:1)
+    at <unknown> (./app/admin/pages/edit/[id]/page.js:5:1)

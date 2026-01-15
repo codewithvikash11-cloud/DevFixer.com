@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </button>
             </div>
 
-            <div className="w-full px-4 lg:px-0 space-y-2 lg:space-y-4">
+            <div className="w-full px-4 lg:px-0 space-y-2 lg:space-y-4 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                 {navItems.map((item) => {
                     const Icon = item.icon;
                     // Check active state exact or sub-path (except root)

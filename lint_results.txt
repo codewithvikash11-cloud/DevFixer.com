@@ -1,0 +1,5 @@
+
+> devfixer.com@1.0.0 lint
+> next lint
+
+Invalid project directory provided, no such directory: C:\Users\rahul\Downloads\DevFixer.com\lint

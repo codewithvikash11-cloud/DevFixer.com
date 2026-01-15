@@ -1,6 +1,7 @@
 import { LANGUAGES } from '@/lib/languages';
+import { getPosts } from '@/lib/actions/posts';
 
-const BASE_URL = 'https://devfixer.com';
+const BASE_URL = 'https://errorwiki.com';
 
 export default async function sitemap() {
     // Static routes
@@ -19,12 +20,19 @@ export default async function sitemap() {
         priority: 0.7,
     }));
 
-    // Error routes (Mock data for now, would fetch from DB/Files)
-    // As we don't have a real DB of errors yet, we'll map a few example ones if we had them or skip.
-    // Ideally this would be: 
-    // const posts = await getAllPosts(); 
-    // const postRoutes = posts.map(...)
-    // For now we will include the static ones referenced in the UI or leave generic.
+    // Dynamic Post routes
+    let postRoutes = [];
+    try {
+        const posts = await getPosts(1000); // Fetch up to 1000 posts
+        postRoutes = posts.map((post) => ({
+            url: `${BASE_URL}/error/${post.slug}`, // Assuming /error structure based on audit
+            lastModified: new Date(post.updatedAt || new Date()),
+            changeFrequency: 'weekly',
+            priority: 0.9
+        }));
+    } catch (error) {
+        console.error("Sitemap generation error:", error);
+    }
 
-    return [...routes, ...languageRoutes];
+    return [...routes, ...languageRoutes, ...postRoutes];
 }
