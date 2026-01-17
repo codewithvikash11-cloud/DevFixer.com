@@ -105,8 +105,8 @@ export default function ToolsPage() {
                                     </p>
 
                                     <div className="mt-auto pt-2">
-                                        <button className="w-full py-2 rounded-lg bg-[#008000] text-white text-xs font-bold uppercase tracking-wide hover:bg-[#006600] transition-colors shadow-md shadow-[#008000]/10 flex items-center justify-center gap-2">
-                                            Solve Error <Zap size={14} className="fill-current" />
+                                        <button className="w-full py-2 rounded-lg bg-[#008000] text-white text-xs font-bold uppercase tracking-wide hover:bg-[#006600] transition-colors shadow-md shadow-[#008000]/20 flex items-center justify-center gap-2">
+                                            Open Tool <Zap size={14} className="fill-current" />
                                         </button>
                                     </div>
                                 </Link>
