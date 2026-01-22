@@ -29,7 +29,10 @@ const nextConfig = {
                 ]
             }
         ];
-    }
+    },
+    images: {
+        domains: ['s0.wp.com', 's1.wp.com', 's2.wp.com', 'savemedevcom.wordpress.com'],
+    },
 };
 
 export default nextConfig;
