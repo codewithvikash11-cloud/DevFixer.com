@@ -31,7 +31,24 @@ const nextConfig = {
         ];
     },
     images: {
-        domains: ['s0.wp.com', 's1.wp.com', 's2.wp.com', 'savemedevcom.wordpress.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 's0.wp.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 's1.wp.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 's2.wp.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'savemedevcom.wordpress.com',
+            },
+        ],
     },
 };
 
