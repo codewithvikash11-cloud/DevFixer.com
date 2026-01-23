@@ -62,6 +62,36 @@ const nextConfig = {
                 destination: '/errors/:slug',
                 permanent: true,
             },
+            {
+                source: '/dashboard',
+                destination: '/',
+                permanent: true,
+            },
+            {
+                source: '/profile',
+                destination: '/',
+                permanent: true,
+            },
+            {
+                source: '/contributor',
+                destination: '/',
+                permanent: true,
+            },
+            {
+                source: '/manage-posts',
+                destination: '/',
+                permanent: true,
+            },
+            {
+                source: '/write-blog',
+                destination: '/',
+                permanent: true,
+            },
+            {
+                source: '/submit-error',
+                destination: '/',
+                permanent: true,
+            },
         ];
     },
 };

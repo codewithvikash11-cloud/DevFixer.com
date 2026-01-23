@@ -39,8 +39,14 @@ export function AuthProvider({ children }) {
     };
 
     const signup = async (email, password, name) => {
-        // Validation only - Admin creation is manual/static for this phase
-        return { success: false, error: "Signups are disabled. Admin only." };
+        try {
+            const user = await authService.signup(email, password, name);
+            setUser(user);
+            return { success: true };
+        } catch (error) {
+            console.error("Signup Error:", error);
+            return { success: false, error: error.message };
+        }
     };
 
     const logout = async () => {

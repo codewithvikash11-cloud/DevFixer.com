@@ -173,10 +173,6 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                         <>
                             <div className="h-6 w-px bg-border mx-1 hidden sm:block" />
                             <div className="flex items-center gap-3">
-                                <Link href="/dashboard" className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface border border-border text-xs font-bold hover:bg-surface-highlight transition-all">
-                                    <span className="w-2 h-2 rounded-full bg-accent-success animate-pulse" />
-                                    Dashboard
-                                </Link>
                                 <button onClick={logout} className="p-2 hover:bg-surface rounded-lg text-text-secondary transition-colors">
                                     <LogOut size={18} />
                                 </button>
