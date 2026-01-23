@@ -2,7 +2,7 @@ import { getAllPosts } from '@/lib/wordpress';
 
 export default async function sitemap() {
     const posts = await getAllPosts();
-    const baseUrl = 'https://devfixer.com'; // Replace with actual site URL if different
+    const baseUrl = 'https://dev-fixer-com.vercel.app';
 
     const blogPosts = posts.map((post) => ({
         url: `${baseUrl}/blog/${post.slug}`,

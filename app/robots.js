@@ -5,6 +5,6 @@ export default function robots() {
             allow: '/',
             disallow: '/private/',
         },
-        sitemap: 'https://devfixer.com/sitemap.xml', // Replace with actual domain
+        sitemap: 'https://dev-fixer-com.vercel.app/sitemap.xml',
     }
 }
