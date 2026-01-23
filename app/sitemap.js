@@ -5,7 +5,7 @@ export default async function sitemap() {
     const baseUrl = 'https://dev-fixer-com.vercel.app';
 
     const blogPosts = posts.map((post) => ({
-        url: `${baseUrl}/blog/${post.slug}`,
+        url: `${baseUrl}/errors/${post.slug}`,
         lastModified: new Date(post.modified),
         changeFrequency: 'weekly',
         priority: 0.7,
@@ -19,7 +19,7 @@ export default async function sitemap() {
             priority: 1,
         },
         {
-            url: `${baseUrl}/blog`,
+            url: `${baseUrl}/errors`,
             lastModified: new Date(),
             changeFrequency: 'daily',
             priority: 0.8,

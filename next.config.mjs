@@ -50,6 +50,20 @@ const nextConfig = {
             },
         ],
     },
+    async redirects() {
+        return [
+            {
+                source: '/blog',
+                destination: '/errors',
+                permanent: true,
+            },
+            {
+                source: '/blog/:slug',
+                destination: '/errors/:slug',
+                permanent: true,
+            },
+        ];
+    },
 };
 
 export default nextConfig;
