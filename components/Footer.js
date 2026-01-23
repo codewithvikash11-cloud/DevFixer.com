@@ -16,7 +16,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20">
 
                     {/* Brand */}
-                    <div className="lg:col-span-4 space-y-6">
+                    <div className="lg:col-span-3 space-y-6">
                         <Link href="/" className="inline-block">
                             <Logo />
                         </Link>
@@ -51,8 +51,19 @@ const Footer = () => {
                         </ul>
                     </div>
 
+                    {/* Legal & Company */}
+                    <div className="lg:col-span-2 space-y-6">
+                        <h4 className="font-bold text-sm text-text-primary">Legal & Company</h4>
+                        <ul className="space-y-4 text-sm text-text-secondary">
+                            <FooterLink href="/about">About Us</FooterLink>
+                            <FooterLink href="/contact">Contact Us</FooterLink>
+                            <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
+                            <FooterLink href="/disclaimer">Disclaimer</FooterLink>
+                        </ul>
+                    </div>
+
                     {/* Newsletter */}
-                    <div className="lg:col-span-4 space-y-6">
+                    <div className="lg:col-span-3 space-y-6">
                         <h4 className="font-bold text-sm text-text-primary">Stay updated</h4>
                         <p className="text-xs text-text-secondary">
                             Get the latest debugging tips and platform updates directly to your inbox.
