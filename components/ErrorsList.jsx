@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function ErrorsList({ initialPosts = [] }) {
+export default function ErrorsList({ initialPosts = [], categories = [] }) {
     const [searchQuery, setSearchQuery] = useState('');
     // Use initialPosts directly. For more complex apps, we might fetch client-side on filter,
     // but for now we filter the 100 posts passed from server (or however many)
@@ -51,7 +51,14 @@ export default function ErrorsList({ initialPosts = [] }) {
         }
 
         if (selectedLanguage !== 'All') {
-            result = result.filter(p => p.language === selectedLanguage);
+            // Find category ID for the selected name
+            const selectedCat = categories.find(c => c.name === selectedLanguage);
+            if (selectedCat) {
+                result = result.filter(p => p.categories && p.categories.includes(selectedCat.id));
+            } else {
+                // Fallback to string match if legacy
+                result = result.filter(p => p.language === selectedLanguage);
+            }
         }
 
         if (selectedDifficulty !== 'All') {
@@ -67,10 +74,10 @@ export default function ErrorsList({ initialPosts = [] }) {
         }
 
         return result;
-    }, [posts, searchQuery, selectedLanguage, selectedDifficulty, sortBy]);
+    }, [posts, searchQuery, selectedLanguage, selectedDifficulty, sortBy, categories]);
 
     // Derived lists for filters
-    const languages = ['All', ...new Set(posts.map(p => p.language).filter(Boolean))];
+    const languages = ['All', ...categories.map(c => c.name)];
     const difficulties = ['All', 'Beginner', 'Intermediate', 'Advanced']; // These might need to come from WP categories/tags if we map them
 
     return (
@@ -234,7 +241,7 @@ export default function ErrorsList({ initialPosts = [] }) {
                                             </div>
                                             <div className="flex items-center gap-1">
                                                 <Clock size={12} />
-                                                <span>{new Date(post.date).toLocaleDateString()}</span>
+                                                <span>{post.date}</span>
                                             </div>
                                         </div>
                                     </div>

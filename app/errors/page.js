@@ -1,6 +1,6 @@
 import React from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
-import { getErrorsPosts } from '@/lib/wordpress';
+import { getErrorsPosts, getCategories } from '@/lib/wordpress';
 import ErrorsList from '@/components/ErrorsList';
 
 export const metadata = {
@@ -14,7 +14,11 @@ export const metadata = {
 export default async function ErrorsListingPage() {
     // Fetch a large batch to allow initial client-side filtering similar to previous "mock" behavior
     // Ideally we would implement server-side search params, but retaining exact UI/UX often suggests keeping the immediate feedback loop of client-side filter if the dataset is manageable.
-    const rawPosts = await getErrorsPosts(1, 100);
+    // Fetch Posts and Categories in parallel
+    const [rawPosts, categories] = await Promise.all([
+        getErrorsPosts(1, 100),
+        getCategories()
+    ]);
 
     const posts = rawPosts.map(p => {
         // Map Tags/Categories to "Language" or "Difficulty"
@@ -25,9 +29,10 @@ export default async function ErrorsListingPage() {
         return {
             title: p.title.rendered,
             slug: p.slug,
-            language: language, // Using first category as language/framework
+            language: language, // Display purpose
+            categories: p.categories, // Array of Category IDs for filtering
             description: p.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160),
-            date: p.date,
+            date: new Date(p.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
             views: '100+', // Placeholder as WP standard API doesn't allow view counting without plugins
             difficulty: 'Intermediate', // Placeholder
             verified: true, // Placeholder
@@ -37,7 +42,7 @@ export default async function ErrorsListingPage() {
 
     return (
         <LayoutWrapper>
-            <ErrorsList initialPosts={posts} />
+            <ErrorsList initialPosts={posts} categories={categories} />
         </LayoutWrapper>
     );
 }
