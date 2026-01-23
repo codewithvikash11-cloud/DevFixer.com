@@ -3,8 +3,8 @@ export default function robots() {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: ['/admin/', '/api/'],
+            disallow: '/private/',
         },
-        sitemap: 'https://errorwiki.com/sitemap.xml',
+        sitemap: 'https://devfixer.com/sitemap.xml', // Replace with actual domain
     }
 }
