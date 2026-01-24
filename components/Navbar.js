@@ -115,10 +115,10 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                     {/* Desktop Nav Links */}
                     {!hideLinks && (
                         <div className="hidden lg:flex items-center gap-1 ml-4">
-                            <NavLink href="/compiler" active={pathname?.startsWith('/compiler')}>Compiler</NavLink>
-                            <NavLink href="/snippets" active={pathname?.startsWith('/snippets')}>Snippets</NavLink>
                             <NavLink href="/errors" active={pathname?.startsWith('/errors')}>Errors</NavLink>
+                            <NavLink href="/snippets" active={pathname?.startsWith('/snippets')}>Snippets</NavLink>
                             <NavLink href="/tools" active={pathname?.startsWith('/tools')}>Tools</NavLink>
+                            <NavLink href="/learn" active={pathname?.startsWith('/learn')}>Learn</NavLink>
                         </div>
                     )}
                 </div>

@@ -1,132 +1,46 @@
-"use client";
+import React from 'react';
+import LayoutWrapper from '@/components/LayoutWrapper';
+import { getPostsByCategory, getCategories } from '@/lib/wordpress';
+import ErrorsList from '@/components/ErrorsList';
 
-import React, { useState, useMemo } from 'react';
-import Link from 'next/link';
-import { TOOLS_REGISTRY, TOOLS_CATEGORIES } from '@/components/tools/ToolsRegistry';
-import { Search, Sparkles, Zap } from 'lucide-react';
+export const metadata = {
+    title: 'Developer Tools | DevFixer',
+    description: 'Essential tools for developers.',
+};
 
-export default function ToolsPage() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [activeCategory, setActiveCategory] = useState('All');
+export default async function ToolsPage() {
+    // Fetch tools
+    const [tools, categories] = await Promise.all([
+        getPostsByCategory('tool', 1, 100),
+        getCategories()
+    ]);
 
-    const filteredTools = useMemo(() => {
-        return TOOLS_REGISTRY.filter(tool => {
-            const matchesSearch = tool.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                tool.description.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesCategory = activeCategory === 'All' || tool.category === activeCategory;
-            return matchesSearch && matchesCategory;
-        });
-    }, [searchTerm, activeCategory]);
-
-    // Group tools by category for the 'All' view
-    const groupedTools = useMemo(() => {
-        if (activeCategory !== 'All') return { [activeCategory]: filteredTools };
-
-        const groups = {};
-        // Initialize groups order
-        Object.values(TOOLS_CATEGORIES).forEach(cat => groups[cat] = []);
-
-        filteredTools.forEach(tool => {
-            if (groups[tool.category]) {
-                groups[tool.category].push(tool);
-            }
-        });
-
-        // Remove empty groups
-        Object.keys(groups).forEach(key => {
-            if (groups[key].length === 0) delete groups[key];
-        });
-
-        return groups;
-    }, [filteredTools, activeCategory]);
+    const posts = tools.map(p => ({
+        title: p.title.rendered,
+        slug: p.slug,
+        language: p._embedded?.['wp:term']?.[0]?.[0]?.name || 'Tool',
+        categories: p.categories,
+        description: p.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160),
+        date: new Date(p.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+        views: '100+',
+        difficulty: 'N/A',
+        verified: true,
+        likes: 0
+    }));
 
     return (
-        <div className="flex flex-col gap-10 pb-20">
-            {/* Hero Section */}
-            <div className="text-center space-y-4 py-8 md:py-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-primary/10 border border-accent-primary/20 text-accent-primary text-[10px] uppercase font-bold tracking-wider">
-                    <Sparkles size={12} />
-                    <span>Developer Utilities</span>
-                </div>
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-accent-primary tracking-tight">
-                    Tools for Builders
-                </h1>
-                <p className="text-text-secondary max-w-2xl mx-auto text-sm md:text-base leading-relaxed px-4">
-                    A collection of 70+ powerful tools to help you develop, debug, and ship faster. Open source and free forever.
-                </p>
-            </div>
-
-            {/* Mobile Search (Desktop has Sidebar) */}
-            <div className="lg:hidden">
-                <div className="relative group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary group-focus-within:text-accent-primary transition-colors" size={16} />
-                    <input
-                        type="text"
-                        placeholder="Search tools..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-surface border border-border rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-accent-primary focus:ring-1 focus:ring-accent-primary/20 transition-all placeholder:text-text-tertiary"
-                    />
-                </div>
-            </div>
-
-            {/* Content Grid */}
-            <div className="space-y-12">
-                {Object.entries(groupedTools).map(([category, tools]) => (
-                    <div key={category} className="space-y-4">
-                        <div className="flex items-center gap-4">
-                            <h2 className="text-lg font-bold text-text-primary flex items-center gap-2">
-                                {category}
-                                <span className="bg-surface-highlight text-text-tertiary text-[10px] px-1.5 py-0.5 rounded-md font-mono">{tools.length}</span>
-                            </h2>
-                            <div className="h-px bg-border flex-1"></div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            {tools.map((tool) => (
-                                <Link
-                                    key={tool.id}
-                                    href={`/tools/${tool.id}`}
-                                    className="group flex flex-col p-4 bg-surface border border-border rounded-xl hover:border-accent-primary/30 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300 relative overflow-hidden"
-                                >
-                                    <div className="flex items-start justify-between mb-3">
-                                        <div className={`w-10 h-10 rounded-lg ${tool.bg} ${tool.color} flex items-center justify-center transition-transform group-hover:scale-110 duration-300`}>
-                                            <tool.icon size={20} />
-                                        </div>
-                                    </div>
-
-                                    {/* Action button added to footer, removed zap overlay to declutter */}
-
-                                    <h3 className="text-sm font-bold text-text-primary group-hover:text-accent-primary transition-colors mb-1 truncate pr-2">
-                                        {tool.title}
-                                    </h3>
-                                    <p className="text-xs text-text-secondary line-clamp-2 leading-relaxed mb-4 flex-1">
-                                        {tool.description}
-                                    </p>
-
-                                    <div className="mt-auto pt-2">
-                                        <button className="w-full py-2 rounded-lg bg-[#008000] text-white text-xs font-bold uppercase tracking-wide hover:bg-[#006600] transition-colors shadow-md shadow-[#008000]/20 flex items-center justify-center gap-2">
-                                            Open Tool <Zap size={14} className="fill-current" />
-                                        </button>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
+        <LayoutWrapper>
+            <div className="container mx-auto px-4 py-8">
+                <h1 className="text-3xl font-bold mb-6 text-accent-primary">Developer Tools</h1>
+                {posts.length > 0 ? (
+                    <ErrorsList initialPosts={posts} categories={categories} />
+                ) : (
+                    <div className="text-center py-20 bg-surface/50 rounded-xl border border-dashed border-border">
+                        <h3 className="text-lg font-bold">No tools found</h3>
+                        <p className="text-text-secondary">Admin: Create a category named "tool" and add posts to it.</p>
                     </div>
-                ))}
+                )}
             </div>
-
-            {Object.keys(groupedTools).length === 0 && (
-                <div className="text-center py-20 bg-surface/30 border border-border dashed border-2 rounded-2xl">
-                    <p className="text-text-secondary font-medium">No tools found matching your search.</p>
-                    <button
-                        onClick={() => { setSearchTerm(''); setActiveCategory('All'); }}
-                        className="mt-2 text-sm text-accent-primary hover:underline"
-                    >
-                        Clear filters
-                    </button>
-                </div>
-            )}
-        </div>
+        </LayoutWrapper>
     );
 }

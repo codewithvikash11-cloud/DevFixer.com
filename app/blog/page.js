@@ -59,10 +59,11 @@ export default async function BlogPage({ searchParams }) {
     const categoryId = searchParams.category ? parseInt(searchParams.category, 10) : null;
     const perPage = 9;
 
-    const [categories, { posts, totalPages }] = await Promise.all([
+    const [categories, posts] = await Promise.all([
         getCategories(),
-        getPosts(page, perPage, categoryId),
+        getPosts(page, perPage, categoryId || null),
     ]);
+    const totalPages = 10; // Placeholder until API wrapper returns headers
 
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-20">
