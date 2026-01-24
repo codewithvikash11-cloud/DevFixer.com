@@ -1,53 +1,43 @@
-import { getAllPosts } from '@/lib/wordpress';
+import { getAllPosts, getCategories } from '@/lib/wordpress';
 
 export default async function sitemap() {
-    const posts = await getAllPosts();
-    const baseUrl = 'https://dev-fixer-com.vercel.app';
+    const baseUrl = 'https://devfixer.com'; // Replace with actual domain
 
-    const blogPosts = posts.map((post) => ({
+    // Fetch all contents
+    const posts = await getAllPosts();
+    const categories = await getCategories();
+
+    const postUrls = posts.map((post) => ({
         url: `${baseUrl}/errors/${post.slug}`,
         lastModified: new Date(post.modified),
         changeFrequency: 'weekly',
-        priority: 0.7,
+        priority: 0.8,
     }));
 
-    return [
-        {
-            url: baseUrl,
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 1,
-        },
-        {
-            url: `${baseUrl}/errors`,
-            lastModified: new Date(),
-            changeFrequency: 'daily',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/about`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.5,
-        },
-        {
-            url: `${baseUrl}/contact`,
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 0.5,
-        },
-        {
-            url: `${baseUrl}/privacy-policy`,
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 0.3,
-        },
-        {
-            url: `${baseUrl}/disclaimer`,
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 0.3,
-        },
-        ...blogPosts,
-    ];
+    // Also map to snippets/tools/learn if we knew their category, 
+    // but for SEO it's safer to expose the canonical path. 
+    // Since we map everything to /errors/[slug] or similar in dynamic routes...
+    // Actually, we haven't created /snippets/[slug] yet.
+    // For now, let's assume everything resolves via /errors/[slug] or we add logic.
+    // Simpler: Just map main pages and posts.
+
+    const staticRoutes = [
+        '',
+        '/errors',
+        '/snippets',
+        '/tools',
+        '/learn',
+        '/about',
+        '/contact',
+        '/privacy-policy',
+        '/login',
+        '/signup',
+    ].map((route) => ({
+        url: `${baseUrl}${route}`,
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 1.0,
+    }));
+
+    return [...staticRoutes, ...postUrls];
 }
