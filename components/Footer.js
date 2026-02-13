@@ -34,20 +34,19 @@ const Footer = () => {
                     <div className="lg:col-span-2 space-y-6">
                         <h4 className="font-bold text-sm text-text-primary">Platform</h4>
                         <ul className="space-y-4 text-sm text-text-secondary">
-                            <FooterLink href="/errors">Database</FooterLink>
-                            <FooterLink href="/languages">Languages</FooterLink>
-                            <FooterLink href="/pricing">Pricing</FooterLink>
-                            <FooterLink href="/enterprise">Enterprise</FooterLink>
+                            <FooterLink href="/fix-error">Fix Error</FooterLink>
+                            <FooterLink href="/categories">Categories</FooterLink>
+                            <FooterLink href="/search">Search</FooterLink>
+                            <FooterLink href="/errors">Browse Solutions</FooterLink>
                         </ul>
                     </div>
 
                     <div className="lg:col-span-2 space-y-6">
                         <h4 className="font-bold text-sm text-text-primary">Resources</h4>
                         <ul className="space-y-4 text-sm text-text-secondary">
-                            <FooterLink href="/docs">Documentation</FooterLink>
-                            <FooterLink href="/api">API Reference</FooterLink>
                             <FooterLink href="/blog">Engineering Blog</FooterLink>
-                            <FooterLink href="/community">Community</FooterLink>
+                            <FooterLink href="/snippets">Snippets</FooterLink>
+                            <FooterLink href="/tools">Developer Tools</FooterLink>
                         </ul>
                     </div>
 
@@ -57,8 +56,8 @@ const Footer = () => {
                         <ul className="space-y-4 text-sm text-text-secondary">
                             <FooterLink href="/about">About Us</FooterLink>
                             <FooterLink href="/contact">Contact Us</FooterLink>
+                            <FooterLink href="/terms">Terms of Service</FooterLink>
                             <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
-                            <FooterLink href="/disclaimer">Disclaimer</FooterLink>
                         </ul>
                     </div>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
-import { getPostsByCategory, getCategories } from '@/lib/wordpress';
+import { getPostsByCategory, getCategories } from '../../lib/wordpress';
 import ErrorsList from '@/components/ErrorsList'; // Reusing generic list component for consistency
 
 export const metadata = {

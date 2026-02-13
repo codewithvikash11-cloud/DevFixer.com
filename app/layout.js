@@ -16,11 +16,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata = {
     metadataBase: new URL('https://errorwiki.com'),
     title: {
-        default: 'ErrorWiki - The Ultimate Developer Playground',
+        default: 'ErrorWiki - AI Error Fixing Engine',
         template: '%s | ErrorWiki'
     },
-    description: 'Build, compile, and debug code instantly. The all-in-one developer platform for HTML, CSS, JavaScript, and more.',
-    keywords: ['online compiler', 'code playground', 'web development', 'errorwiki', 'developer tools'],
+    description: 'Instant AI-powered solutions for technical errors. Fix bugs in React, Next.js, Python, and more with verified explanations.',
+    keywords: ['error fixer', 'ai debugging', 'programming errors', 'stacktrace analyzer', 'errorwiki'],
     authors: [{ name: 'ErrorWiki Team' }],
     creator: 'ErrorWiki',
     openGraph: {

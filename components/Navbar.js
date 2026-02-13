@@ -102,29 +102,30 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                 <div className="flex items-center gap-3 lg:gap-8 shrink-0">
                     <button
                         onClick={onMenuClick}
-                        className="p-2 -ml-2 lg:hidden text-text-secondary hover:text-text-primary active:scale-90 transition-transform"
-                        aria-label="Toggle Menu"
+                        className="p-2 -ml-2 lg:hidden text-text-secondary hover:text-text-primary active:scale-90 transition-transform focus:outline-none focus:ring-2 focus:ring-accent-primary/20 rounded-lg"
+                        aria-label="Open Menu"
                     >
                         {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
 
-                    <Link href="/" className="flex items-center gap-2 group shrink-0">
+                    <Link href="/" className="flex items-center gap-2 group shrink-0 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 rounded-lg p-1">
                         <Logo />
                     </Link>
 
-                    {/* Desktop Nav Links */}
+                    {/* Desktop Nav Links - Only visible on LG+ */}
                     {!hideLinks && (
                         <div className="hidden lg:flex items-center gap-1 ml-4">
-                            <NavLink href="/errors" active={pathname?.startsWith('/errors')}>Errors</NavLink>
-                            <NavLink href="/snippets" active={pathname?.startsWith('/snippets')}>Snippets</NavLink>
+                            <NavLink href="/fix-error" active={pathname?.startsWith('/fix-error')} isPrimary>Fix Error</NavLink>
+                            <NavLink href="/categories" active={pathname?.startsWith('/categories')}>Categories</NavLink>
+                            <NavLink href="/search" active={pathname?.startsWith('/search')}>Search</NavLink>
+                            <NavLink href="/errors" active={pathname?.startsWith('/errors')}>Browse Solutions</NavLink>
                             <NavLink href="/tools" active={pathname?.startsWith('/tools')}>Tools</NavLink>
-                            <NavLink href="/learn" active={pathname?.startsWith('/learn')}>Learn</NavLink>
                         </div>
                     )}
                 </div>
 
-                {/* Center: Omni-Search (Desktop) OR Custom Content */}
-                <div className="hidden md:block flex-1 max-w-sm lg:max-w-xl px-4 absolute left-1/2 -translate-x-1/2 w-full text-center pointer-events-none">
+                {/* Center: Omni-Search (Desktop Only - LG+) */}
+                <div className="hidden lg:block flex-1 max-w-sm lg:max-w-xl px-4 absolute left-1/2 -translate-x-1/2 w-full text-center pointer-events-none">
                     <div className="pointer-events-auto inline-block w-full">
                         {centerContent ? (
                             centerContent
@@ -139,7 +140,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                                     className="w-full h-10 pl-10 pr-12 bg-surface/50 border border-border/50 rounded-full text-sm transition-all focus:bg-background focus:border-accent-primary/50 focus:ring-4 focus:ring-accent-primary/10 outline-none text-text-primary placeholder:text-text-tertiary shadow-sm hover:border-border"
                                 />
                                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-50">
-                                    <kbd className="hidden lg:inline-flex h-5 items-center gap-1 rounded border border-border bg-panel px-1.5 font-mono text-[10px] font-medium text-text-secondary">
+                                    <kbd className="hidden xl:inline-flex h-5 items-center gap-1 rounded border border-border bg-panel px-1.5 font-mono text-[10px] font-medium text-text-secondary">
                                         <span className="text-xs">⌘</span>K
                                     </kbd>
                                 </div>
@@ -157,10 +158,12 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                         </>
                     )}
 
+                    {/* Mobile/Tablet Search Icon (Visible < LG) */}
                     {!hideSearch && !centerContent && (
                         <button
                             onClick={() => setIsSearchOpen(true)}
-                            className="p-2 md:hidden text-text-secondary hover:text-text-primary active:scale-95 transition-transform"
+                            className="p-2 lg:hidden text-text-secondary hover:text-text-primary active:scale-95 transition-transform"
+                            aria-label="Search"
                         >
                             <Search size={22} />
                         </button>
@@ -173,7 +176,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                         <>
                             <div className="h-6 w-px bg-border mx-1 hidden sm:block" />
                             <div className="flex items-center gap-3">
-                                <button onClick={logout} className="p-2 hover:bg-surface rounded-lg text-text-secondary transition-colors">
+                                <button onClick={logout} className="p-2 hover:bg-surface rounded-lg text-text-secondary transition-colors" aria-label="Log Out">
                                     <LogOut size={18} />
                                 </button>
                             </div>
@@ -202,18 +205,21 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
     );
 };
 
-const NavLink = ({ href, children, active }) => (
+const NavLink = ({ href, children, active, isPrimary, ...props }) => (
     <Link
         href={href}
         className={cn(
-            "px-3 py-2 text-sm font-medium transition-all rounded-lg relative",
+            "px-3 py-2 text-sm font-medium transition-all rounded-lg relative flex items-center gap-2",
             active
                 ? "text-accent-primary bg-accent-primary/5 font-bold"
-                : "text-text-secondary hover:text-text-primary hover:bg-surface"
+                : "text-text-secondary hover:text-text-primary hover:bg-surface",
+            isPrimary && "bg-accent-primary/10 text-accent-primary hover:bg-accent-primary/20",
+            props.isPrimary && !active && "border border-accent-primary/20"
         )}
     >
+        {isPrimary && <Sparkles className="w-4 h-4" />}
         {children}
-        {active && (
+        {active && !isPrimary && (
             <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-primary rounded-full" />
         )}
     </Link>

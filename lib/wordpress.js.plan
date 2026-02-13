@@ -1,0 +1,14 @@
+
+/**
+ * Fetch posts specifically for the Errors section.
+ * Optimally, this should filter by an 'error' category.
+ * For now, we'll fetch general posts to populate the UI.
+ * @param {number} page 
+ * @param {number} perPage 
+ */
+export async function getErrorsPosts(page = 1, perPage = 10) {
+    // Ideally: return getPostsByCategory('error', page, perPage);
+    // But since 'error' category might not exist, let's fetch all posts
+    // and let the client filter or just show them.
+    return await getPosts(page, perPage);
+}
