@@ -13,53 +13,50 @@ const jetbrainsMono = JetBrains_Mono({
     variable: '--font-jetbrains-mono',
 });
 
-export const metadata = {
-    metadataBase: new URL('https://errorwiki.com'),
-    title: {
-        default: 'ErrorWiki - AI Error Fixing Engine',
-        template: '%s | ErrorWiki'
-    },
-    description: 'Instant AI-powered solutions for technical errors. Fix bugs in React, Next.js, Python, and more with verified explanations.',
-    keywords: ['error fixer', 'ai debugging', 'programming errors', 'stacktrace analyzer', 'errorwiki'],
-    authors: [{ name: 'ErrorWiki Team' }],
-    creator: 'ErrorWiki',
-    openGraph: {
-        type: 'website',
-        locale: 'en_US',
-        url: 'https://errorwiki.com',
-        siteName: 'ErrorWiki',
-        title: 'ErrorWiki - Build Faster',
-        description: 'The ultimate developer playground.',
-        images: [
-            {
-                url: '/og-image.jpg',
-                width: 1200,
-                height: 630,
-                alt: 'ErrorWiki Platform',
-            },
-        ],
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'ErrorWiki',
-        description: 'Build code faster than ever.',
-        creator: '@errorwiki',
-    },
-    alternates: {
-        canonical: '/',
-    },
-    robots: {
-        index: true,
-        follow: true,
-        googleBot: {
+import { getSettings } from '@/lib/actions/settings';
+
+export async function generateMetadata() {
+    const settings = await getSettings();
+    const siteTitle = settings.siteTitle || 'ErrorWiki';
+    const siteDescription = settings.siteDescription || 'Instant AI-powered solutions for technical errors.';
+    const ogImage = settings.ogImage || '/og-image.jpg';
+
+    return {
+        metadataBase: new URL('https://errorwiki.com'),
+        title: {
+            default: siteTitle,
+            template: `%s | ${siteTitle}`
+        },
+        description: siteDescription,
+        keywords: settings.keywords ? settings.keywords.split(',').map(k => k.trim()) : ['error fixer', 'ai debugging', 'programming errors'],
+        openGraph: {
+            type: 'website',
+            locale: 'en_US',
+            url: 'https://errorwiki.com',
+            siteName: siteTitle,
+            title: siteTitle,
+            description: siteDescription,
+            images: [
+                {
+                    url: ogImage,
+                    width: 1200,
+                    height: 630,
+                    alt: siteTitle,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: siteTitle,
+            description: siteDescription,
+            images: [ogImage],
+        },
+        robots: {
             index: true,
             follow: true,
-            'max-video-preview': -1,
-            'max-image-preview': 'large',
-            'max-snippet': -1,
         },
-    },
-};
+    };
+}
 
 import GlobalShell from '@/components/GlobalShell';
 
