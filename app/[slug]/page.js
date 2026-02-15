@@ -1,65 +1,76 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import LayoutWrapper from '@/components/LayoutWrapper';
-import { pagesService } from '@/lib/pages';
+import { getPageBySlug } from '@/lib/actions/pages';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import PageRenderer from '@/components/PageRenderer';
 
-export async function generateMetadata(props) {
-    const params = await props.params;
-    const page = await pagesService.getPageBySlug(params.slug);
+export async function generateMetadata({ params }) {
+    const { slug } = await params;
+    const page = await getPageBySlug(slug);
 
     if (!page) {
-        return { title: 'Page Not Found' };
+        return {
+            title: 'Page Not Found',
+        };
     }
 
     return {
-        title: `${page.title} | DevFixer`,
-        description: page.content?.substring(0, 150) || 'DevFixer Page'
+        title: page.seoTitle || page.title,
+        description: page.seoDescription || `Read more about ${page.title} on DevFixer.`,
     };
 }
 
-export default async function GenericPage(props) {
-    const params = await props.params;
-    const { slug } = params;
-
-    // Ignore protected routes if they somehow reach here (though Next.js handles explicit folders first)
-    if (['admin', 'api', 'errors', 'languages'].includes(slug)) {
-        notFound();
-    }
-
-    const page = await pagesService.getPageBySlug(slug);
+export default async function DynamicPage({ params }) {
+    const { slug } = await params;
+    const page = await getPageBySlug(slug);
 
     if (!page) {
-        notFound();
-    }
-
-    // Don't render "System" pages like 'home' as generic pages
-    if (page.isSystem) {
         notFound();
     }
 
     return (
-        <LayoutWrapper>
-            <div className="max-w-4xl mx-auto px-4 py-12 md:py-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <h1 className="text-4xl md:text-6xl font-black mb-8 md:mb-12 tracking-tighter uppercase">{page.title}</h1>
-                <div className="prose prose-invert prose-lg max-w-none">
-                    {/* 
-                       For Markdown content, usually we'd use a parser like 'react-markdown'.
-                       Since I can't easily install new packages, I'll do a simple split render 
-                       or just display text if it's simple. 
-                       For now, I'll assume simple text or implement a basic parser if needed, 
-                       but standard practice suggests using a library.
-                       "content" field in pages.json is markdown.
-                     */}
-                    {page.content.split('\n').map((line, index) => (
-                        <React.Fragment key={index}>
-                            {line.startsWith('# ') ? <h1 className="text-3xl font-bold mt-8 mb-4">{line.replace('# ', '')}</h1> :
-                                line.startsWith('## ') ? <h2 className="text-2xl font-bold mt-6 mb-3">{line.replace('## ', '')}</h2> :
-                                    line === '' ? <br /> :
-                                        <p className="mb-4 text-text-secondary leading-relaxed">{line}</p>}
-                        </React.Fragment>
-                    ))}
-                </div>
-            </div>
-        </LayoutWrapper>
+        <div className="min-h-screen bg-[#050505] text-white selection:bg-[#008000] selection:text-white">
+            <Navbar />
+
+            <main className="pt-24 min-h-screen">
+                {/* Title is rendered by Hero if present, or we can keep a default header if it's text-only mode? 
+                    Actually, if it's builder mode, the user puts a Hero. 
+                    If it's legacy mode, PageRenderer renders a wrapped Rich Text.
+                    
+                    The existing header in page.js forces a title. 
+                    Let's only show the default header if content is NOT builder mode (heuristic).
+                    Or simpler: PageRenderer is fully responsible for content. 
+                    We pass the title to PageRenderer? No, the builder HAS a Hero section.
+                    
+                    However, for existing 'About Us' pages which are text only, we want the title.
+                    Let's inspect content string to decide.
+                */}
+
+                {/* Only show default header if content is NOT JSON-like (Legacy) */}
+                {(!page.content || !page.content.trim().startsWith('[')) && (
+                    <article className="max-w-4xl mx-auto px-4 pt-12">
+                        <header className="mb-12 text-center">
+                            <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                                {page.title}
+                            </h1>
+                            {page.updatedAt && (
+                                <p className="text-sm text-gray-500">
+                                    Last Updated: {new Date(page.updatedAt).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    })}
+                                </p>
+                            )}
+                        </header>
+                    </article>
+                )}
+
+                <PageRenderer content={page.content} />
+            </main>
+
+            <Footer />
+        </div>
     );
 }

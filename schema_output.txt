@@ -1,0 +1,31 @@
+[dotenv@17.2.3] injecting env (5) from .env.local -- tip: ≡ƒùé∩╕Å backup and recover secrets: https://dotenvx.com/ops
+
+--- Checking Schema: Pages (pages) ---
+- [string] slug (Req: true, Array: false)
+- [string] title (Req: true, Array: false)
+- [boolean] isPublished (Req: true, Array: false)
+- [string] seoTitle (Req: false, Array: false)
+- [string] seoDescription (Req: false, Array: false)
+- [string] ogImage (Req: false, Array: false)
+- [string] content (Req: true, Array: false)
+- [datetime] publishedAt (Req: false, Array: false)
+
+--- Checking Schema: Page Sections (page_sections) ---
+- [string] pageId (Req: true, Array: false)
+- [string] type (Req: true, Array: false)
+- [integer] order (Req: true, Array: false)
+- [string] content (Req: true, Array: false)
+- [string] config (Req: false, Array: false)
+
+--- Checking Schema: Site Content (site_content) ---
+- [string] key (Req: true, Array: false)
+- [string] value (Req: true, Array: false)
+- [string] section (Req: true, Array: false)
+- [string] type (Req: true, Array: false)
+
+--- Checking Schema: Menus (Potential) (menus) ---
+- [string] label (Req: true, Array: false)
+- [string] path (Req: true, Array: false)
+- [string] parentId (Req: false, Array: false)
+- [boolean] isExternal (Req: false, Array: false)
+- [boolean] isOpenNewTab (Req: false, Array: false)
