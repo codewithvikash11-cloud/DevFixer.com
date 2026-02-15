@@ -1,0 +1,6 @@
+{
+  "name": "AppwriteException",
+  "code": 400,
+  "type": "document_invalid_structure",
+  "response": "{\"message\":\"Invalid document structure: Unknown attribute: \\\"viewCount\\\"\",\"code\":400,\"type\":\"document_invalid_structure\",\"version\":\"1.8.1\"}"
+}

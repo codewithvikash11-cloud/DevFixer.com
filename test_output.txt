@@ -1,0 +1,11 @@
+[dotenv@17.2.3] injecting env (5) from .env.local -- tip: ≡ƒöÉ prevent committing .env to code: https://dotenvx.com/precommit
+1. Creating Test Category...
+   Created Category: Test Cat 1771129889164 (69914c21000a2292d377)
+2. Creating Test Post with Category...
+Test Failed:
+{
+  "name": "AppwriteException",
+  "code": 400,
+  "type": "document_invalid_structure",
+  "response": "{\"message\":\"Invalid document structure: Missing required attribute \\\"createdAt\\\"\",\"code\":400,\"type\":\"document_invalid_structure\",\"version\":\"1.8.1\"}"
+}

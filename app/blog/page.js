@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
-import { getPosts, getCategories } from '@/lib/wordpress';
+import { getPosts } from '@/lib/actions/posts';
+import { getCategories } from '@/lib/actions/categories';
+// import { getCategories } from '@/lib/wordpress';
 import BlogCard from '@/components/blog/BlogCard';
 import CategoryFilter from '@/components/blog/CategoryFilter';
 import Pagination from '@/components/blog/Pagination';
@@ -61,9 +63,11 @@ export default async function BlogPage({ searchParams }) {
 
     const [categories, posts] = await Promise.all([
         getCategories(),
-        getPosts(page, perPage, categoryId || null),
+        getPosts(perPage, 'published', categoryId)
     ]);
-    const totalPages = 10; // Placeholder until API wrapper returns headers
+
+    // const totalPages = 1; // Placeholder
+    const totalPages = Math.ceil(posts.length / perPage) || 1; // Simple calculation based on fetched count if not paginated by API yet
 
     return (
         <div className="min-h-screen bg-black text-white pt-24 pb-20">
