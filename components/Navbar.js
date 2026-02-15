@@ -64,7 +64,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
         )}>
             {/* Mobile Search Overlay */}
             <div className={cn(
-                "absolute inset-0 z-50 flex items-center px-4 gap-4 md:hidden bg-background transition-opacity duration-300 ease-out",
+                "absolute inset-0 z-50 flex items-center px-4 gap-4 lg:hidden bg-background transition-opacity duration-300 ease-out",
                 isSearchOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
             )}>
                 <button
@@ -112,16 +112,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                         <Logo />
                     </Link>
 
-                    {/* Desktop Nav Links - Only visible on LG+ */}
-                    {!hideLinks && (
-                        <div className="hidden lg:flex items-center gap-1 ml-4">
-                            <NavLink href="/fix-error" active={pathname?.startsWith('/fix-error')} isPrimary>Fix Error</NavLink>
-                            <NavLink href="/categories" active={pathname?.startsWith('/categories')}>Categories</NavLink>
-                            <NavLink href="/search" active={pathname?.startsWith('/search')}>Search</NavLink>
-                            <NavLink href="/errors" active={pathname?.startsWith('/errors')}>Browse Solutions</NavLink>
-                            <NavLink href="/tools" active={pathname?.startsWith('/tools')}>Tools</NavLink>
-                        </div>
-                    )}
+
                 </div>
 
                 {/* Center: Omni-Search (Desktop Only - LG+) */}

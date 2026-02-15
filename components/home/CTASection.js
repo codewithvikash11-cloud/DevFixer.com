@@ -40,7 +40,7 @@ const CTASection = () => {
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                         <Link
-                            href="/errors"
+                            href="/fix-error"
                             className="group relative px-8 py-4 bg-accent-primary text-white rounded-lg font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:bg-accent-hover hover:shadow-[0_0_40px_-10px_rgba(0,128,0,0.5)]"
                         >
                             <span className="relative flex items-center gap-2">

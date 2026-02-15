@@ -46,6 +46,13 @@ export default function SidebarToolbox() {
             desc: "Academy"
         },
         {
+            name: "Fix Error",
+            href: "/fix-error",
+            icon: Zap, // Using Zap or Sparkles if available, Zap is imported
+            color: "text-accent-primary",
+            desc: "AI Chatbot"
+        },
+        {
             name: "Tools Hub",
             href: "/tools",
             icon: Briefcase,
