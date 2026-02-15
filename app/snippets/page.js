@@ -1,30 +1,29 @@
 import React from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
-import { getPostsByCategory, getCategories } from '../../lib/wordpress';
-import ErrorsList from '@/components/ErrorsList'; // Reusing generic list component for consistency
+import { getPosts } from '@/lib/actions/posts';
+import { getCategories } from '@/lib/actions/categories';
+import ErrorsList from '@/components/ErrorsList';
 
 export const metadata = {
     title: 'Code Snippets | DevFixer',
-    description: 'Useful code snippets for React, Python, JavaScript, and more.',
+    description: 'Useful code snippets for everyday development.',
 };
 
 export default async function SnippetsPage() {
-    // Fetch snippets category posts
     const [snippets, categories] = await Promise.all([
-        getPostsByCategory('snippet', 1, 100),
+        getPosts(100, 'published', 'Snippets'),
         getCategories()
     ]);
 
-    // Mapper function
     const posts = snippets.map(p => ({
-        title: p.title.rendered,
+        title: p.title,
         slug: p.slug,
-        language: p._embedded?.['wp:term']?.[0]?.[0]?.name || 'General',
-        categories: p.categories,
-        description: p.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160),
-        date: new Date(p.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
-        views: '100+',
-        difficulty: 'Intermediate',
+        language: p.language || 'Snippet',
+        categories: [p.category],
+        description: p.description || '',
+        date: new Date(p.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+        views: p.views || 0,
+        difficulty: 'Easy',
         verified: true,
         likes: 0
     }));
@@ -38,7 +37,7 @@ export default async function SnippetsPage() {
                 ) : (
                     <div className="text-center py-20 bg-surface/50 rounded-xl border border-dashed border-border">
                         <h3 className="text-lg font-bold">No snippets found</h3>
-                        <p className="text-text-secondary">Admin: Create a category named "snippet" and add posts to it.</p>
+                        <p className="text-text-secondary">Admin: Create a category named "Snippets" and add posts to it.</p>
                     </div>
                 )}
             </div>

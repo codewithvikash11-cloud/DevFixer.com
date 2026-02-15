@@ -14,8 +14,12 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import { useSearchParams } from 'next/navigation';
+
 export default function ErrorsList({ initialPosts = [], categories = [] }) {
-    const [searchQuery, setSearchQuery] = useState('');
+    const searchParams = useSearchParams();
+    const initialQuery = searchParams.get('search') || '';
+    const [searchQuery, setSearchQuery] = useState(initialQuery);
     // Use initialPosts directly. For more complex apps, we might fetch client-side on filter,
     // but for now we filter the 100 posts passed from server (or however many)
     // OR we could just implement client-side filtering on the passed props if the user requirement "Pagination headers" implies we might have many pages.

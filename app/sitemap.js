@@ -1,25 +1,26 @@
-import { getAllPosts, getCategories } from '@/lib/wordpress';
+import { getPosts } from '@/lib/actions/posts';
+import { getPages } from '@/lib/actions/pages';
 
 export default async function sitemap() {
     const baseUrl = 'https://devfixer.com'; // Replace with actual domain
 
     // Fetch all contents
-    const posts = await getAllPosts();
-    const categories = await getCategories();
+    const posts = await getPosts(1000, 'published');
+    const pages = await getPages();
 
     const postUrls = posts.map((post) => ({
         url: `${baseUrl}/errors/${post.slug}`,
-        lastModified: new Date(post.modified),
+        lastModified: new Date(post.updatedAt),
         changeFrequency: 'weekly',
         priority: 0.8,
     }));
 
-    // Also map to snippets/tools/learn if we knew their category, 
-    // but for SEO it's safer to expose the canonical path. 
-    // Since we map everything to /errors/[slug] or similar in dynamic routes...
-    // Actually, we haven't created /snippets/[slug] yet.
-    // For now, let's assume everything resolves via /errors/[slug] or we add logic.
-    // Simpler: Just map main pages and posts.
+    const pageUrls = pages.map((page) => ({
+        url: `${baseUrl}/${page.slug}`,
+        lastModified: new Date(page.updatedAt),
+        changeFrequency: 'monthly',
+        priority: 0.9,
+    }));
 
     const staticRoutes = [
         '',
@@ -39,5 +40,5 @@ export default async function sitemap() {
         priority: 1.0,
     }));
 
-    return [...staticRoutes, ...postUrls];
+    return [...staticRoutes, ...postUrls, ...pageUrls];
 }

@@ -32,6 +32,20 @@ export default function FixErrorPage() {
 
             const data = await response.json();
             setSolution(data);
+
+            // Save to Local History
+            try {
+                // Dynamically import to avoid SSR issues if any, though documentService checks window
+                const { documentService } = await import('@/lib/documents-local');
+                documentService.addToHistory({
+                    action: 'Fixed Error',
+                    preview: data.title || 'Error Solution',
+                    tool: 'fix-error'
+                });
+            } catch (err) {
+                console.warn('Failed to save history', err);
+            }
+
         } catch (err) {
             setError(err.message);
         } finally {
