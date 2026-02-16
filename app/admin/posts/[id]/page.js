@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { getPostById, createAdminPost, updateAdminPost } from '@/lib/actions/posts';
+import { getPostById, createPost, updatePost } from '@/lib/actions/posts';
 import { Save, ArrowLeft, Layout, FileText, Type } from 'lucide-react';
 import Link from 'next/link';
 
@@ -49,9 +49,9 @@ export default function PostEditor() {
         let res;
 
         if (isNew) {
-            res = await createAdminPost(form);
+            res = await createPost(form);
         } else {
-            res = await updateAdminPost(params.id, form);
+            res = await updatePost(params.id, form);
         }
 
         setSaving(false);

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { createPost, updatePost, getPost } from '@/lib/actions/posts';
+import { createPost, updatePost, getPostById } from '@/lib/actions/posts';
 import { getCategories } from '@/lib/actions/categories';
 import { Wand2, Save, Eye, ArrowLeft, Loader2 } from 'lucide-react';
 
@@ -41,7 +41,7 @@ export default function CreatePostPage() {
             // We need to import getCategories. Let's assume we import allowed.
             // Wait, I need to add import to top first.
             const [postData, catsData] = await Promise.all([
-                editId ? getPost(editId) : Promise.resolve(null),
+                editId ? getPostById(editId) : Promise.resolve(null),
                 getCategories()
             ]);
 
