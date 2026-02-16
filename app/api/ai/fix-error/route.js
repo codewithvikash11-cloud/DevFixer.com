@@ -5,6 +5,8 @@ import dbConnect from '@/lib/mongodb';
 import ErrorPost from '@/lib/models/ErrorPost';
 import UserQuery from '@/lib/models/UserQuery';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(request) {
     try {
         const { error } = await request.json();
