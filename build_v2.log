@@ -1,0 +1,140 @@
+
+> devfixer.com@1.0.0 build
+> next build --webpack
+
+Γû▓ Next.js 16.1.0 (webpack)
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 12.3s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+GEMINI_API_KEY is missing. AI features will not work.
+  Generating static pages using 11 workers (0/79) ...
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+  Generating static pages using 11 workers (19/79) 
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+  Generating static pages using 11 workers (39/79) 
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+  Generating static pages using 11 workers (59/79) 
+Γ£ô Generating static pages using 11 workers (79/79) in 4.3s
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+Γöî Γùï /
+Γö£ Γùï /_not-found
+Γö£ ╞Æ /[slug]
+Γö£ Γùï /about
+Γö£ Γùï /admin
+Γö£ Γùï /admin/api
+Γö£ Γùï /admin/backups
+Γö£ Γùï /admin/builder
+Γö£ Γùï /admin/categories
+Γö£ Γùï /admin/comments
+Γö£ Γùï /admin/content
+Γö£ Γùï /admin/courses
+Γö£ Γùï /admin/create-post
+Γö£ Γùï /admin/dashboard
+Γö£ Γùï /admin/docs
+Γö£ Γùï /admin/errors
+Γö£ Γùï /admin/files
+Γö£ Γùï /admin/homepage
+Γö£ Γùï /admin/languages
+Γö£ Γùï /admin/login
+Γö£ Γùï /admin/logs
+Γö£ Γùï /admin/media
+Γö£ Γùï /admin/menu
+Γö£ Γùï /admin/menus
+Γö£ ╞Æ /admin/menus/[id]
+Γö£ Γùï /admin/menus/create
+Γö£ Γùï /admin/pages
+Γö£ ╞Æ /admin/pages/[id]
+Γö£ Γùï /admin/pages/create
+Γö£ ╞Æ /admin/pages/edit/[id]
+Γö£ Γùï /admin/posts
+Γö£ ╞Æ /admin/posts/[id]
+Γö£ ╞Æ /admin/posts/edit/[slug]
+Γö£ Γùï /admin/posts/new
+Γö£ Γùï /admin/reviews
+Γö£ Γùï /admin/roles
+Γö£ Γùï /admin/security
+Γö£ Γùï /admin/seo
+Γö£ Γùï /admin/settings
+Γö£ Γùï /admin/sheets
+Γö£ Γùï /admin/snippets
+Γö£ Γùï /admin/tags
+Γö£ Γùï /admin/tools
+Γö£ Γùï /admin/users
+Γö£ Γùï /api-tester
+Γö£ ╞Æ /api/ai/fix-error
+Γö£ ╞Æ /api/auth/login
+Γö£ ╞Æ /api/auth/logout
+Γö£ ╞Æ /api/auth/me
+Γö£ ╞Æ /api/pages
+Γö£ ╞Æ /api/posts
+Γö£ ╞Æ /api/proxy
+Γö£ ╞Æ /api/vote
+Γö£ Γùï /blog
+Γö£ ╞Æ /blog/[slug]
+Γö£ Γùï /blogs
+Γö£ Γùï /categories
+Γö£ ╞Æ /cms/drafts
+Γö£ Γùï /code-reviewer
+Γö£ Γùï /compiler
+Γö£ Γùï /contact
+Γö£ Γùï /developer-tools
+Γö£ Γùï /disclaimer
+Γö£ Γùï /docs
+Γö£ Γùï /documents
+Γö£ Γùï /editor
+Γö£ Γùï /errors
+Γö£ ╞Æ /errors/[slug]
+Γö£ Γùï /fix-error
+Γö£ Γùï /global-cdn
+Γö£ Γùï /grammar
+Γö£ Γùï /history
+Γö£ Γùï /languages
+Γö£ ╞Æ /languages/[slug]
+Γö£ Γùï /learn
+Γö£ Γùï /log-analyzer
+Γö£ Γùï /login
+Γö£ Γùï /plagiarism
+Γö£ ╞Æ /post/[slug]
+Γö£ Γùï /privacy-policy
+Γö£ Γùï /rewrite
+Γö£ Γùï /robots.txt
+Γö£ Γùï /search
+Γö£ Γùï /sheets
+Γö£ Γùï /signup
+Γö£ Γùï /sitemap.xml
+Γö£ Γùï /snippets
+Γö£ Γùï /solutions
+Γö£ Γùï /terms
+Γö£ Γùï /tools
+Γöö ╞Æ /tools/[slug]
+
+
+╞Æ Proxy (Middleware)
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+

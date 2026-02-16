@@ -1,0 +1,49 @@
+
+> devfixer.com@1.0.0 build
+> next build --webpack
+
+Γû▓ Next.js 16.1.0 (webpack)
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 8.9s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+GEMINI_API_KEY is missing. AI features will not work.
+  Generating static pages using 11 workers (0/79) ...
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+  Generating static pages using 11 workers (19/79) 
+  Generating static pages using 11 workers (39/79) 
+Failed to fetch posts: MongooseError: Operation `errorposts.find()` buffering timed out after 10000ms
+    at ignore-listed frames
+Failed to fetch categories: MongooseError: Operation `categories.find()` buffering timed out after 10000ms
+    at ignore-listed frames
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Failed to fetch posts: MongooseError: Operation `errorposts.find()` buffering timed out after 10000ms
+    at ignore-listed frames
+Failed to fetch categories: MongooseError: Operation `categories.find()` buffering timed out after 10000ms
+    at ignore-listed frames
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Warning: MONGODB_URI is not defined. Database operations will fail.
+Failed to fetch categories: MongooseError: Operation `categories.find()` buffering timed out after 10000ms
+    at ignore-listed frames
+Error occurred prerendering page "/about". Read more: https://nextjs.org/docs/messages/prerender-error
+MongooseError: Operation `pages.findOne()` buffering timed out after 10000ms
+    at ignore-listed frames {
+  digest: '4047722741'
+}
+Export encountered an error on /about/page: /about, exiting the build.
+Γ¿» Next.js build worker exited with code: 1 and signal: null
