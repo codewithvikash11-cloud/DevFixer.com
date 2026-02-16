@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { getPosts } from '@/lib/actions/posts';
 import { getCategories } from '@/lib/actions/categories';
@@ -34,7 +34,9 @@ export default async function LearnPage() {
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-3xl font-bold mb-6 text-accent-primary">Learning Hub</h1>
                 {posts.length > 0 ? (
-                    <ErrorsList initialPosts={posts} categories={categories} />
+                    <Suspense fallback={<div className="p-8 text-center text-text-secondary">Loading...</div>}>
+                        <ErrorsList initialPosts={posts} categories={categories} />
+                    </Suspense>
                 ) : (
                     <div className="text-center py-20 bg-surface/50 rounded-xl border border-dashed border-border">
                         <h3 className="text-lg font-bold">No tutorials found</h3>

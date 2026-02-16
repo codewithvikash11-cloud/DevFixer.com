@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { getPosts } from '@/lib/actions/posts';
 import { getCategories } from '@/lib/actions/categories';
@@ -51,7 +51,9 @@ export default async function ErrorsListingPage() {
 
     return (
         <LayoutWrapper>
-            <ErrorsList initialPosts={posts} categories={categories} />
+            <Suspense fallback={<div className="p-8 text-center text-text-secondary">Loading errors...</div>}>
+                <ErrorsList initialPosts={posts} categories={categories} />
+            </Suspense>
         </LayoutWrapper>
     );
 }

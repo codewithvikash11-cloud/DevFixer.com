@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { getPosts } from '@/lib/actions/posts';
 import { getCategories } from '@/lib/actions/categories';
@@ -32,7 +32,9 @@ export default async function BlogPage() {
         <LayoutWrapper>
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-3xl font-bold mb-6 text-accent-primary">Blog</h1>
-                <ErrorsList initialPosts={posts} categories={categories} />
+                <Suspense fallback={<div className="p-8 text-center text-text-secondary">Loading...</div>}>
+                    <ErrorsList initialPosts={posts} categories={categories} />
+                </Suspense>
             </div>
         </LayoutWrapper>
     );
