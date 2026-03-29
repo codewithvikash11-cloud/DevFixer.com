@@ -31,37 +31,53 @@ const Footer = () => {
                     </div>
 
                     {/* Links */}
-                    <div className="lg:col-span-3 space-y-6">
-                        <h4 className="font-bold text-sm text-text-primary uppercase tracking-widest">Platform</h4>
+                    <div className="lg:col-span-2 space-y-6">
+                        <h4 className="font-bold text-sm text-text-primary">Platform</h4>
                         <ul className="space-y-4 text-sm text-text-secondary">
-                            <FooterLink href="/errors">Browse Errors</FooterLink>
-                            <FooterLink href="/categories">Expert Categories</FooterLink>
-                            <FooterLink href="/languages">Language Docs</FooterLink>
-                            <FooterLink href="/snippets">Code Snippets</FooterLink>
+                            <FooterLink href="/fix-error">Fix Error</FooterLink>
+                            <FooterLink href="/categories">Categories</FooterLink>
+                            <FooterLink href="/search">Search</FooterLink>
+                            <FooterLink href="/errors">Browse Solutions</FooterLink>
                         </ul>
                     </div>
 
-                    <div className="lg:col-span-3 space-y-6">
-                        <h4 className="font-bold text-sm text-text-primary uppercase tracking-widest">Support</h4>
+                    <div className="lg:col-span-2 space-y-6">
+                        <h4 className="font-bold text-sm text-text-primary">Resources</h4>
                         <ul className="space-y-4 text-sm text-text-secondary">
-                            <FooterLink href="/about">About DevFixer</FooterLink>
-                            <FooterLink href="/contact">Contact Support</FooterLink>
-                            <FooterLink href="/disclaimer">Disclaimer</FooterLink>
-                            <FooterLink href="/sitemap.xml">Sitemap</FooterLink>
+                            <FooterLink href="/blog">Engineering Blog</FooterLink>
+                            <FooterLink href="/snippets">Snippets</FooterLink>
+                            <FooterLink href="/tools">Developer Tools</FooterLink>
                         </ul>
                     </div>
 
-                    {/* Legal */}
-                    <div className="lg:col-span-3 space-y-6">
-                        <h4 className="font-bold text-sm text-text-primary uppercase tracking-widest">Legal</h4>
+                    {/* Legal & Company */}
+                    <div className="lg:col-span-2 space-y-6">
+                        <h4 className="font-bold text-sm text-text-primary">Legal & Company</h4>
                         <ul className="space-y-4 text-sm text-text-secondary">
+                            <FooterLink href="/about">About Us</FooterLink>
+                            <FooterLink href="/contact">Contact Us</FooterLink>
                             <FooterLink href="/terms">Terms of Service</FooterLink>
                             <FooterLink href="/privacy-policy">Privacy Policy</FooterLink>
-                            <FooterLink href="/docs">Documentation</FooterLink>
                         </ul>
                     </div>
 
-
+                    {/* Newsletter */}
+                    <div className="lg:col-span-3 space-y-6">
+                        <h4 className="font-bold text-sm text-text-primary">Stay updated</h4>
+                        <p className="text-xs text-text-secondary">
+                            Get the latest debugging tips and platform updates directly to your inbox.
+                        </p>
+                        <form className="relative flex gap-2">
+                            <input
+                                type="email"
+                                placeholder="developer@company.com"
+                                className="w-full h-10 bg-surface border border-border rounded-lg px-4 text-sm outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/10 transition-all"
+                            />
+                            <button type="submit" className="h-10 px-4 bg-text-primary text-background rounded-lg font-bold text-sm hover:opacity-90 transition-opacity">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
                 {/* Bottom Bar */}

@@ -1,54 +1,68 @@
 @import "tailwindcss";
 
 :root {
-    /* 60-30-10 COLOR RULE */
-    --background: #0D0D0D; /* 60% Black */
-    --panel: #1A1A1A;      /* 30% Dark Gray */
-    --surface: #1A1A1A;
-    --surface-highlight: #262626;
+    /* PREMIUM LIGHT THEME */
+    --background: #FFFFFF;
+    --panel: #F9FAFB;
+    --surface: #FFFFFF;
+    --surface-highlight: #F3F4F6;
 
-    --text-primary: #FFFFFF;
-    --text-secondary: #A1A1AA;
-    --text-tertiary: #71717A;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
 
-    --accent-primary: #00FF88; /* 10% Neon Green */
-    --accent-glow: rgba(0, 255, 136, 0.25);
-    --accent-hover: #00E67A;
-    
-    --accent-success: #00FF88;
+    --accent-primary: #008000;
+    --accent-secondary: #006400;
+    /* Darker green */
+    --accent-tertiary: #004d00;
+    --accent-hover: #006400;
+    --accent-success: #008000;
     --accent-warning: #F59E0B;
     --accent-error: #EF4444;
-    --accent-info: #00FF88;
+    --accent-info: #008000;
 
-    --border: #262626;
-    --border-hover: #404040;
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
 
-    --glass-surface: rgba(13, 13, 13, 0.85);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-surface: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.05);
 
     --font-sans: var(--font-inter);
     --font-mono: var(--font-jetbrains-mono);
 }
 
 [data-theme='dark'] {
-    /* Keeping it same as root for consistency if theme toggle exists */
-    --background: #0D0D0D;
-    --panel: #1A1A1A;
-    --surface: #1A1A1A;
-    --surface-highlight: #262626;
+    /* TRUE BLACK DARK THEME */
+    --background: #000000;
+    /* True Black */
+    --panel: #09090b;
+    /* Zinc 950 */
+    --surface: #000000;
+    --surface-highlight: #18181b;
+    /* Zinc 900 */
 
     --text-primary: #FFFFFF;
     --text-secondary: #A1A1AA;
-    --text-tertiary: #71717A;
+    --text-tertiary: #52525B;
 
-    --accent-primary: #00FF88;
-    --accent-glow: rgba(0, 255, 136, 0.35);
-    --accent-hover: #00E67A;
+    /* BRAND ACCENTS - LUMINOUS GREEN */
+    /* BRAND ACCENTS */
+    --accent-primary: #008000;
+    --accent-glow: rgba(0, 128, 0, 0.35);
+    --accent-hover: #009900;
+    /* Slightly lighter for visibility in dark mode */
 
-    --border: #262626;
-    --border-hover: #404040;
+    --accent-success: #008000;
+    --accent-warning: #F59E0B;
+    --accent-error: #EF4444;
+    --accent-info: #008000;
 
-    --glass-surface: rgba(13, 13, 13, 0.7);
+    --border: #27272A;
+    /* Zinc 800 */
+    --border-hover: #3F3F46;
+    /* Zinc 700 */
+
+    --glass-surface: rgba(0, 0, 0, 0.7);
     --glass-border: rgba(255, 255, 255, 0.1);
 }
 
