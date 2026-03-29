@@ -52,43 +52,14 @@ export default function MobileMenu({ isOpen, onClose }) {
     };
 
     const menuItems = [
-        // Explore Section
-        {
-            section: "Explore",
-            items: [
-                { name: 'Home', href: '/', icon: Home, color: 'text-text-secondary' },
-                { name: 'Fix Error', href: '/fix-error', icon: Zap, color: 'text-accent-primary', desc: "AI Chatbot" },
-                { name: 'Learn', href: '/learn', icon: GraduationCap, color: 'text-accent-primary', desc: "Academy" },
-                { name: 'Tools Hub', href: '/tools', icon: Briefcase, color: 'text-accent-primary', desc: "Utilities" },
-                { name: 'API Tester', href: '/api-tester', icon: Network, color: 'text-accent-primary', desc: "REST Client" },
-                { name: 'Compiler', href: '/compiler', icon: Code, color: 'text-accent-primary', desc: "Online IDE" },
-                { name: 'Errors', href: '/errors', icon: Terminal, color: 'text-accent-primary', desc: "Fix Database" },
-                { name: 'Languages', href: '/languages', icon: Globe, color: 'text-accent-primary', desc: "Docs & Syntax" },
-                { name: 'Dashboard', href: '/dashboard', icon: Layout, color: 'text-accent-warning', desc: "Contributor" }
-            ]
-        },
-        // Writing Section
-        {
-            section: "Writing AI",
-            items: [
-                { name: 'Docs Editor', href: '/docs', icon: DocsIcon, color: 'text-accent-primary', desc: "Rich Text", hasCustomIcon: true },
-                { name: 'Sheets Editor', href: '/sheets', icon: SheetsIcon, color: 'text-accent-primary', desc: "Spreadsheet", hasCustomIcon: true },
-                { name: 'Grammar', href: '/grammar', icon: GrammarIcon, color: 'text-accent-primary', desc: "AI Correction", hasCustomIcon: true },
-                { name: 'Rewrite', href: '/rewrite', icon: RewriteIcon, color: 'text-accent-primary', desc: "Paraphraser", hasCustomIcon: true },
-                { name: 'Plagiarism', href: '/plagiarism', icon: PlagiarismIcon, color: 'text-accent-primary', desc: "Originality Check", hasCustomIcon: true },
-                { name: 'Saved Docs', href: '/documents', icon: DocumentsIcon, color: 'text-accent-primary', desc: "My Library", hasCustomIcon: true },
-                { name: 'History', href: '/history', icon: HistoryIcon, color: 'text-accent-primary', desc: "Activity Log", hasCustomIcon: true }
-            ]
-        },
-        // Productivity Section
-        {
-            section: "Productivity",
-            items: [
-                { name: 'Log Analyzer', href: '/log-analyzer', icon: ScrollText, color: 'text-accent-primary', desc: "AI Debugger" },
-                { name: 'Code Reviewer', href: '/code-reviewer', icon: ShieldCheck, color: 'text-accent-primary', desc: "Quality Audit" },
-                { name: 'Snippets', href: '/snippets', icon: BookOpen, color: 'text-accent-primary', desc: "Code Library" }
-            ]
-        }
+        { name: 'Home', href: '/', icon: Home, color: 'text-text-secondary' },
+        { name: 'Errors', href: '/errors', icon: Terminal, color: 'text-accent-primary', desc: "Verified Solutions" },
+        { name: 'Tools Hub', href: '/tools', icon: Briefcase, color: 'text-accent-primary', desc: "Utilities" },
+        { name: 'Compiler', href: '/compiler', icon: Code, color: 'text-accent-primary', desc: "Online IDE" },
+        { name: 'Languages', href: '/languages', icon: Globe, color: 'text-accent-primary', desc: "Docs & Syntax" },
+        { name: 'Snippets', href: '/snippets', icon: BookOpen, color: 'text-accent-primary', desc: "Code Library" },
+        { name: 'Learn', href: '/learn', icon: GraduationCap, color: 'text-accent-primary', desc: "Academy" },
+        { name: 'Dashboard', href: '/dashboard', icon: Layout, color: 'text-accent-warning', desc: "Contributor" }
     ];
 
     return (
@@ -124,67 +95,41 @@ export default function MobileMenu({ isOpen, onClose }) {
                     </button>
                 </div>
 
-                {/* Mobile Search */}
-                <div className="p-5 pb-2">
-                    <form onSubmit={handleSearch} className="relative group">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary group-focus-within:text-accent-primary transition-colors" size={16} />
-                        <input
-                            type="search"
-                            placeholder="Search errors..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full h-10 pl-10 pr-4 bg-surface border border-border rounded-xl text-sm focus:border-accent-primary focus:ring-1 focus:ring-accent-primary outline-none transition-all placeholder:text-text-tertiary"
-                        />
-                    </form>
-                </div>
+                {/* Mobile Search Removed */}
 
-                <nav className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-hide">
-                    {menuItems.map((section, idx) => (
-                        <div key={idx}>
-                            <div className="px-2 mb-2">
-                                <h2 className="text-[10px] font-black uppercase tracking-[0.15em] text-text-tertiary mb-1 whitespace-nowrap">{section.section}</h2>
-                                <div className="h-0.5 w-6 bg-accent-primary/50 rounded-full shadow-[0_0_8px_var(--accent-primary)]"></div>
-                            </div>
-                            <div className="space-y-1">
-                                {section.items.map((item, index) => {
-                                    const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
+                <nav className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar-hide">
+                    {menuItems.map((item, index) => {
+                        const isActive = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
 
-                                    return (
-                                        <Link
-                                            key={item.href}
-                                            href={item.href}
-                                            onClick={onClose}
-                                            className={cn(
-                                                "flex items-center space-x-3 px-4 py-3 rounded-xl transition-all font-medium group select-none relative overflow-hidden",
-                                                isActive
-                                                    ? "bg-accent-primary/10 text-accent-primary font-bold border border-accent-primary/20"
-                                                    : "text-text-secondary hover:bg-surface hover:text-text-primary border border-transparent"
-                                            )}
-                                        >
-                                            <div className={cn(
-                                                "relative z-10",
-                                                isActive ? "text-accent-primary" : item.color
-                                            )}>
-                                                {item.hasCustomIcon ? (
-                                                    <item.icon size={20} isActive={isActive} />
-                                                ) : (
-                                                    <item.icon size={20} />
-                                                )}
-                                            </div>
-                                            <div className="flex flex-col relative z-10">
-                                                <span className="text-sm">{item.name}</span>
-                                                {item.desc && <span className="text-[10px] text-text-tertiary font-normal">{item.desc}</span>}
-                                            </div>
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={onClose}
+                                className={cn(
+                                    "flex items-center space-x-3 px-4 py-3 rounded-xl transition-all font-medium group select-none relative overflow-hidden",
+                                    isActive
+                                        ? "bg-accent-primary/10 text-accent-primary font-bold border border-accent-primary/20"
+                                        : "text-text-secondary hover:bg-surface hover:text-text-primary border border-transparent"
+                                )}
+                            >
+                                <div className={cn(
+                                    "relative z-10",
+                                    isActive ? "text-accent-primary" : item.color
+                                )}>
+                                    <item.icon size={20} />
+                                </div>
+                                <div className="flex flex-col relative z-10">
+                                    <span className="text-sm">{item.name}</span>
+                                    {item.desc && <span className="text-[10px] text-text-tertiary font-normal">{item.desc}</span>}
+                                </div>
 
-                                            {isActive && (
-                                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent-primary"></div>
-                                            )}
-                                        </Link>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    ))}
+                                {isActive && (
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent-primary"></div>
+                                )}
+                            </Link>
+                        );
+                    })}
                 </nav>
 
                 {/* Footer Actions */}

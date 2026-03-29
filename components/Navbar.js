@@ -62,40 +62,10 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                 ? "glass-strong border-b border-border shadow-sm"
                 : "bg-transparent border-b border-transparent"
         )}>
-            {/* Mobile Search Overlay */}
+            {/* Search Overlay Removed */}
+            
             <div className={cn(
-                "absolute inset-0 z-50 flex items-center px-4 gap-4 lg:hidden bg-background transition-opacity duration-300 ease-out",
-                isSearchOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-            )}>
-                <button
-                    onClick={() => setIsSearchOpen(false)}
-                    className="p-2 -ml-2 hover:bg-surface rounded-full text-text-secondary active:scale-95 transition-transform"
-                >
-                    <X size={24} />
-                </button>
-                <form onSubmit={handleSearch} className="flex-1">
-                    <input
-                        ref={inputRef}
-                        type="search"
-                        placeholder="Search solutions..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full h-10 bg-transparent text-lg font-medium text-text-primary placeholder:text-text-tertiary outline-none"
-                    />
-                </form>
-                {searchQuery && (
-                    <button
-                        onClick={handleSearch}
-                        className="p-2 bg-accent-primary text-white rounded-full"
-                    >
-                        <ArrowRight size={20} />
-                    </button>
-                )}
-            </div>
-
-            <div className={cn(
-                "h-full px-4 md:px-8 flex items-center justify-between gap-4 max-w-[1920px] mx-auto relative transition-opacity duration-300",
-                isSearchOpen ? "opacity-0 md:opacity-100" : "opacity-100"
+                "h-full px-4 md:px-8 flex items-center justify-between gap-4 max-w-[1920px] mx-auto relative transition-opacity duration-300"
             )}>
 
                 {/* Left: Brand & Menu */}
@@ -115,28 +85,10 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
 
                 </div>
 
-                {/* Center: Omni-Search (Desktop Only - LG+) */}
+                {/* Center Content Empty (Removed Search Bar) */}
                 <div className="hidden lg:block flex-1 max-w-sm lg:max-w-xl px-4 absolute left-1/2 -translate-x-1/2 w-full text-center pointer-events-none">
                     <div className="pointer-events-auto inline-block w-full">
-                        {centerContent ? (
-                            centerContent
-                        ) : !hideSearch && (
-                            <form onSubmit={handleSearch} className="relative group w-full text-left">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary transition-colors group-focus-within:text-accent-primary" size={16} />
-                                <input
-                                    type="text"
-                                    placeholder="Search 50k+ error solutions..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full h-10 pl-10 pr-12 bg-surface/50 border border-border/50 rounded-full text-sm transition-all focus:bg-background focus:border-accent-primary/50 focus:ring-4 focus:ring-accent-primary/10 outline-none text-text-primary placeholder:text-text-tertiary shadow-sm hover:border-border"
-                                />
-                                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-50">
-                                    <kbd className="hidden xl:inline-flex h-5 items-center gap-1 rounded border border-border bg-panel px-1.5 font-mono text-[10px] font-medium text-text-secondary">
-                                        <span className="text-xs">⌘</span>K
-                                    </kbd>
-                                </div>
-                            </form>
-                        )}
+                        {centerContent && centerContent}
                     </div>
                 </div>
 
@@ -149,16 +101,7 @@ const Navbar = ({ onMenuClick, isSidebarOpen, centerContent: propCenter, customA
                         </>
                     )}
 
-                    {/* Mobile/Tablet Search Icon (Visible < LG) */}
-                    {!hideSearch && !centerContent && (
-                        <button
-                            onClick={() => setIsSearchOpen(true)}
-                            className="p-2 lg:hidden text-text-secondary hover:text-text-primary active:scale-95 transition-transform"
-                            aria-label="Search"
-                        >
-                            <Search size={22} />
-                        </button>
-                    )}
+                    {/* Mobile/Tablet Search Icon Removed */}
 
                     <ThemeToggle />
 
